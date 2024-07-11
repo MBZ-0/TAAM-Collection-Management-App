@@ -1,4 +1,4 @@
-package com.example.b07demosummer2024;
+package com.tbb.taamcollection;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
