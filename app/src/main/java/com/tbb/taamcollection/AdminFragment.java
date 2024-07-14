@@ -9,19 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class ScrollerFragment extends Fragment {
+public class AdminFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scroller, container, false);
+        // Create a TextView programmatically
+        TextView textView = new TextView(getContext());
+        textView.setText("Admin Fragment");
+        textView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        textView.setGravity(android.view.Gravity.CENTER);
 
-        TextView textView = view.findViewById(R.id.textView);
-        StringBuilder text = new StringBuilder();
-        for (int i = 0; i < 20; i++) {
-            text.append("Line ").append(i + 1).append("\n");
-        }
-        textView.setText(text.toString());
-
-        return view;
+        return textView;
     }
 }

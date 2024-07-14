@@ -1,0 +1,17 @@
+<!-- layout_black_bar.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/black">
+
+    <!-- You can customize this further as needed, e.g., adding text or icons -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text="@string/app_name"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:gravity="center" />
+</LinearLayout>
