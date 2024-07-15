@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
@@ -11,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/textViewLotNumber"
@@ -20,7 +18,7 @@
         android:layout_weight="0.75"
         android:gravity="center_horizontal"
         android:padding="8sp"
-        android:textSize="10sp"/>
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -29,7 +27,7 @@
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:padding="8sp"
-        android:textSize="10sp"/>
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/textViewDescription"
@@ -38,7 +36,7 @@
         android:layout_weight="1.1"
         android:gravity="center_horizontal"
         android:padding="8sp"
-        android:textSize="10sp"/>
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/textViewPeriod"
@@ -47,7 +45,7 @@
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:padding="8sp"
-        android:textSize="10sp"/>
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/textViewCategory"
@@ -56,5 +54,5 @@
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:padding="8sp"
-        android:textSize="10sp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="10sp" />
+</TableRow>

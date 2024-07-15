@@ -1,56 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
     tools:context=".HomeFragment">
 
-    <include
-        android:id="@+id/table_layout"
-        layout="@layout/table_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/view"
-        />
-
     <!-- Admin Button (Top Right Corner) -->
-    <Button
-        android:id="@+id/admin"
-        style="@style/ButtonStyle"
-        android:layout_width="75dp"
-        android:layout_height="35dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp">
+
+        <Button
+            android:id="@+id/admin"
+            style="@style/ButtonStyle"
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:text="@string/admin" />
+    </LinearLayout>
+
+    <!-- Table Header -->
+    <TableLayout
+        android:id="@+id/tableHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/admin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@android:color/white"
+        android:padding="16dp"
+        android:stretchColumns="*">
 
-    <!-- View Button -->
-    <Button
-        android:id="@+id/view"
-        style="@style/ButtonStyle"
-        android:layout_width="75dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <!-- Table Heading -->
+        <TableRow android:background="@color/gold">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:padding="8sp"
+                android:text=" "
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
-    <!-- Search Button -->
-    <Button
-        android:id="@+id/search"
-        style="@style/ButtonStyle"
-        android:layout_width="75dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center_horizontal"
+                android:padding="8sp"
+                android:text="@string/col2"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="8sp"
+                android:text="@string/col3"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.1"
+                android:gravity="center_horizontal"
+                android:padding="8sp"
+                android:text="@string/col4"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="8sp"
+                android:text="@string/col5"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="8sp"
+                android:text="@string/col6"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="8sp"
+                android:text="@string/col7"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+        </TableRow>
+    </TableLayout>
+
+    <!-- Recycler View -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:background="#D6EEEE" />
+
+    <!-- Bottom Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="16dp">
+
+        <Button
+            android:id="@+id/view"
+            style="@style/ButtonStyle"
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/view" />
+
+        <Button
+            android:id="@+id/search"
+            style="@style/ButtonStyle"
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/search" />
+    </LinearLayout>
+</LinearLayout>
