@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class AdminBase extends Database{
 
-    HashMap<Integer, adminLogin> allLogins;
+    HashMap<Integer, AdminLogin> allLogins;
 
     AdminBase(String name){
         super(name);
@@ -19,13 +19,13 @@ public class AdminBase extends Database{
 
     @Override
     void updateQuery(){
-        allLogins = adminLogin.convert(preConvert);
+        allLogins = AdminLogin.convert(preConvert);
     }
 
-    adminLogin queryUsername(String username){
+    AdminLogin queryUsername(String username){
         if (loaded) {
             int i = 0;
-            adminLogin temp = allLogins.get(i);
+            AdminLogin temp = allLogins.get(i);
             while (temp != null) {
                 if (Objects.equals(temp.getUsername(), username)) {
                     return temp;
@@ -40,7 +40,7 @@ public class AdminBase extends Database{
 
     boolean authenticateLogin(String username, String password){
         if (loaded) {
-            adminLogin temp = queryUsername(username);
+            AdminLogin temp = queryUsername(username);
             if (temp != null) {
                 return temp.getPassword().equals(password);
             }

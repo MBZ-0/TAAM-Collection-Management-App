@@ -3,18 +3,18 @@ package com.tbb.taamcollection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class adminLogin {
+public class AdminLogin {
     private String username = "";
     private String password = "";
 
-    adminLogin(){
+    AdminLogin(){
     }
 
-    static HashMap<Integer, adminLogin> convert(ArrayList<HashMap<String, Object>> a) {
-        HashMap<Integer, adminLogin> r = new HashMap<>();
+    static HashMap<Integer, AdminLogin> convert(ArrayList<HashMap<String, Object>> a) {
+        HashMap<Integer, AdminLogin> r = new HashMap<>();
         for (int i = 0; i < a.size(); i++) {
             if (a.get(i) != null) {
-                adminLogin n = new adminLogin();
+                AdminLogin n = new AdminLogin();
                 HashMap<String, Object> k = a.get(i);
                 n.username = (String) k.get("username");
                 n.password = (String) k.get("password");
