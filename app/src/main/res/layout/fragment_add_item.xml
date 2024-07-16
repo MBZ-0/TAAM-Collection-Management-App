@@ -63,6 +63,8 @@
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
         android:text="@string/add_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
