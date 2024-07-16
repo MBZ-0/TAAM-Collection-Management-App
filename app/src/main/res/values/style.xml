@@ -1,0 +1,30 @@
+<resources>
+    <!-- Header style for general use -->
+    <style name="HeaderStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/oswald_bold</item>
+    </style>
+
+    <!-- Label style for table headers -->
+    <style name="LabelStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:fontFamily">@font/oswald_bold</item>
+    </style>
+
+    <!-- Button style -->
+    <style name="ButtonStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/oswald_bold</item>
+        <item name="android:textColor">@android:color/white</item> <!-- Text color -->
+        <item name="android:background">@drawable/button_background</item> <!-- Background drawable -->
+        <item name="android:paddingLeft">16dp</item> <!-- Left padding -->
+        <item name="android:paddingRight">16dp</item> <!-- Right padding -->
+        <item name="android:paddingTop">8dp</item> <!-- Top padding -->
+        <item name="android:paddingBottom">8dp</item> <!-- Bottom padding -->
+    </style>
+
+</resources>

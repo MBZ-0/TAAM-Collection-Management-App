@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "839646616897",
+    "project_id": "taam-collection-management-app",
+    "storage_bucket": "taam-collection-management-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839646616897:android:fa87c4d703c1fdf1b755c0",
+        "android_client_info": {
+          "package_name": "com.tbb.taamcollection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmqQOIzFnWvHSlK2X6PYqw7OlGW91NZDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
