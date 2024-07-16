@@ -60,21 +60,23 @@ public class AddItemFragment extends Fragment {
     }
 
     private void addItem() {
-        String lotNum = editTextLotNum.getText().toString().trim();
+        String lotNumStr = editTextLotNum.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
         String category = editTextCatogory.getText().toString().trim();
         String period = editTextPeriod.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
 
-        if (lotNum.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty() || description.isEmpty()) {
+        if (lotNumStr.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty() || description.isEmpty()) {
             Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!isNumber(lotNum)) {
+        if (!isNumber(lotNumStr)) {
             Toast.makeText(getContext(), "Lot Number should be an Integer", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        int lotNum = Integer.parseInt(lotNumStr);
 
         itemsRef = db.getReference("categories/" + category);
         String id = itemsRef.push().getKey();
