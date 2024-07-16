@@ -5,23 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class AdminFragment extends Fragment {
+public class ScrollerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Create a TextView programmatically
-        TextView textView = new TextView(getContext());
-        textView.setText("Admin Fragment");
-        textView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        ));
-        textView.setGravity(android.view.Gravity.CENTER);
+        View view = inflater.inflate(R.layout.fragment_scroller, container, false);
 
-        return textView;
+        TextView textView = view.findViewById(R.id.textView);
+        StringBuilder text = new StringBuilder();
+        for (int i = 0; i < 20; i++) {
+            text.append("Line ").append(i + 1).append("\n");
+        }
+        textView.setText(text.toString());
+
+        return view;
     }
 }

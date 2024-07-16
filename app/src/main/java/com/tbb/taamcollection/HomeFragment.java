@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,36 +17,36 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
-        // New buttons from the updated XML
-        Button buttonAdmin = view.findViewById(R.id.admin);
-        Button buttonView = view.findViewById(R.id.view);
-        Button buttonSearch = view.findViewById(R.id.search);
+        Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
+        Button buttonScroller = view.findViewById(R.id.buttonScroller);
+        Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
+        Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
 
-        // Set click listeners for the new buttons
-        buttonAdmin.setOnClickListener(new View.OnClickListener() {
+        buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace with the appropriate fragment or action for the admin button
-                loadFragment(new AdminFragment());
+                loadFragment(new RecyclerViewFragment());
             }
         });
 
-        buttonView.setOnClickListener(new View.OnClickListener() {
+        buttonScroller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace with the appropriate fragment or action for the view button
-                loadFragment(new ViewFragment());
+                loadFragment(new ScrollerFragment());
             }
         });
 
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
+        buttonSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace with the appropriate fragment or action for the search button
-                loadFragment(new SearchFragment());
+                loadFragment(new SpinnerFragment());
             }
         });
 
+        buttonManageItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { loadFragment(new ManageItemsFragment());}
+        });
 
         return view;
     }

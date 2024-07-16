@@ -20,14 +20,14 @@ public class ItemDatabase extends Database{
         allItems = Item.convert(preConvert);
     }
 
-    void add( Item obj, int id){
+    void add(Item obj, int id){
         addEntry(obj, id);
         if(loaded){
             allItems.put(id, obj);
         }
     }
 
-    void remove( Item obj, int id){
+    void remove(Item obj, int id){
         removeEntry(id);
         if(loaded){
             allItems.remove(id);
