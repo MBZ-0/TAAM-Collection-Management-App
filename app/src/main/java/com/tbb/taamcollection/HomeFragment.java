@@ -12,6 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class HomeFragment extends Fragment {
+
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -21,6 +26,7 @@ public class HomeFragment extends Fragment {
         Button buttonScroller = view.findViewById(R.id.buttonScroller);
         Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
         Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
+        Button buttonAdmin = view.findViewById(R.id.admin); // Add this line
 
         buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +51,16 @@ public class HomeFragment extends Fragment {
 
         buttonManageItems.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { loadFragment(new ManageItemsFragment());}
+            public void onClick(View v) {
+                loadFragment(new ManageItemsFragment());
+            }
+        });
+
+        buttonAdmin.setOnClickListener(new View.OnClickListener() { // Add this block
+            @Override
+            public void onClick(View v) {
+                loadFragment(new LoginFragment()); // Replace with your AdminFragment
+            }
         });
 
         return view;

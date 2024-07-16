@@ -21,9 +21,6 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance("https://taam-collection-management-app-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = db.getReference("items"); // Adjust the reference as per your database structure
 
-//        myRef.setValue("B07 Demo!");
-        myRef.child("movies").setValue("B07 Demo!");
-
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }
