@@ -40,7 +40,16 @@ public class AddItemFragment extends Fragment {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println();
+                String lotNum = editTextLotNum.getText().toString().trim();
+                String name = editTextName.getText().toString().trim();
+                String category = editTextCatogory.getText().toString().trim();
+                String period = editTextPeriod.getText().toString().trim();
+                String description = editTextDescription.getText().toString().trim();
+                System.out.println(lotNum);
+                System.out.println(name);
+                System.out.println(category);
+                System.out.println(period);
+                System.out.println(description);
                 //addItem();
             }
         });
