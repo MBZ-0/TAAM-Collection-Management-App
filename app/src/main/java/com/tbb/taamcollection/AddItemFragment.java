@@ -40,21 +40,23 @@ public class AddItemFragment extends Fragment {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String lotNum = editTextLotNum.getText().toString().trim();
-                String name = editTextName.getText().toString().trim();
-                String category = editTextCatogory.getText().toString().trim();
-                String period = editTextPeriod.getText().toString().trim();
-                String description = editTextDescription.getText().toString().trim();
-                System.out.println(lotNum);
-                System.out.println(name);
-                System.out.println(category);
-                System.out.println(period);
-                System.out.println(description);
-                //addItem();
+                addItem();
             }
         });
 
         return view;
+    }
+
+    private static boolean isNumber(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void addItem() {
@@ -66,6 +68,11 @@ public class AddItemFragment extends Fragment {
 
         if (lotNum.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty() || description.isEmpty()) {
             Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!isNumber(lotNum)) {
+            Toast.makeText(getContext(), "Lot Number should be an Integer", Toast.LENGTH_SHORT).show();
             return;
         }
 
