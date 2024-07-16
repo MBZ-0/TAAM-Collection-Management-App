@@ -21,12 +21,12 @@ public class ManageItemsFragment extends Fragment {
         Button buttonDeleteItem = view.findViewById(R.id.buttonDeleteItem);
         Button buttonBack = view.findViewById(R.id.buttonBack);
 
-//        buttonAddItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadFragment(new AddItemFragment());
-//            }
-//        });
+        buttonAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new AddItemFragment());
+            }
+        });
 
 //        buttonDeleteItem.setOnClickListener(v -> loadFragment(new DeleteItemFragment()));
 
