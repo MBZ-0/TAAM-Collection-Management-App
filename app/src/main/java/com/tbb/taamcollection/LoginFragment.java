@@ -42,13 +42,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 // if statement here for authentication
-                if(db.authenticateLogin(username,password)){
-                    invalidLogin.setVisibility(View.INVISIBLE);
-                    loadFragment(new HomeFragment()); // will switch HomeFragment to Admin page once implemented
-                }
-                else{
-                    invalidLogin.setVisibility(View.VISIBLE);
-                }
+               db.authenticateLogin(username,password);
             }
         });
 
