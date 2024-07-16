@@ -1,5 +1,8 @@
 package com.tbb.taamcollection;
 
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -11,41 +14,33 @@ import java.util.Objects;
  */
 public class AdminBase extends Database{
 
-    HashMap<Integer, AdminLogin> allLogins;
+    static Database db;
 
     AdminBase(String name){
         super(name);
+        db = this;
     }
 
-    @Override
-    void updateQuery(){
-        allLogins = AdminLogin.convert(preConvert);
+    void success(){
+        System.out.println("SUCCESS");
+    }
+    void failure(){
+        System.out.println("FAILURE");
     }
 
-    AdminLogin queryUsername(String username){
-        if (loaded) {
-            int i = 0;
-            AdminLogin temp = allLogins.get(i);
-            while (temp != null) {
-                if (Objects.equals(temp.getUsername(), username)) {
-                    return temp;
+
+    void authenticateLogin(String username, String password){
+        database.child(username).get().addOnCompleteListener(task -> {
+            if(!task.isSuccessful()){
+                System.out.println("FAIL");
+            }else{
+                String psw =(String) task.getResult().getValue();
+                if(psw != null && psw.equals(password)){
+                    success();
+                }else {
+                    failure();
                 }
-                i++;
-                temp = allLogins.get(i);
             }
-            return null;
-        }
-        return null;
-    }
-
-    boolean authenticateLogin(String username, String password){
-        if (loaded) {
-            AdminLogin temp = queryUsername(username);
-            if (temp != null) {
-                return temp.getPassword().equals(password);
-            }
-            return false;
-        }
-        return false;
+        });
     }
 }

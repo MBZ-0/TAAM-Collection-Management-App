@@ -1,12 +1,13 @@
 package com.tbb.taamcollection;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminLogin {
     private String username = "";
     private String password = "";
-
     AdminLogin(){
     }
 
