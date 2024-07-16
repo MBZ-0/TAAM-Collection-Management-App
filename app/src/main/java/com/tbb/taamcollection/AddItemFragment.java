@@ -30,7 +30,7 @@ public class AddItemFragment extends Fragment {
 
         editTextLotNum = view.findViewById(R.id.editTextLotNum);
         editTextName = view.findViewById(R.id.editTextName);
-        editTextCatogory = view.findViewById(R.id.editTextDescription);
+        editTextCatogory = view.findViewById(R.id.editTextCategory);
         editTextPeriod = view.findViewById(R.id.editTextPeriod);
         editTextDescription = view.findViewById(R.id.editTextDescription);
         buttonAdd = view.findViewById(R.id.buttonAdd);
