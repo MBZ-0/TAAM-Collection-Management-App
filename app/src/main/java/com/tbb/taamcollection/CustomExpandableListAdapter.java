@@ -54,16 +54,31 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         ImageView imageVideoContent = convertView.findViewById(R.id.image_video_content);
 
         // Set text or other properties of the views
-        category.setText("Category: " + childText);
-        period.setText("Period: " + childText);
-        descriptionTitle.setText("Description");
-        descriptionContent.setText("Detailed description: " + childText);
-        imageVideoTitle.setText("Image/Video");
-
-        // Handle visibility toggling for Description
-        if (childText.equals("Description")) {
+        if (childPosition == 0) {
+            category.setVisibility(View.VISIBLE);
+            period.setVisibility(View.GONE);
+            descriptionTitle.setVisibility(View.GONE);
+            descriptionContent.setVisibility(View.GONE);
+            imageVideoTitle.setVisibility(View.GONE);
+            imageVideoContent.setVisibility(View.GONE);
+            category.setText("Category: " + childText);
+        } else if (childPosition == 1) {
+            category.setVisibility(View.GONE);
+            period.setVisibility(View.VISIBLE);
+            descriptionTitle.setVisibility(View.GONE);
+            descriptionContent.setVisibility(View.GONE);
+            imageVideoTitle.setVisibility(View.GONE);
+            imageVideoContent.setVisibility(View.GONE);
+            period.setText("Period: " + childText);
+        } else if (childPosition == 2) {
+            category.setVisibility(View.GONE);
+            period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.VISIBLE);
             descriptionContent.setVisibility(View.GONE);
+            imageVideoTitle.setVisibility(View.GONE);
+            imageVideoContent.setVisibility(View.GONE);
+            descriptionTitle.setText("Description");
+            descriptionContent.setText("Detailed description: " + childText);
 
             descriptionTitle.setOnClickListener(v -> {
                 if (descriptionContent.getVisibility() == View.GONE) {
@@ -72,15 +87,14 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                     descriptionContent.setVisibility(View.GONE);
                 }
             });
-        } else {
+        } else if (childPosition == 3) {
+            category.setVisibility(View.GONE);
+            period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
-        }
-
-        // Handle visibility toggling for Image/Video
-        if (childText.equals("Image/Video")) {
             imageVideoTitle.setVisibility(View.VISIBLE);
             imageVideoContent.setVisibility(View.GONE);
+            imageVideoTitle.setText("Image/Video");
 
             imageVideoTitle.setOnClickListener(v -> {
                 if (imageVideoContent.getVisibility() == View.GONE) {
@@ -89,9 +103,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                     imageVideoContent.setVisibility(View.GONE);
                 }
             });
-        } else {
-            imageVideoTitle.setVisibility(View.GONE);
-            imageVideoContent.setVisibility(View.GONE);
         }
 
         return convertView;
@@ -99,7 +110,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).size();
+        return 4; // We always have 4 child items: Category, Period, Description, and Image/Video
     }
 
     @Override
@@ -126,22 +137,21 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.group_item, null);
         }
 
-        TextView groupText = convertView.findViewById(R.id.group_text);
         TextView itemName = convertView.findViewById(R.id.item_name);
         TextView lotNumber = convertView.findViewById(R.id.lot_number);
-        CheckBox groupCheckbox = convertView.findViewById(R.id.group_checkbox);
+        CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
 
-        groupText.setText(headerTitle);
-        itemName.setText("Item: " + headerTitle);
+        itemName.setText(headerTitle);
         lotNumber.setText("Lot: " + headerTitle);
 
-        // Handle CheckBox state changes
-        groupCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        // Update the CheckBox state if needed
+        itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Handle CheckBox state changes
         });
 
         return convertView;
     }
+
 
     @Override
     public boolean hasStableIds() {
