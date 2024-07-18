@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/editTextDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="411dp"
+        android:layout_height="95dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Description: "
@@ -77,7 +77,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewInvalidLotNumber"
+        app:layout_constraintVertical_bias="0.291" />
 
     <TextView
         android:id="@+id/textViewUnfilledParameter"
