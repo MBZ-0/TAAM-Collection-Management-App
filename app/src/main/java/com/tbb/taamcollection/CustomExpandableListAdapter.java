@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> listDataChild;
 
     public CustomExpandableListAdapter(Context context, List<String> listDataHeader,
-                                    HashMap<String, List<String>> listChildData) {
+                                       HashMap<String, List<String>> listChildData) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listChildData;
@@ -61,22 +60,39 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         descriptionContent.setText("Detailed description: " + childText);
         imageVideoTitle.setText("Image/Video");
 
-        // Click listeners to toggle visibility
-        descriptionTitle.setOnClickListener(v -> {
-            if (descriptionContent.getVisibility() == View.GONE) {
-                descriptionContent.setVisibility(View.VISIBLE);
-            } else {
-                descriptionContent.setVisibility(View.GONE);
-            }
-        });
+        // Handle visibility toggling for Description
+        if (childText.equals("Description")) {
+            descriptionTitle.setVisibility(View.VISIBLE);
+            descriptionContent.setVisibility(View.GONE);
 
-        imageVideoTitle.setOnClickListener(v -> {
-            if (imageVideoContent.getVisibility() == View.GONE) {
-                imageVideoContent.setVisibility(View.VISIBLE);
-            } else {
-                imageVideoContent.setVisibility(View.GONE);
-            }
-        });
+            descriptionTitle.setOnClickListener(v -> {
+                if (descriptionContent.getVisibility() == View.GONE) {
+                    descriptionContent.setVisibility(View.VISIBLE);
+                } else {
+                    descriptionContent.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            descriptionTitle.setVisibility(View.GONE);
+            descriptionContent.setVisibility(View.GONE);
+        }
+
+        // Handle visibility toggling for Image/Video
+        if (childText.equals("Image/Video")) {
+            imageVideoTitle.setVisibility(View.VISIBLE);
+            imageVideoContent.setVisibility(View.GONE);
+
+            imageVideoTitle.setOnClickListener(v -> {
+                if (imageVideoContent.getVisibility() == View.GONE) {
+                    imageVideoContent.setVisibility(View.VISIBLE);
+                } else {
+                    imageVideoContent.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            imageVideoTitle.setVisibility(View.GONE);
+            imageVideoContent.setVisibility(View.GONE);
+        }
 
         return convertView;
     }
@@ -110,15 +126,17 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.group_item, null);
         }
 
+        TextView groupText = convertView.findViewById(R.id.group_text);
         TextView itemName = convertView.findViewById(R.id.item_name);
         TextView lotNumber = convertView.findViewById(R.id.lot_number);
-        CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
+        CheckBox groupCheckbox = convertView.findViewById(R.id.group_checkbox);
 
-        itemName.setText(headerTitle);
+        groupText.setText(headerTitle);
+        itemName.setText("Item: " + headerTitle);
         lotNumber.setText("Lot: " + headerTitle);
 
-        // Update the CheckBox state if needed
-        itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        // Handle CheckBox state changes
+        groupCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Handle CheckBox state changes
         });
 
