@@ -31,8 +31,8 @@ public class HomeFragment extends Fragment {
         expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild);
         expandableListView.setAdapter(expandableListAdapter);
 
-        Button buttonAdmin = view.findViewById(R.id.admin);
-        buttonAdmin.setOnClickListener(new View.OnClickListener() {
+        Button buttonAdmin = view.findViewById(R.id.admin); // Add this line
+        buttonAdmin.setOnClickListener(new View.OnClickListener() { // Add this block
             @Override
             public void onClick(View v) {
                 loadFragment(new LoginFragment()); // Replace with your AdminFragment
