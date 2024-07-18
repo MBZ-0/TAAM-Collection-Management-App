@@ -62,13 +62,13 @@
         android:onClick="toggleImageVideoVisibility" />
 
     <!-- ImageView for the image or video content -->
-<!--    <ImageView-->
-<!--        android:id="@+id/image_video_content"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/jjj" &lt;!&ndash; Replace with your image or video placeholder &ndash;&gt;-->
-<!--    android:contentDescription="@string/image_video"-->
-<!--    android:paddingTop="4dp"-->
-<!--    android:visibility="gone" />-->
+    <ImageView
+        android:id="@+id/image_video_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/jjj"
+        android:contentDescription="@string/image_video"
+        android:paddingTop="4dp"
+        android:visibility="gone" />
 
 </LinearLayout>
