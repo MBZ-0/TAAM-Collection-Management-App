@@ -41,6 +41,9 @@ public class AddItemFragment extends Fragment {
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
 
+        emptyField.setVisibility(View.INVISIBLE);
+        badLotNum.setVisibility(View.INVISIBLE);
+
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
