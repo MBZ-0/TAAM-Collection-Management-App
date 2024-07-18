@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- TextView for the category -->
     <TextView
         android:id="@+id/category"
         android:layout_width="wrap_content"
@@ -14,6 +15,7 @@
         android:textColor="@color/black"
         android:fontFamily="@font/oswald_bold" />
 
+    <!-- TextView for the period -->
     <TextView
         android:id="@+id/period"
         android:layout_width="wrap_content"
@@ -24,6 +26,7 @@
         android:fontFamily="@font/oswald_bold"
         android:paddingTop="4dp" />
 
+    <!-- TextView for the description title -->
     <TextView
         android:id="@+id/description_title"
         android:layout_width="wrap_content"
@@ -34,6 +37,7 @@
         android:fontFamily="@font/oswald_bold"
         android:paddingTop="4dp" />
 
+    <!-- TextView for the description content -->
     <TextView
         android:id="@+id/description_content"
         android:layout_width="wrap_content"
@@ -45,6 +49,7 @@
         android:paddingTop="4dp"
         android:visibility="gone" />
 
+    <!-- TextView for the image/video title -->
     <TextView
         android:id="@+id/image_video_title"
         android:layout_width="wrap_content"
@@ -56,6 +61,7 @@
         android:paddingTop="8dp"
         android:onClick="toggleImageVideoVisibility" />
 
+    <!-- ImageView for the image or video content -->
     <ImageView
         android:id="@+id/image_video_content"
         android:layout_width="wrap_content"
