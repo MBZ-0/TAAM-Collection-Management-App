@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemFragment extends Fragment {
     private EditText editTextLotNum, editTextName, editTextCatogory, editTextPeriod, editTextDescription;
+    private TextView emptyField, badLotNum;
     private Button buttonAdd;
 
     private FirebaseDatabase db;
@@ -34,6 +36,8 @@ public class AddItemFragment extends Fragment {
         editTextPeriod = view.findViewById(R.id.editTextPeriod);
         editTextDescription = view.findViewById(R.id.editTextDescription);
         buttonAdd = view.findViewById(R.id.buttonAdd);
+        emptyField = view.findViewById(R.id.textViewUnfilledParameter);
+        badLotNum = view.findViewById(R.id.textViewInvalidLotNumber);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
 
@@ -66,13 +70,16 @@ public class AddItemFragment extends Fragment {
         String period = editTextPeriod.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
 
+        emptyField.setVisibility(View.INVISIBLE);
+        badLotNum.setVisibility(View.INVISIBLE);
+
         if (lotNumStr.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty() || description.isEmpty()) {
-            Toast.makeText(getContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            emptyField.setVisibility(View.VISIBLE);
             return;
         }
 
         if (!isNumber(lotNumStr)) {
-            Toast.makeText(getContext(), "Lot Number should be an Integer", Toast.LENGTH_SHORT).show();
+            badLotNum.setVisibility(View.VISIBLE);
             return;
         }
 
