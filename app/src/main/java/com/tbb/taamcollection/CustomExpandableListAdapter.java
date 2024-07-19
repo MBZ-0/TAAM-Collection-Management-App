@@ -50,8 +50,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView period = convertView.findViewById(R.id.period);
         TextView descriptionTitle = convertView.findViewById(R.id.description_title);
         TextView descriptionContent = convertView.findViewById(R.id.description_content);
+        ImageView descriptionArrow = convertView.findViewById(R.id.description_arrow);
         TextView imageVideoTitle = convertView.findViewById(R.id.image_video_title);
         ImageView imageVideoContent = convertView.findViewById(R.id.image_video_content);
+        ImageView imageVideoArrow = convertView.findViewById(R.id.image_video_arrow);
 
         // Set text or other properties of the views
         if (childPosition == 0) {
@@ -59,32 +61,40 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
+            descriptionArrow.setVisibility(View.GONE);
             imageVideoTitle.setVisibility(View.GONE);
             imageVideoContent.setVisibility(View.GONE);
+            imageVideoArrow.setVisibility(View.GONE);
             category.setText("Category: " + childText);
         } else if (childPosition == 1) {
             category.setVisibility(View.GONE);
             period.setVisibility(View.VISIBLE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
+            descriptionArrow.setVisibility(View.GONE);
             imageVideoTitle.setVisibility(View.GONE);
             imageVideoContent.setVisibility(View.GONE);
+            imageVideoArrow.setVisibility(View.GONE);
             period.setText("Period: " + childText);
         } else if (childPosition == 2) {
             category.setVisibility(View.GONE);
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.VISIBLE);
             descriptionContent.setVisibility(View.GONE);
+            descriptionArrow.setVisibility(View.VISIBLE);
             imageVideoTitle.setVisibility(View.GONE);
             imageVideoContent.setVisibility(View.GONE);
+            imageVideoArrow.setVisibility(View.GONE);
             descriptionTitle.setText("Description");
             descriptionContent.setText("Detailed description: " + childText);
 
             descriptionTitle.setOnClickListener(v -> {
                 if (descriptionContent.getVisibility() == View.GONE) {
                     descriptionContent.setVisibility(View.VISIBLE);
+                    descriptionArrow.setImageResource(R.drawable.ic_arrow_up);
                 } else {
                     descriptionContent.setVisibility(View.GONE);
+                    descriptionArrow.setImageResource(R.drawable.ic_arrow_down);
                 }
             });
         } else if (childPosition == 3) {
@@ -92,15 +102,19 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
+            descriptionArrow.setVisibility(View.GONE);
             imageVideoTitle.setVisibility(View.VISIBLE);
             imageVideoContent.setVisibility(View.GONE);
+            imageVideoArrow.setVisibility(View.VISIBLE);
             imageVideoTitle.setText("Image/Video");
 
             imageVideoTitle.setOnClickListener(v -> {
                 if (imageVideoContent.getVisibility() == View.GONE) {
                     imageVideoContent.setVisibility(View.VISIBLE);
+                    imageVideoArrow.setImageResource(R.drawable.ic_arrow_up);
                 } else {
                     imageVideoContent.setVisibility(View.GONE);
+                    imageVideoArrow.setImageResource(R.drawable.ic_arrow_down);
                 }
             });
         }
