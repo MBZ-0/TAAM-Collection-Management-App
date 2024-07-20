@@ -25,6 +25,7 @@ public class AddItemFragment extends Fragment {
 
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
+    private ItemDatabase itemdb;
 
     @Nullable
     @Override
@@ -50,6 +51,7 @@ public class AddItemFragment extends Fragment {
         spinnerPeriod.setAdapter(periodadapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        ItemDatabase itemdb = new ItemDatabase("items");
 
         errorField.setText("");
 
@@ -96,7 +98,6 @@ public class AddItemFragment extends Fragment {
 
         int lotNum = Integer.parseInt(lotNumStr);
 
-        ItemDatabase itemdb = new ItemDatabase("items");
         Category propercategory = Category.fromLabel(category);
         Period properperiod = Period.fromLabel(period);
 
