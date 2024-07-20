@@ -43,13 +43,13 @@ public class AddItemFragment extends Fragment {
         errorField = view.findViewById(R.id.textViewError);
 
         ArrayAdapter<CharSequence> categoryadapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.categories_array, android.R.layout.simple_spinner_item);
-        categoryadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.categories_array, R.layout.better_spinner);
+        categoryadapter.setDropDownViewResource(R.layout.better_spinner);
         spinnerCategory.setAdapter(categoryadapter);
 
         ArrayAdapter<CharSequence> periodadapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.periods_array, android.R.layout.simple_spinner_item);
-        periodadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.periods_array, R.layout.better_spinner);
+        periodadapter.setDropDownViewResource(R.layout.better_spinner);
         spinnerPeriod.setAdapter(periodadapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
