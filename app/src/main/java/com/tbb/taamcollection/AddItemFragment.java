@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -37,6 +38,16 @@ public class AddItemFragment extends Fragment {
         editTextDescription = view.findViewById(R.id.editTextDescription);
         buttonAdd = view.findViewById(R.id.buttonAdd);
         errorField = view.findViewById(R.id.textViewError);
+
+        ArrayAdapter<CharSequence> categoryadapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.categories_array, android.R.layout.simple_spinner_item);
+        categoryadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(categoryadapter);
+
+        ArrayAdapter<CharSequence> periodadapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.categories_array, android.R.layout.simple_spinner_item);
+        periodadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(periodadapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
 
@@ -86,8 +97,8 @@ public class AddItemFragment extends Fragment {
         int lotNum = Integer.parseInt(lotNumStr);
 
         ItemDatabase itemdb = new ItemDatabase("items");
-        Category propercategory = Category.fromLabel("");
-        Period properperiod = Period.fromLabel("");
+        Category propercategory = Category.fromLabel("");//Change to category
+        Period properperiod = Period.fromLabel("");//Change to period
 
         Item item = new Item(itemdb);
         item.setLotNumber(lotNum);
