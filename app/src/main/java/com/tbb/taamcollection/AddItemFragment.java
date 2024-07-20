@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.SQLOutput;
+
 public class AddItemFragment extends Fragment {
     private EditText editTextLotNum, editTextName, editTextDescription;
     private Spinner spinnerCategory, spinnerPeriod;
@@ -51,13 +53,14 @@ public class AddItemFragment extends Fragment {
         spinnerPeriod.setAdapter(periodadapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
-        ItemDatabase itemdb = new ItemDatabase("items");
+        itemdb = new ItemDatabase("items");
 
         errorField.setText("");
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println(itemdb);
                 addItem();
             }
         });
@@ -78,6 +81,7 @@ public class AddItemFragment extends Fragment {
     }
 
     private void addItem() {
+        System.out.println(itemdb);
         String lotNumStr = editTextLotNum.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
         String category = spinnerCategory.getSelectedItem().toString().trim();
