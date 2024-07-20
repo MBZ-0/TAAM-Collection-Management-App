@@ -77,11 +77,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewInvalidLotNumber"
-        app:layout_constraintVertical_bias="0.291" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewError" />
 
     <TextView
-        android:id="@+id/textViewUnfilledParameter"
+        android:id="@+id/textViewError"
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
@@ -92,15 +91,4 @@
         tools:layout_editor_absoluteX="16dp"
         tools:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/textViewInvalidLotNumber"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/oswald_bold"
-        android:text="Lot number should be a number"
-        android:textColor="#E20303"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUnfilledParameter"
-        tools:layout_editor_absoluteX="16dp"
-        tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
