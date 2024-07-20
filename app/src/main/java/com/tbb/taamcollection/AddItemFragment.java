@@ -97,25 +97,13 @@ public class AddItemFragment extends Fragment {
         int lotNum = Integer.parseInt(lotNumStr);
 
         ItemDatabase itemdb = new ItemDatabase("items");
-        Category propercategory = Category.fromLabel("");//Change to category
-        Period properperiod = Period.fromLabel("");//Change to period
+        Category propercategory = Category.fromLabel(category);
+        Period properperiod = Period.fromLabel(period);
 
         Item item = new Item(itemdb);
         item.setLotNumber(lotNum);
         item.setName(name);
         item.setCategory(propercategory);
         item.setPeriod(properperiod);
-
-        //itemsRef = db.getReference("categories/" + category);
-        //String id = itemsRef.push().getKey();
-        //Item item = new Item(id, title, author, genre, description);
-
-//        itemsRef.child(id).setValue(item).addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                Toast.makeText(getContext(), "Item added", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(getContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 }
