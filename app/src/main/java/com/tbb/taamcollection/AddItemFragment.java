@@ -108,6 +108,7 @@ public class AddItemFragment extends Fragment {
         Item item = new Item(itemdb);
         item.setLotNumber(lotNum);
         item.setName(name);
+        item.setDescription(description);
         item.setCategory(propercategory);
         item.setPeriod(properperiod);
         item.setImg(null);
