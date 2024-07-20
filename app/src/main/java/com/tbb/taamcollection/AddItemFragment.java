@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemFragment extends Fragment {
-    private EditText editTextLotNum, editTextName, editTextCatogory, editTextPeriod, editTextDescription;
+    private EditText editTextLotNum, editTextName, editTextDescription;
+    private Spinner spinnerCategory, spinnerPeriod;
     private TextView errorField;
     private Button buttonAdd;
 
@@ -30,8 +32,8 @@ public class AddItemFragment extends Fragment {
 
         editTextLotNum = view.findViewById(R.id.editTextLotNum);
         editTextName = view.findViewById(R.id.editTextName);
-        editTextCatogory = view.findViewById(R.id.editTextCategory);
-        editTextPeriod = view.findViewById(R.id.editTextPeriod);
+        spinnerCategory = view.findViewById(R.id.spinnerAddCategory);
+        spinnerPeriod = view.findViewById(R.id.spinnerAddPeriod);
         editTextDescription = view.findViewById(R.id.editTextDescription);
         buttonAdd = view.findViewById(R.id.buttonAdd);
         errorField = view.findViewById(R.id.textViewError);
@@ -65,13 +67,13 @@ public class AddItemFragment extends Fragment {
     private void addItem() {
         String lotNumStr = editTextLotNum.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
-        String category = editTextCatogory.getText().toString().trim();
-        String period = editTextPeriod.getText().toString().trim();
+        String category = spinnerCategory.getSelectedItem().toString().trim();
+        String period = spinnerPeriod.getSelectedItem().toString().trim();
         String description = editTextDescription.getText().toString().trim();
 
         errorField.setText("");
 
-        if (lotNumStr.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty() || description.isEmpty()) {
+        if (lotNumStr.isEmpty() || name.isEmpty() || description.isEmpty()) {
             errorField.setText("Please fill in all Fields");
             return;
         }
@@ -83,8 +85,18 @@ public class AddItemFragment extends Fragment {
 
         int lotNum = Integer.parseInt(lotNumStr);
 
-        itemsRef = db.getReference("categories/" + category);
-        String id = itemsRef.push().getKey();
+        ItemDatabase itemdb = new ItemDatabase("items");
+        Category propercategory = Category.fromLabel("");
+        Period properperiod = Period.fromLabel("");
+
+        Item item = new Item(itemdb);
+        item.setLotNumber(lotNum);
+        item.setName(name);
+        item.setCategory(propercategory);
+        item.setPeriod(properperiod);
+
+        //itemsRef = db.getReference("categories/" + category);
+        //String id = itemsRef.push().getKey();
         //Item item = new Item(id, title, author, genre, description);
 
 //        itemsRef.child(id).setValue(item).addOnCompleteListener(task -> {
