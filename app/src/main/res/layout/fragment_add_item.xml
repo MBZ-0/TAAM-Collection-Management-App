@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/editTextDescription"
-        android:layout_width="411dp"
-        android:layout_height="95dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Description: "
