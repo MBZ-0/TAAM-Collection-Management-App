@@ -45,9 +45,9 @@ public class AddItemFragment extends Fragment {
         spinnerCategory.setAdapter(categoryadapter);
 
         ArrayAdapter<CharSequence> periodadapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.categories_array, android.R.layout.simple_spinner_item);
+                R.array.periods_array, android.R.layout.simple_spinner_item);
         periodadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(periodadapter);
+        spinnerPeriod.setAdapter(periodadapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
 
