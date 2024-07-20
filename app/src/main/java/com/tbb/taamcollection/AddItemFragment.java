@@ -105,5 +105,9 @@ public class AddItemFragment extends Fragment {
         item.setName(name);
         item.setCategory(propercategory);
         item.setPeriod(properperiod);
+        item.setImg(null);
+
+        itemdb.add(item);
+        itemdb.updateDatabase();
     }
 }
