@@ -57,6 +57,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView descriptionContent = convertView.findViewById(R.id.description_content);
         ImageView descriptionArrow = convertView.findViewById(R.id.description_arrow);
 
+        // Set default text for missing child items
+        String defaultText = "Unknown";
+
         // Set text or other properties of the views
         if (childPosition == 0) {
             category.setVisibility(View.VISIBLE);
@@ -64,22 +67,22 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.GONE);
-            category.setText("Category: " + childText);
+            category.setText("Category: " + (childText != null ? childText : defaultText));
         } else if (childPosition == 1) {
             category.setVisibility(View.GONE);
             period.setVisibility(View.VISIBLE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.GONE);
-            period.setText("Period: " + childText);
+            period.setText("Period: " + (childText != null ? childText : defaultText));
         } else if (childPosition == 2) {
             category.setVisibility(View.GONE);
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.VISIBLE);
             descriptionContent.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.VISIBLE);
-            descriptionTitle.setText("Description");
-            descriptionContent.setText("Detailed description: " + childText);
+            descriptionTitle.setText("Description: ");
+            descriptionContent.setText("Detailed description: " + (childText != null ? childText : defaultText));
 
             descriptionTitle.setOnClickListener(v -> {
                 if (descriptionContent.getVisibility() == View.GONE) {
@@ -129,7 +132,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
         ImageView groupImage = convertView.findViewById(R.id.group_image);
 
-        itemName.setText(headerTitle);
+        // Set default values for group items
+        String defaultGroupName = "Unnamed Group";
+        String defaultLotNumber = "Lot: 0";
+
+        itemName.setText(headerTitle != null ? headerTitle : defaultGroupName);
         lotNumber.setText("Lot: " + (groupPosition + 1)); // Set lot number
 
         // Set the image resource for the group
@@ -152,3 +159,5 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 }
+
+// TODO: fix issue when group or subgroup text is not entered - app crahses, instead want (defaultText)
