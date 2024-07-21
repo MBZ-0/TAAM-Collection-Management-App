@@ -65,39 +65,4 @@
         android:textSize="12sp"
         android:visibility="gone" />
 
-    <!-- LinearLayout for Image/Video with arrow indicator -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/image_video_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Image/Video"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/oswald_bold"
-            android:layout_weight="1"
-            android:paddingTop="8dp" />
-
-        <ImageView
-            android:id="@+id/image_video_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_down"
-            android:padding="8dp" />
-    </LinearLayout>
-
-    <!-- ImageView for the image or video content -->
-    <ImageView
-        android:id="@+id/image_video_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/jjj"
-        android:contentDescription="@string/image_video"
-        android:paddingTop="4dp"
-        android:visibility="gone" />
 </LinearLayout>

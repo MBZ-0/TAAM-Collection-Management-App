@@ -20,6 +20,8 @@ public class HomeFragment extends Fragment {
     CustomExpandableListAdapter expandableListAdapter;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+    List<Integer> listDataLotNumbers;
+    List<Integer> listDataImages; // List for image resources
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,7 +30,7 @@ public class HomeFragment extends Fragment {
 
         expandableListView = view.findViewById(R.id.expandableListView);
         prepareListData();
-        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages);
         expandableListView.setAdapter(expandableListAdapter);
 
         Button buttonAdmin = view.findViewById(R.id.admin); // Add this line
@@ -52,23 +54,32 @@ public class HomeFragment extends Fragment {
     private void prepareListData() {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
+        listDataLotNumbers = new ArrayList<>();
+        listDataImages = new ArrayList<>(); // Initialize the list of image resources
 
         // Adding group data
         listDataHeader.add("Group 1");
         listDataHeader.add("Group 2");
+
+        // Adding lot numbers
+        listDataLotNumbers.add(101);
+        listDataLotNumbers.add(102);
+
+        // Adding image resources
+        listDataImages.add(R.drawable.jjj); // Replace with your actual drawable resource
+        // listDataImages.add(R.drawable.jjj);
+        // No image is inserted here, so defaults to default_image.jpg
 
         // Adding child data
         List<String> group1 = new ArrayList<>();
         group1.add("Category");
         group1.add("Period");
         group1.add("Description");
-        group1.add("Image/Video");
 
         List<String> group2 = new ArrayList<>();
         group2.add("Category");
         group2.add("Period");
         group2.add("Description");
-        group2.add("Image/Video");
 
         listDataChild.put(listDataHeader.get(0), group1);
         listDataChild.put(listDataHeader.get(1), group2);
