@@ -27,6 +27,7 @@ public class LoginFragment extends Fragment {
         TextInputEditText userText = view.findViewById(R.id.username);
         TextInputEditText passText = view.findViewById(R.id.password);
         AdminBase db = new AdminBase("adminLogins");
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,8 +42,12 @@ public class LoginFragment extends Fragment {
                     emptyPassUser.setVisibility(View.INVISIBLE);
                 }
 
-                // if statement here for authentication
-               db.authenticateLogin(username,password);
+                db.authenticateLogin(username,password);
+
+
+
+
+
             }
         });
 
