@@ -137,7 +137,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         String defaultLotNumber = "Lot: 0";
 
         itemName.setText(headerTitle != null ? headerTitle : defaultGroupName);
-        lotNumber.setText("Lot: " + (groupPosition + 1)); // Set lot number
+        lotNumber.setText("Lot: " + (listDataLotNumbers.get(groupPosition) != null ? listDataLotNumbers.get(groupPosition) : 0));
 
         // Set the image resource for the group
         if (groupPosition < listDataImages.size()) {

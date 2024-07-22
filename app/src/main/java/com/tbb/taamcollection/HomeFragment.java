@@ -1,27 +1,36 @@
 package com.tbb.taamcollection;
 
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-
+import android.util.Log;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
+
     ExpandableListView expandableListView;
     CustomExpandableListAdapter expandableListAdapter;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     List<Integer> listDataLotNumbers;
-    List<Integer> listDataImages; // List for image resources
+    List<Integer> listDataImages;
+    private DatabaseReference itemsRef;
+    private ItemDatabase itemDatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,15 +38,28 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
         expandableListView = view.findViewById(R.id.expandableListView);
-        prepareListData();
+
+        // Initialize Firebase reference
+        itemDatabase = new ItemDatabase("items");
+
+        // Initialize lists
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
+        listDataLotNumbers = new ArrayList<>();
+        listDataImages = new ArrayList<>();
+
+        // Initialize adapter and set it to the ExpandableListView
         expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages);
         expandableListView.setAdapter(expandableListAdapter);
 
-        Button buttonAdmin = view.findViewById(R.id.admin); // Add this line
-        buttonAdmin.setOnClickListener(new View.OnClickListener() { // Add this block
+        // Fetch data from Firebase
+        prepareListDataFromDatabase();
+
+        Button buttonAdmin = view.findViewById(R.id.admin);
+        buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new LoginFragment()); // Replace with your AdminFragment
+                loadFragment(new LoginFragment());
             }
         });
 
@@ -51,37 +73,40 @@ public class HomeFragment extends Fragment {
         transaction.commit();
     }
 
-    private void prepareListData() {
-        listDataHeader = new ArrayList<>();
-        listDataChild = new HashMap<>();
-        listDataLotNumbers = new ArrayList<>();
-        listDataImages = new ArrayList<>(); // Initialize the list of image resources
+    private void prepareListDataFromDatabase() {
+        itemsRef = itemDatabase.database;
+        itemsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listDataHeader.clear();
+                listDataChild.clear();
+                listDataLotNumbers.clear();
+                listDataImages.clear();
+                int i=0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Item item = snapshot.getValue(Item.class);
+                    if (item != null) {
+                        listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
+                        listDataLotNumbers.add(item.getLotNumber() != 0 ? item.getLotNumber() : 0);
+                        List<String> childList = new ArrayList<>();
+                        childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
+                        childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
+                        childList.add(item.getDescription() != null ? item.getDescription() : "Unknown Description");
+                        listDataChild.put(listDataHeader.get(i), childList);
+                        listDataImages.add(R.drawable.default_image); // Replace with actual image handling logic
+                        i++;
+                    } else {
+                        Log.d(TAG, "Fetched item is null");
+                    }
+                }
 
-        // Adding group data
-        listDataHeader.add("Group 1");
-        listDataHeader.add("Group 2");
+                expandableListAdapter.notifyDataSetChanged();
+            }
 
-        // Adding lot numbers
-        listDataLotNumbers.add(101);
-        listDataLotNumbers.add(102);
-
-        // Adding image resources
-        listDataImages.add(R.drawable.jjj); // Replace with your actual drawable resource
-        // listDataImages.add(R.drawable.jjj);
-        // No image is inserted here, so defaults to default_image.jpg
-
-        // Adding child data
-        List<String> group1 = new ArrayList<>();
-        group1.add("Category");
-        group1.add("Period");
-        group1.add("Description");
-
-        List<String> group2 = new ArrayList<>();
-        group2.add("Category");
-        group2.add("Period");
-        group2.add("Description");
-
-        listDataChild.put(listDataHeader.get(0), group1);
-        listDataChild.put(listDataHeader.get(1), group2);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "Database error: " + databaseError.getMessage());
+            }
+        });
     }
 }
