@@ -1,4 +1,12 @@
 <resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/gold</item>
+    </style>
+
     <!-- Header style for general use -->
     <style name="HeaderStyle">
         <item name="android:textSize">24sp</item>
@@ -25,6 +33,13 @@
         <item name="android:paddingRight">16dp</item> <!-- Right padding -->
         <item name="android:paddingTop">8dp</item> <!-- Top padding -->
         <item name="android:paddingBottom">8dp</item> <!-- Bottom padding -->
+    </style>
+
+    <style name="ListStyle">
+        <item name="android:divider">@color/gold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/oswald_bold</item>
+        <item name="android:dividerHeight">1dp</item>
     </style>
 
 </resources>
