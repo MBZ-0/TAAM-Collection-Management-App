@@ -15,7 +15,7 @@ import java.util.Objects;
 public class AdminBase extends Database{
 
     static Database db;
-
+    static boolean loggedIn = false;
     AdminBase(String name){
         super(name);
         db = this;

@@ -16,7 +16,11 @@
 
     <!-- New -->
     <string name="admin">ADMIN</string>
+    <string name="adminBack">BACK</string>
     <string name="view">VIEW</string>
+    <string name="add">ADD</string>
+    <string name="remove">REMOVE</string>
+    <string name="report">REPORT</string>
     <string name="search">SEARCH</string>
 
     <string name="col1"> </string>
