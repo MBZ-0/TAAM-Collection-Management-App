@@ -1,4 +1,5 @@
 package com.tbb.taamcollection;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.sql.SQLOutput;
-
 public class LoginFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,41 +26,45 @@ public class LoginFragment extends Fragment {
         TextView emptyPassUser = view.findViewById(R.id.emptyPassUser);
         TextInputEditText userText = view.findViewById(R.id.username);
         TextInputEditText passText = view.findViewById(R.id.password);
-        AdminBase db = new AdminBase("adminLogins");
+
+        AdminBase db = new AdminBase("adminLogins") {
+            @Override
+            void success() {
+                AdminBase.loggedIn = true;
+                invalidLogin.setVisibility(View.INVISIBLE);
+                loadFragment(new HomeFragment());
+            }
+
+            @Override
+            void failure() {
+                invalidLogin.setVisibility(View.VISIBLE);
+            }
+        };
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String username = userText.getText().toString();
                 String password = passText.getText().toString();
 
-                if(username.isEmpty() || password.isEmpty()){
+                if (username.isEmpty() || password.isEmpty()) {
                     emptyPassUser.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     emptyPassUser.setVisibility(View.INVISIBLE);
+                    db.authenticateLogin(username, password);
                 }
-
-                db.authenticateLogin(username,password);
-
-
-
-
-
             }
         });
 
         buttonReturn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { loadFragment(new HomeFragment());}
+            public void onClick(View v) {
+                loadFragment(new HomeFragment());
+            }
         });
-
-
 
         return view;
     }
-
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
