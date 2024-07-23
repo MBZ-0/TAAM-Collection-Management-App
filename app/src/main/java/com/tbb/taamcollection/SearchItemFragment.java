@@ -47,6 +47,9 @@ public class SearchItemFragment extends Fragment {
                 if(!lot.isEmpty() || !name.isEmpty() || !category.isEmpty() || !period.isEmpty()){
                     LinkedList<Item> itemsList = db.search(name,lot,category,period);
                 }
+
+
+
             }
         });
 

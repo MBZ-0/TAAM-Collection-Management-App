@@ -75,7 +75,7 @@ public class ItemDatabase extends Database{
 //                r.add(value);
 //            }
             boolean match = true;
-            if (!(lot.isEmpty()) && Integer.parseInt(lot) != value.getLotNumber()){
+            if (!(lot.isEmpty()) && !(lot.equals(String.valueOf(value.getLotNumber())))){
                 match = false;
             }
             if (!name.isEmpty() && !(name.equals(value.getName()))){
