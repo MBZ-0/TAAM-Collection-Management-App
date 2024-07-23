@@ -20,10 +20,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class SearchItemFragment extends Fragment {
+    ItemDatabase db;
     @Nullable
     @Override
 
@@ -34,7 +36,7 @@ public class SearchItemFragment extends Fragment {
         TextInputEditText nameItem = view.findViewById(R.id.nameItem);
         TextInputEditText categoryItem = view.findViewById(R.id.categoryItem);
         TextInputEditText periodItem = view.findViewById(R.id.periodItem);
-
+        db = new ItemDatabase("items");
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -42,41 +44,10 @@ public class SearchItemFragment extends Fragment {
                 String name = nameItem.getText().toString();
                 String category = categoryItem.getText().toString();
                 String period = periodItem.getText().toString();
-                FirebaseDatabase db = FirebaseDatabase.getInstance("https://taam-collection-management-app-default-rtdb.firebaseio.com");
-                DatabaseReference items = db.getReference("items");
+                if(!lot.isEmpty() || !name.isEmpty() || !category.isEmpty() || !period.isEmpty()){
+                    LinkedList<Item> itemsList = db.search(name,lot,category,period);
+                }
 
-                // This code collects all relevant items and stores it in a list
-                items.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        List<Item> filteredItems = new ArrayList<>();
-
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            Item item = snapshot.getValue(Item.class);
-                            boolean match = true;
-                            if (Integer.parseInt(lot) != item.getLotNumber()){
-                                match = false;
-                            }
-                            if (!name.isEmpty() && !(name.equals(item.getName()))){
-                                match = false;
-
-                            }
-                            if (!category.isEmpty() && !(category.equals(item.getCategory().getValue()))){
-                                match = false;
-                            }
-                            if (!period.isEmpty() && !(period.equals(item.getPeriod().getValue()))){
-                                match = false;
-                            }
-                            if(match){
-                                filteredItems.add(item);
-                            }
-                        }
-
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
 
 
 
