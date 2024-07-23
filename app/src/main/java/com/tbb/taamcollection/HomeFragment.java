@@ -19,10 +19,8 @@ public class HomeFragment extends Fragment {
 
 
     //REPLACE WITH SOMETHING ELSE
-    boolean loggedIn = false;
+    
     public void onLogin(Button back, Button add, Button remove, Button report, Button admin){
-        System.out.println("LOGIN");
-        loggedIn = true;
         back.setVisibility(View.VISIBLE);
         add.setVisibility(View.VISIBLE);
         remove.setVisibility(View.VISIBLE);
@@ -31,7 +29,7 @@ public class HomeFragment extends Fragment {
     }
     public void onLogout(Button back, Button add, Button remove, Button report, Button admin){
         System.out.println("LOGOUT");
-        loggedIn = false;
+        AdminBase.loggedIn = false;
         back.setVisibility(View.INVISIBLE);
         add.setVisibility(View.INVISIBLE);
         remove.setVisibility(View.INVISIBLE);
@@ -57,8 +55,8 @@ public class HomeFragment extends Fragment {
         Button buttonView = view.findViewById(R.id.view);
         Button buttonSearch = view.findViewById(R.id.search);
 
-        if(loggedIn){
-            onLogout(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
+        if(AdminBase.loggedIn){
+            onLogin(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
         }else {
             onLogout(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
         }
@@ -95,14 +93,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: COMMENT OUT following line
-                onLogin(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
+                //onLogin(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
                 loadFragment(new LoginFragment()); // Replace with your AdminFragment
             }
         });
         buttonAdd.setOnClickListener(new View.OnClickListener() { // Add this block
             @Override
             public void onClick(View v) {
-                if(loggedIn) {
+                if(AdminBase.loggedIn) {
                     //TODO: Replace with ADD fragment
                     //loadFragment(new LoginFragment());
                 }
@@ -111,7 +109,7 @@ public class HomeFragment extends Fragment {
         buttonRemove.setOnClickListener(new View.OnClickListener() { // Add this block
             @Override
             public void onClick(View v) {
-                if(loggedIn) {
+                if(AdminBase.loggedIn) {
                     //TODO: Replace with REMOVE fragment
                     //loadFragment(new LoginFragment());
                 }
@@ -120,7 +118,7 @@ public class HomeFragment extends Fragment {
         buttonReport.setOnClickListener(new View.OnClickListener() { // Add this block
             @Override
             public void onClick(View v) {
-                if(loggedIn) {
+                if(AdminBase.loggedIn) {
                     //TODO: Replace with REPORT fragment
                     //loadFragment(new LoginFragment());
                 }
@@ -129,7 +127,7 @@ public class HomeFragment extends Fragment {
         buttonBack.setOnClickListener(new View.OnClickListener() { // Add this block
             @Override
             public void onClick(View v) {
-                if(loggedIn) {
+                if(AdminBase.loggedIn) {
                     onLogout(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
                 }
             }
