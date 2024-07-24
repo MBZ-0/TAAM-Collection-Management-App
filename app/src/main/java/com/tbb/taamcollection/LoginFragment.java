@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 // if statement here for authentication
-               db.authenticateLogin(username,password);
+                db.authenticateLogin(username,password);
             }
         });
 

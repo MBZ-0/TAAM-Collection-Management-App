@@ -16,8 +16,6 @@ public class Item {
 
     Image img;
 
-    Item() {}
-
     Item(ItemDatabase db){
         id = db.nextId();
     }
