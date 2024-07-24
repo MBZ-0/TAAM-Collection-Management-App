@@ -17,6 +17,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/buttonReturn"
+        style="@style/ButtonStyle"
+        android:layout_width="85dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:text="return"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/buttonLogin"
         style="@style/ButtonStyle"
         android:layout_width="94dp"
@@ -35,6 +46,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="312dp"
         android:hint="Username"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -47,6 +59,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="380dp"
         android:hint="Password"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -92,7 +105,9 @@
         android:layout_width="160dp"
         android:layout_height="23dp"
         android:layout_marginTop="488dp"
-        android:text="TextView"
+        android:fontFamily="@font/oswald_bold"
+        android:text="Please enter a password/username"
+        android:textColor="#FF0000"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.235"
