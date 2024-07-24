@@ -14,12 +14,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-public class LoginFragment extends Fragment {
+public class AdminLoginFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_home_fragment, container, false);
+        View view = inflater.inflate(R.layout.admin_login_fragment, container, false);
         Button buttonLogin = view.findViewById(R.id.buttonLogin);
         Button buttonReturn = view.findViewById(R.id.buttonReturn);
         TextView invalidLogin = view.findViewById(R.id.invalidLogin);
@@ -27,10 +27,10 @@ public class LoginFragment extends Fragment {
         TextInputEditText userText = view.findViewById(R.id.username);
         TextInputEditText passText = view.findViewById(R.id.password);
 
-        AdminBase db = new AdminBase("adminLogins") {
+        AdminDatabase db = new AdminDatabase("adminLogins") {
             @Override
             void success() {
-                AdminBase.loggedIn = true;
+                AdminDatabase.loggedIn = true;
                 invalidLogin.setVisibility(View.INVISIBLE);
                 loadFragment(new HomeFragment());
             }

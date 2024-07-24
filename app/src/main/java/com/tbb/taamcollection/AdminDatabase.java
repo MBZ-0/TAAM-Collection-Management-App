@@ -1,22 +1,16 @@
 package com.tbb.taamcollection;
 
-import com.google.firebase.database.DatabaseReference;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-
 /***
  * class AdminBase
  *  Fields
  * HashMap allLogins: A hashmap of every login in the database since last update
  * Item query: Gets an item
  */
-public class AdminBase extends Database{
+public class AdminDatabase extends Database{
 
     static Database db;
     static boolean loggedIn = false;
-    AdminBase(String name){
+    AdminDatabase(String name){
         super(name);
         db = this;
     }

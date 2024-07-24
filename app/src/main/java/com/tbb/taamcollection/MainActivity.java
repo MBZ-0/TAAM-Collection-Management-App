@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         // Change status bar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = db.getReference("items"); // Adjust the reference as per your database structure
 
         if (savedInstanceState == null) {
-            loadFragment(new SearchItemFragment());
+            loadFragment(new HomeFragment());
         }
     }
 
