@@ -68,12 +68,30 @@ public class ItemDatabase extends Database{
         }
     }
 
-    LinkedList<Item> search(String s){
+    LinkedList<Item> search(String name, String lot, String category, String period){
         LinkedList<Item> r = new LinkedList<>();
         allItems.forEach((key, value) -> {
-            if(value.getName().contains(s) || Integer.toString(value.getLotNumber()).contains(s)){
+//            if(value.getName().contains(s) || Integer.toString(value.getLotNumber()).contains(s)){
+//                r.add(value);
+//            }
+            boolean match = true;
+            if (!(lot.isEmpty()) && !(lot.equals(String.valueOf(value.getLotNumber())))){
+                match = false;
+            }
+            if (!name.isEmpty() && !(name.equals(value.getName()))){
+                match = false;
+
+            }
+            if (!category.isEmpty() && !(category.equals(value.getCategory().getValue()))){
+                match = false;
+            }
+            if (!period.isEmpty() && !(period.equals(value.getPeriod().getValue()))){
+                match = false;
+            }
+            if(match){
                 r.add(value);
             }
+
         });
         return r;
     }
