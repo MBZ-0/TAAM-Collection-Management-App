@@ -6,61 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- Table Layout Include -->
     <include
-        android:id="@+id/table_layout"
-        layout="@layout/table_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonRecyclerView"
-        />
-
-    <!-- RecyclerView Button -->
-    <Button
-        android:id="@+id/buttonRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/recyclerview"
-        app:layout_constraintTop_toBottomOf="@+id/table_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScroller"/>
-
-    <!-- Scroller Button -->
-    <Button
-        android:id="@+id/buttonScroller"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/scroller"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSpinner"/>
-
-    <!-- Spinner Button -->
-    <Button
-        android:id="@+id/buttonSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/buttonScroller"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonManageItems" />
-
-    <!-- Manage Items Button -->
-    <Button
-        android:id="@+id/buttonManageItems"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/manage_items"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSpinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/view"/>
+        android:id="@+id/expandableListView"
+        layout="@layout/fragment_custom_expandable_list" />
 
     <!-- Admin Button (Top Right Corner) -->
     <Button
