@@ -8,21 +8,21 @@
 
     <EditText
         android:id="@+id/editTextDescription"
-        android:layout_width="411dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Description: "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPeriod" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAddPeriod" />
 
     <EditText
         android:id="@+id/editTextLotNum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Lot Number:"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,37 +34,13 @@
         android:id="@+id/editTextName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Name: "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLotNum" />
-
-    <EditText
-        android:id="@+id/editTextCategory"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/oswald_bold"
-        android:hint="Category: "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
-
-    <EditText
-        android:id="@+id/editTextPeriod"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/oswald_bold"
-        android:hint="Period: "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCategory" />
 
     <Button
         android:id="@+id/buttonAdd"
@@ -77,11 +53,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewInvalidLotNumber"
-        app:layout_constraintVertical_bias="0.291" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewError"
+        app:layout_constraintVertical_bias="0.323" />
 
     <TextView
-        android:id="@+id/textViewUnfilledParameter"
+        android:id="@+id/textViewError"
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
@@ -89,18 +65,23 @@
         android:text="Please fill in every field"
         android:textColor="#E20303"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
-        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/textViewInvalidLotNumber"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
+    <Spinner
+        android:id="@+id/spinnerAddCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/oswald_bold"
-        android:text="Lot number should be a number"
-        android:textColor="#E20303"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUnfilledParameter"
-        tools:layout_editor_absoluteX="16dp"
-        tools:visibility="invisible" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextName"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Spinner
+        android:id="@+id/spinnerAddPeriod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAddCategory"
+        tools:layout_editor_absoluteX="0dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

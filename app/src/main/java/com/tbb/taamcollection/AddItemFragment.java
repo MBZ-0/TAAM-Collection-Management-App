@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,13 +17,17 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.SQLOutput;
+
 public class AddItemFragment extends Fragment {
-    private EditText editTextLotNum, editTextName, editTextCatogory, editTextPeriod, editTextDescription;
-    private TextView emptyField, badLotNum;
+    private EditText editTextLotNum, editTextName, editTextDescription;
+    private Spinner spinnerCategory, spinnerPeriod;
+    private TextView errorField;
     private Button buttonAdd;
 
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
+    private ItemDatabase itemdb;
 
     @Nullable
     @Override
@@ -32,21 +36,31 @@ public class AddItemFragment extends Fragment {
 
         editTextLotNum = view.findViewById(R.id.editTextLotNum);
         editTextName = view.findViewById(R.id.editTextName);
-        editTextCatogory = view.findViewById(R.id.editTextCategory);
-        editTextPeriod = view.findViewById(R.id.editTextPeriod);
+        spinnerCategory = view.findViewById(R.id.spinnerAddCategory);
+        spinnerPeriod = view.findViewById(R.id.spinnerAddPeriod);
         editTextDescription = view.findViewById(R.id.editTextDescription);
         buttonAdd = view.findViewById(R.id.buttonAdd);
-        emptyField = view.findViewById(R.id.textViewUnfilledParameter);
-        badLotNum = view.findViewById(R.id.textViewInvalidLotNumber);
+        errorField = view.findViewById(R.id.textViewError);
+
+        ArrayAdapter<CharSequence> categoryadapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.categories_array, R.layout.better_spinner);
+        categoryadapter.setDropDownViewResource(R.layout.better_spinner);
+        spinnerCategory.setAdapter(categoryadapter);
+
+        ArrayAdapter<CharSequence> periodadapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.periods_array, R.layout.better_spinner);
+        periodadapter.setDropDownViewResource(R.layout.better_spinner);
+        spinnerPeriod.setAdapter(periodadapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        itemdb = new ItemDatabase("items");
 
-        emptyField.setVisibility(View.INVISIBLE);
-        badLotNum.setVisibility(View.INVISIBLE);
+        errorField.setText("");
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println(itemdb);
                 addItem();
             }
         });
@@ -67,37 +81,39 @@ public class AddItemFragment extends Fragment {
     }
 
     private void addItem() {
+        System.out.println(itemdb);
         String lotNumStr = editTextLotNum.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
-        String category = editTextCatogory.getText().toString().trim();
-        String period = editTextPeriod.getText().toString().trim();
+        String category = spinnerCategory.getSelectedItem().toString().trim();
+        String period = spinnerPeriod.getSelectedItem().toString().trim();
         String description = editTextDescription.getText().toString().trim();
 
-        emptyField.setVisibility(View.INVISIBLE);
-        badLotNum.setVisibility(View.INVISIBLE);
+        errorField.setText("");
 
-        if (lotNumStr.isEmpty() || name.isEmpty() || category.isEmpty() || period.isEmpty() || description.isEmpty()) {
-            emptyField.setVisibility(View.VISIBLE);
+        if (lotNumStr.isEmpty() || name.isEmpty() || description.isEmpty()) {
+            errorField.setText("Please fill in all Fields");
             return;
         }
 
         if (!isNumber(lotNumStr)) {
-            badLotNum.setVisibility(View.VISIBLE);
+            errorField.setText("Lot Number should be a Number");
             return;
         }
 
         int lotNum = Integer.parseInt(lotNumStr);
 
-        itemsRef = db.getReference("categories/" + category);
-        String id = itemsRef.push().getKey();
-        //Item item = new Item(id, title, author, genre, description);
+        Category propercategory = Category.fromLabel(category);
+        Period properperiod = Period.fromLabel(period);
 
-//        itemsRef.child(id).setValue(item).addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                Toast.makeText(getContext(), "Item added", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(getContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        Item item = new Item(itemdb);
+        item.setLotNumber(lotNum);
+        item.setName(name);
+        item.setDescription(description);
+        item.setCategory(propercategory);
+        item.setPeriod(properperiod);
+        item.setImg(null);
+
+        itemdb.add(item);
+        itemdb.updateDatabase();
     }
 }
