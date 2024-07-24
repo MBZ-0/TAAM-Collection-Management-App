@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/expandableListView"
-        layout="@layout/fragment_custom_expandable_list" />
+        layout="@layout/custom_expandable_list_fragment" />
 
     <!-- Admin Button (Top Right Corner) -->
     <Button
