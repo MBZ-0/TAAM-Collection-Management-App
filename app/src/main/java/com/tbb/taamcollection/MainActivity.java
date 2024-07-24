@@ -1,6 +1,9 @@
 package com.tbb.taamcollection;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -18,11 +21,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Change status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.black));
+        }
+
         db = FirebaseDatabase.getInstance("https://taam-collection-management-app-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = db.getReference("items"); // Adjust the reference as per your database structure
 
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
+            loadFragment(new SearchItemFragment());
         }
     }
 
