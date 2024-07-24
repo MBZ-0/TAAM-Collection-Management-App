@@ -26,7 +26,17 @@ public class LoginFragment extends Fragment {
         TextView emptyPassUser = view.findViewById(R.id.emptyPassUser);
         TextInputEditText userText = view.findViewById(R.id.username);
         TextInputEditText passText = view.findViewById(R.id.password);
-        AdminBase db = new AdminBase("adminLogins");
+        AdminBase db = new AdminBase("adminLogins"){
+            @Override
+            void success(){
+                AdminBase.loggedIn = true;
+                invalidLogin.setVisibility(View.INVISIBLE);
+                loadFragment(new HomeFragment());
+            }
+            void failure(){
+                invalidLogin.setVisibility(View.VISIBLE);
+            }
+        };
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
