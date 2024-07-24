@@ -17,8 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.sql.SQLOutput;
-
 public class AddItemFragment extends Fragment {
     private EditText editTextLotNum, editTextName, editTextDescription;
     private Spinner spinnerCategory, spinnerPeriod;
@@ -32,7 +30,7 @@ public class AddItemFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_item, container, false);
+        View view = inflater.inflate(R.layout.add_item_fragment, container, false);
 
         editTextLotNum = view.findViewById(R.id.editTextLotNum);
         editTextName = view.findViewById(R.id.editTextName);
@@ -43,13 +41,13 @@ public class AddItemFragment extends Fragment {
         errorField = view.findViewById(R.id.textViewError);
 
         ArrayAdapter<CharSequence> categoryadapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.categories_array, R.layout.better_spinner);
-        categoryadapter.setDropDownViewResource(R.layout.better_spinner);
+                R.array.categories_array, R.layout.spinner);
+        categoryadapter.setDropDownViewResource(R.layout.spinner);
         spinnerCategory.setAdapter(categoryadapter);
 
         ArrayAdapter<CharSequence> periodadapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.periods_array, R.layout.better_spinner);
-        periodadapter.setDropDownViewResource(R.layout.better_spinner);
+                R.array.periods_array, R.layout.spinner);
+        periodadapter.setDropDownViewResource(R.layout.spinner);
         spinnerPeriod.setAdapter(periodadapter);
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");

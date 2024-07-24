@@ -15,6 +15,7 @@ public class Item {
     private Category category = Category.Bronze;
 
     Image img;
+    public Item() {}
 
     Item(ItemDatabase db){
         id = db.nextId();

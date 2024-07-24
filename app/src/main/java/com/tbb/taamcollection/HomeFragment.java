@@ -1,7 +1,7 @@
 package com.tbb.taamcollection;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,7 +26,7 @@ public class HomeFragment extends Fragment {
 
     public void onLogout(Button back, Button add, Button remove, Button report, Button admin){
         System.out.println("LOGOUT");
-        AdminBase.loggedIn = false;
+        AdminDatabase.loggedIn = false;
         back.setVisibility(View.INVISIBLE);
         add.setVisibility(View.INVISIBLE);
         remove.setVisibility(View.INVISIBLE);
@@ -38,12 +38,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
-
-        Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
-        Button buttonScroller = view.findViewById(R.id.buttonScroller);
-        Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
-        Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
         Button buttonAdmin = view.findViewById(R.id.admin);
         Button buttonBack = view.findViewById(R.id.adminBack);
         Button buttonAdd = view.findViewById(R.id.add);
@@ -52,53 +47,24 @@ public class HomeFragment extends Fragment {
         Button buttonView = view.findViewById(R.id.view);
         Button buttonSearch = view.findViewById(R.id.search);
 
-        if(AdminBase.loggedIn){
+        if(AdminDatabase.loggedIn){
             onLogin(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
         } else {
             onLogout(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
         }
 
-        buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new RecyclerViewFragment());
-            }
-        });
-
-        buttonScroller.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new ScrollerFragment());
-            }
-        });
-
-        buttonSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new SpinnerFragment());
-            }
-        });
-
-        buttonManageItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new ManageItemsFragment());
-            }
-        });
-
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new LoginFragment()); // Replace with your AdminFragment
+                loadFragment(new AdminLoginFragment());
             }
         });
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminBase.loggedIn) {
-                    // Replace with ADD fragment
-                    // loadFragment(new AddFragment());
+                if(AdminDatabase.loggedIn) {
+                     loadFragment(new AddItemFragment());
                 }
             }
         });
@@ -106,9 +72,8 @@ public class HomeFragment extends Fragment {
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminBase.loggedIn) {
-                    // Replace with REMOVE fragment
-                    // loadFragment(new RemoveFragment());
+                if(AdminDatabase.loggedIn) {
+                    loadFragment(new RemoveItemFragment());
                 }
             }
         });
@@ -116,9 +81,8 @@ public class HomeFragment extends Fragment {
         buttonReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminBase.loggedIn) {
-                    // Replace with REPORT fragment
-                    // loadFragment(new ReportFragment());
+                if(AdminDatabase.loggedIn) {
+                    loadFragment(new ReportItemFragment());
                 }
             }
         });
@@ -126,7 +90,7 @@ public class HomeFragment extends Fragment {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminBase.loggedIn) {
+                if(AdminDatabase.loggedIn) {
                     onLogout(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
                 }
             }
@@ -135,16 +99,14 @@ public class HomeFragment extends Fragment {
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace with SEARCH fragment
-                // loadFragment(new SearchFragment());
+                loadFragment(new SearchItemFragment());
             }
         });
 
         buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace with VIEW fragment
-                // loadFragment(new ViewFragment());
+                loadFragment(new ViewItemFragment());
             }
         });
 

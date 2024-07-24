@@ -48,7 +48,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.child_item, null);
+            convertView = inflater.inflate(R.layout.expandable_list_child_item, null);
         }
 
         TextView category = convertView.findViewById(R.id.category);
@@ -124,7 +124,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.group_item, null);
+            convertView = inflater.inflate(R.layout.expandable_list_parent_item, null);
         }
 
         TextView itemName = convertView.findViewById(R.id.item_name);
