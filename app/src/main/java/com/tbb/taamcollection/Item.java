@@ -13,8 +13,8 @@ public class Item {
     private String name = "", description = "";
     private Period period = Period.Ji;
     private Category category = Category.Bronze;
+    private String url = "";
 
-    Image img;
     public Item() {}
 
     Item(ItemDatabase db){
@@ -67,10 +67,6 @@ public class Item {
         this.category = category;
     }
 
-    public void setImg(Image img) {
-        this.img = img;
-    }
-
     public int getId() {
         return id;
     }
@@ -93,9 +89,5 @@ public class Item {
 
     public Category getCategory() {
         return category;
-    }
-
-    public Image getImg() {
-        return img;
     }
 }
