@@ -7,5 +7,5 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class StorageHandler {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private StorageReference storageRef = storage.getReference();}
+    private StorageReference storageRef = storage.getReference();
 }
