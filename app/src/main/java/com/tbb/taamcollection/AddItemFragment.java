@@ -109,7 +109,7 @@ public class AddItemFragment extends Fragment {
         item.setDescription(description);
         item.setCategory(propercategory);
         item.setPeriod(properperiod);
-        item.setUrl(null);
+        item.setUrl("Placeholder String");
 
         itemdb.add(item);
         itemdb.updateDatabase();

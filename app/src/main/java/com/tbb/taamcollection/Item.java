@@ -37,6 +37,7 @@ public class Item {
                 n.description = (String)k.get("description");
                 n.period = Period.fromLabel((String)k.get("period"));
                 n.category = Category.fromLabel((String)k.get("category"));
+                n.url = (String)k.get("url");
                 r.put(i, n);
             }
         }
@@ -94,4 +95,6 @@ public class Item {
     public Category getCategory() {
         return category;
     }
+
+    public String getUrl() { return url; }
 }
