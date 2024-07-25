@@ -67,6 +67,10 @@ public class Item {
         this.category = category;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public int getId() {
         return id;
     }
