@@ -12,10 +12,17 @@ public class StorageHandler {
         storageRef = storage.getReference();
     }
 
-    public void getFile() {
+    //Store a file into the storage
+    public void storeFile() {
 
     }
 
+    //Query a given path and return it
+    public void queryFile(String path) {
+
+    }
+
+    //Delete a given path
     public void removeFile(String path) {
 
     }
