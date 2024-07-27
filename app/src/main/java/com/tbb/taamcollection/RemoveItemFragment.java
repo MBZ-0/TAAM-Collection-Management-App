@@ -21,7 +21,7 @@ public class RemoveItemFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         // The layout file should be created in the res/layout directory
-        View view = inflater.inflate(R.layout.sample_fragment_view, container, false);
+        View view = inflater.inflate(R.layout.delete_item_fragment, container, false);
 
         // TODO: Initialize UI elements here and set up any necessary listeners
 
