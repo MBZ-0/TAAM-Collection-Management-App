@@ -27,6 +27,8 @@ public class RemoveItemFragment extends Fragment {
         buttonConfirm = view.findViewById(R.id.buttonConfirm);
         buttonCancel = view.findViewById(R.id.buttonCancel);
 
+        textViewDeleteText.setText("Are you sure you want to delete " + "" + "? This action cannot be undone.");
+
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
