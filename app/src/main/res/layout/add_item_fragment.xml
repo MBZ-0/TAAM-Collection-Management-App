@@ -64,7 +64,7 @@
         android:fontFamily="@font/oswald_bold"
         android:text="Please fill in every field"
         android:textColor="#E20303"
-        app:layout_constraintTop_toBottomOf="@+id/editTextURL"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUrl"
         tools:layout_editor_absoluteX="0dp"
         tools:visibility="invisible" />
 
@@ -85,7 +85,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/editTextURL"
+        android:id="@+id/editTextUrl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
