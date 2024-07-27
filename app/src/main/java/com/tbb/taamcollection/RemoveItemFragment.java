@@ -7,24 +7,46 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class RemoveItemFragment extends Fragment {
-
-    // Default constructor
-    public RemoveItemFragment() {
-        // Required empty public constructor
-    }
+    private TextView textViewDeleteText;
+    private Button buttonConfirm, buttonCancel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        // The layout file should be created in the res/layout directory
         View view = inflater.inflate(R.layout.delete_item_fragment, container, false);
 
-        // TODO: Initialize UI elements here and set up any necessary listeners
+        textViewDeleteText = view.findViewById(R.id.textViewConfirmation);
+        buttonConfirm = view.findViewById(R.id.buttonConfirm);
+        buttonCancel = view.findViewById(R.id.buttonCancel);
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteItem();
+            }
+        });
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
 
         return view;
+    }
+
+    private void deleteItem() {
+        //ToDo - Implement
+    }
+
+    private void back() {
+        //ToDo - Implement
     }
 }
