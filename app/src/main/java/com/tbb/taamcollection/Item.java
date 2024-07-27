@@ -14,8 +14,6 @@ public class Item {
     private Period period = Period.Ji;
     private Category category = Category.Bronze;
     private String url = "";
-    //0 for image, 1 for video, -1 for neither
-    private int urlStatus = -1;
 
     public Item() {}
 
@@ -74,16 +72,6 @@ public class Item {
         this.url = url;
     }
 
-    public void setUrlStatus() {
-        if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".bmp") || url.endsWith(".svg")) {
-            urlStatus = 0;
-        } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
-            urlStatus = 1;
-        } else {
-            urlStatus = -1;
-        }
-    }
-
     public int getId() {
         return id;
     }
@@ -110,5 +98,12 @@ public class Item {
 
     public String getUrl() { return url; }
 
-    public int getUrlStatus() { return urlStatus; }
+    //0 for image, 1 for video, -1 for neither
+    public int getUrlStatus() { if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".bmp") || url.endsWith(".svg")) {
+        return 0;
+    } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
+        return 1;
+    } else {
+        return 1;
+    }}
 }
