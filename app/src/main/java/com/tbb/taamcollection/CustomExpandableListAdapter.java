@@ -23,10 +23,12 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private List<Integer> listDataLotNumbers;
     private List<Integer> listDataImages; // List for image resources
     private List<Boolean> checkboxStates; // List for checkbox states
+    private List<Integer> listIds;
 
     public CustomExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, List<String>> listChildData,
-                                       List<Integer> listDataLotNumbers, List<Integer> listDataImages) {
+                                       List<Integer> listDataLotNumbers, List<Integer> listDataImages,
+                                       List<Integer> listIds) {
         this.context = context;
         this.listDataHeader = listDataHeader != null ? listDataHeader : new ArrayList<>();
         this.listDataChild = listChildData != null ? listChildData : new HashMap<>();
@@ -153,13 +155,20 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         // Set the checkbox state based on the list
-        if (groupPosition < checkboxStates.size()) {
+        try {
             itemCheckbox.setOnCheckedChangeListener(null);
             itemCheckbox.setChecked(checkboxStates.get(groupPosition));
-            itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> checkboxStates.set(groupPosition, isChecked));
-        } else {
-            Log.e("CustomExpandableListAdapter", "groupPosition " + groupPosition + " is out of bounds for checkboxStates with size " + checkboxStates.size());
-            itemCheckbox.setChecked(false);
+            itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                checkboxStates.set(groupPosition, isChecked);
+            });
+        } catch (IndexOutOfBoundsException e) {
+            Log.e("CustomExpandableListAdapter", "IndexOutOfBoundsException in getGroupView: " + e.getMessage());
+            // Initialize checkboxStates correctly
+            checkboxStates = new ArrayList<>(Collections.nCopies(this.listDataHeader.size(), false));
+            itemCheckbox.setChecked(checkboxStates.get(groupPosition));
+            itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                checkboxStates.set(groupPosition, isChecked);
+            });
         }
 
         return convertView;

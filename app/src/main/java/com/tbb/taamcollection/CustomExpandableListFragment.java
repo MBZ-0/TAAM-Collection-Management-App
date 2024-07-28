@@ -26,6 +26,8 @@ public class CustomExpandableListFragment extends Fragment {
     HashMap<String, List<String>> listDataChild;
     List<Integer> listDataLotNumbers;
     List<Integer> listDataImages;
+    List<Integer> listIds;
+    List<Boolean> checkboxStates;
     private DatabaseReference itemsRef;
     private ItemDatabase itemDatabase;
 
@@ -44,9 +46,11 @@ public class CustomExpandableListFragment extends Fragment {
         listDataChild = new HashMap<>();
         listDataLotNumbers = new ArrayList<>();
         listDataImages = new ArrayList<>();
+        listIds = new ArrayList<>();
 
         // Initialize adapter and set it to the ExpandableListView
-        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages);
+        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader,
+                listDataChild, listDataLotNumbers, listDataImages, listIds);
         expandableListView.setAdapter(expandableListAdapter);
 
         // Fetch data from Firebase
@@ -64,12 +68,14 @@ public class CustomExpandableListFragment extends Fragment {
                 listDataChild.clear();
                 listDataLotNumbers.clear();
                 listDataImages.clear();
+                listIds.clear();
                 int i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Item item = snapshot.getValue(Item.class);
                     if (item != null) {
                         listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
                         listDataLotNumbers.add(item.getLotNumber() != 0 ? item.getLotNumber() : 0);
+                        listIds.add(item.getId() != 0 ? item.getId() : -1);
                         List<String> childList = new ArrayList<>();
                         childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
                         childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
@@ -81,7 +87,7 @@ public class CustomExpandableListFragment extends Fragment {
                         Log.d(TAG, "Fetched item is null");
                     }
                 }
-
+                checkboxStates = expandableListAdapter.getCheckboxStates();
                 expandableListAdapter.notifyDataSetChanged();
             }
 
@@ -90,5 +96,21 @@ public class CustomExpandableListFragment extends Fragment {
                 Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
         });
+    }
+
+    public CustomExpandableListAdapter getAdapter() {
+        return expandableListAdapter;
+    }
+
+    public DatabaseReference getDatabaseReference() {
+        return itemsRef;
+    }
+
+    public void removeItems() {
+        for (int i=0; i<checkboxStates.size(); i++) {
+            if (checkboxStates.get(i)) {
+                itemDatabase.remove(listIds.get(i));
+            }
+        }
     }
 }

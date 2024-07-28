@@ -13,9 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class RemoveItemFragment extends Fragment {
     private TextView textViewDeleteText;
     private Button buttonConfirm, buttonCancel;
+
+    List<Boolean> checkboxStates;
 
     @Nullable
     @Override
@@ -26,6 +30,8 @@ public class RemoveItemFragment extends Fragment {
         textViewDeleteText = view.findViewById(R.id.textViewConfirmation);
         buttonConfirm = view.findViewById(R.id.buttonConfirm);
         buttonCancel = view.findViewById(R.id.buttonCancel);
+
+
 
         textViewDeleteText.setText("Are you sure you want to delete " + "" + "? This action cannot be undone.");
 
@@ -47,7 +53,18 @@ public class RemoveItemFragment extends Fragment {
     }
 
     private void deleteItem() {
-        //ToDo - Implement
+        CustomExpandableListFragment fragment =
+                (CustomExpandableListFragment) getChildFragmentManager().findFragmentByTag("CustomExpandableListFragment");
+
+        if (fragment != null) {
+            CustomExpandableListAdapter adapter = fragment.getAdapter();
+            checkboxStates = adapter.getCheckboxStates();
+        }
+        else System.out.println("FRAGMENT NOT FOUND!!!");
+
+        fragment.removeItems();
+
+        // TODO: app crashing when pressing delete after verification screen
     }
 
     private void loadFragment(Fragment fragment) {
