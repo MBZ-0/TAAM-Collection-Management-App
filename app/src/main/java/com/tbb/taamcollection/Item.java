@@ -104,6 +104,6 @@ public class Item {
     } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
         return 1;
     } else {
-        return 1;
+        return -1;
     }}
 }
