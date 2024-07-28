@@ -107,10 +107,18 @@ public class CustomExpandableListFragment extends Fragment {
     }
 
     public void removeItems() {
-        for (int i=0; i<checkboxStates.size(); i++) {
-            if (checkboxStates.get(i)) {
-                itemDatabase.remove(listIds.get(i));
-            }
-        }
+        System.out.println("OKAYYYYY TESTING");
+        System.out.println("OKAYYYYY TESTING");
+        System.out.println("OKAYYYYY TESTING");
+        System.out.println("OKAYYYYY TESTING");
+        System.out.println("OKAYYYYY TESTING");
+
+        itemDatabase.remove(listIds.get(3));
+//        for (int i=0; i<checkboxStates.size(); i++) {
+//            System.out.println(checkboxStates.get(i));
+//            if (checkboxStates.get(i)) {
+//                itemDatabase.remove(listIds.get(i));
+//            }
+//        }
     }
 }

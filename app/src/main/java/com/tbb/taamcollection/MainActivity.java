@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = db.getReference("items"); // Adjust the reference as per your database structure
 
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
+            loadFragment(new HomeFragment(), "HomeFragment");
         }
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragment_container, fragment, tag);
         transaction.addToBackStack(null);
         transaction.commit();
     }

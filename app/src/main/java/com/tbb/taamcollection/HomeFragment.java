@@ -1,7 +1,6 @@
 package com.tbb.taamcollection;
 
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -64,7 +63,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(AdminDatabase.loggedIn) {
-                     loadFragment(new AddItemFragment());
+                    loadFragment(new AddItemFragment());
                 }
             }
         });
@@ -112,7 +111,7 @@ public class HomeFragment extends Fragment {
 
         // Add the CustomExpandableListFragment to the HomeFragment layout
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.expandableListView, new CustomExpandableListFragment());
+        transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(), "CustomExpandableListFragment");
         transaction.commit();
 
         return view;

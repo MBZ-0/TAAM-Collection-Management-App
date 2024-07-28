@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,8 +29,6 @@ public class RemoveItemFragment extends Fragment {
         textViewDeleteText = view.findViewById(R.id.textViewConfirmation);
         buttonConfirm = view.findViewById(R.id.buttonConfirm);
         buttonCancel = view.findViewById(R.id.buttonCancel);
-
-
 
         textViewDeleteText.setText("Are you sure you want to delete " + "" + "? This action cannot be undone.");
 
@@ -53,18 +50,21 @@ public class RemoveItemFragment extends Fragment {
     }
 
     private void deleteItem() {
-        CustomExpandableListFragment fragment =
-                (CustomExpandableListFragment) getChildFragmentManager().findFragmentByTag("CustomExpandableListFragment");
+        Fragment homeFragment = getParentFragmentManager().findFragmentByTag("HomeFragment");
+        if (homeFragment != null) {
+            CustomExpandableListFragment fragment =
+                    (CustomExpandableListFragment) homeFragment.getChildFragmentManager().findFragmentByTag("CustomExpandableListFragment");
 
-        if (fragment != null) {
-            CustomExpandableListAdapter adapter = fragment.getAdapter();
-            checkboxStates = adapter.getCheckboxStates();
+            if (fragment != null) {
+                fragment.removeItems();
+            } else {
+                System.out.println("CustomExpandableListFragment NOT FOUND!!!");
+            }
+        } else {
+            System.out.println("HOME FRAGMENT NOT FOUND!!!");
         }
-        else System.out.println("FRAGMENT NOT FOUND!!!");
 
-        fragment.removeItems();
-
-        // TODO: app crashing when pressing delete after verification screen
+        loadFragment(new HomeFragment());
     }
 
     private void loadFragment(Fragment fragment) {
