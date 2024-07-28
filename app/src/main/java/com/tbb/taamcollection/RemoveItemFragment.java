@@ -33,7 +33,7 @@ public class RemoveItemFragment extends Fragment {
 
 
 
-        textViewDeleteText.setText("Are you sure you want to delete " + "" + "? This action cannot be undone.");
+        textViewDeleteText.setText("Are you sure you want the checked off items? This action cannot be undone.");
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
