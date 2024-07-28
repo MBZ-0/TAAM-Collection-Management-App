@@ -61,7 +61,7 @@ public class ItemDatabase extends Database{
         }
     }
 
-    void remove(Item obj, int id){
+    void remove(int id){
         removeEntry(Integer.toString(id));
         if(loaded){
             allItems.remove(id);
