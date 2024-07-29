@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,7 @@ public class CustomExpandableListFragment extends Fragment {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     List<Integer> listDataLotNumbers;
-    List<Integer> listDataImages;
+    List<String> listDataUrls;
     private DatabaseReference itemsRef;
     private ItemDatabase itemDatabase;
 
@@ -43,10 +45,10 @@ public class CustomExpandableListFragment extends Fragment {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
         listDataLotNumbers = new ArrayList<>();
-        listDataImages = new ArrayList<>();
+        listDataUrls = new ArrayList<>();
 
         // Initialize adapter and set it to the ExpandableListView
-        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages);
+        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataUrls);
         expandableListView.setAdapter(expandableListAdapter);
 
         // Fetch data from Firebase
@@ -63,7 +65,7 @@ public class CustomExpandableListFragment extends Fragment {
                 listDataHeader.clear();
                 listDataChild.clear();
                 listDataLotNumbers.clear();
-                listDataImages.clear();
+                listDataUrls.clear();
                 int i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Item item = snapshot.getValue(Item.class);
@@ -75,7 +77,7 @@ public class CustomExpandableListFragment extends Fragment {
                         childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
                         childList.add(item.getDescription() != null ? item.getDescription() : "Unknown Description");
                         listDataChild.put(listDataHeader.get(i), childList);
-                        listDataImages.add(R.drawable.default_image); // Replace with actual image handling logic
+                        listDataUrls.add(item.getUrl() != null ? item.getUrl() : ""); // Use the actual URL
                         i++;
                     } else {
                         Log.d(TAG, "Fetched item is null");

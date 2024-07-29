@@ -1,6 +1,7 @@
 package com.tbb.taamcollection;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,16 +22,16 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
     private List<Integer> listDataLotNumbers;
-    private List<Integer> listDataImages; // List for image resources
+    private List<String> listDataUrls; // List for URLs
 
     public CustomExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, List<String>> listChildData,
-                                       List<Integer> listDataLotNumbers, List<Integer> listDataImages) {
+                                       List<Integer> listDataLotNumbers, List<String> listDataUrls) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listChildData;
         this.listDataLotNumbers = listDataLotNumbers;
-        this.listDataImages = listDataImages; // Initialize the list of image resources
+        this.listDataUrls = listDataUrls; // Initialize the list of URLs
     }
 
     @Override
@@ -131,6 +135,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lotNumber = convertView.findViewById(R.id.lot_number);
         CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
         ImageView groupImage = convertView.findViewById(R.id.group_image);
+        VideoView groupVideo = convertView.findViewById(R.id.group_video);
 
         // Set default values for group items
         String defaultGroupName = "Unnamed Group";
@@ -139,10 +144,28 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         itemName.setText(headerTitle != null ? headerTitle : defaultGroupName);
         lotNumber.setText("Lot: " + (listDataLotNumbers.get(groupPosition) != null ? listDataLotNumbers.get(groupPosition) : 0));
 
-        // Set the image resource for the group
-        if (groupPosition < listDataImages.size()) {
-            groupImage.setImageResource(listDataImages.get(groupPosition));
+        // Set the image or video resource for the group
+        String url = listDataUrls.get(groupPosition);
+        if (url != null && !url.isEmpty()) {
+            int urlStatus = getUrlStatus(url);
+            if (urlStatus == 0) {
+                groupImage.setVisibility(View.VISIBLE);
+                groupVideo.setVisibility(View.GONE);
+                Glide.with(context).load(url).placeholder(R.drawable.default_image).into(groupImage);
+            } else if (urlStatus == 1) {
+                groupImage.setVisibility(View.GONE);
+                groupVideo.setVisibility(View.VISIBLE);
+                Uri videoUri = Uri.parse(url);
+                groupVideo.setVideoURI(videoUri);
+                groupVideo.setOnPreparedListener(mp -> mp.start());
+            } else {
+                groupImage.setVisibility(View.VISIBLE);
+                groupVideo.setVisibility(View.GONE);
+                groupImage.setImageResource(R.drawable.default_image); // Default image
+            }
         } else {
+            groupImage.setVisibility(View.VISIBLE);
+            groupVideo.setVisibility(View.GONE);
             groupImage.setImageResource(R.drawable.default_image); // Default image
         }
 
@@ -158,6 +181,15 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-}
 
-// TODO: fix issue when group or subgroup text is not entered - app crahses, instead want (defaultText)
+    // Helper method to determine URL status
+    private int getUrlStatus(String url) {
+        if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".bmp") || url.endsWith(".svg")) {
+            return 0;
+        } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+}
