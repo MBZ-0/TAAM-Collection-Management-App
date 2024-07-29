@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.LinkedList;
 
 public class CustomExpandableListFragment extends Fragment {
 
@@ -49,8 +50,17 @@ public class CustomExpandableListFragment extends Fragment {
         expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages);
         expandableListView.setAdapter(expandableListAdapter);
 
-        // Fetch data from Firebase
-        prepareListDataFromDatabase();
+        // Check if there are arguments passed to the fragment
+        Bundle args = getArguments();
+        if (args != null) {
+            LinkedList<Item> itemsList = (LinkedList<Item>) args.getSerializable("itemsList");
+            if (itemsList != null) {
+                prepareListDataFromItemsList(itemsList);
+            }
+        } else {
+            // Fetch data from Firebase if no arguments are passed
+            prepareListDataFromDatabase();
+        }
 
         return view;
     }
@@ -90,5 +100,25 @@ public class CustomExpandableListFragment extends Fragment {
                 Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
         });
+    }
+
+    private void prepareListDataFromItemsList(LinkedList<Item> itemsList) {
+        listDataHeader.clear();
+        listDataChild.clear();
+        listDataLotNumbers.clear();
+        listDataImages.clear();
+
+        for (Item item : itemsList) {
+            listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
+            listDataLotNumbers.add(item.getLotNumber() != 0 ? item.getLotNumber() : 0);
+            List<String> childList = new ArrayList<>();
+            childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
+            childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
+            childList.add(item.getDescription() != null ? item.getDescription() : "Unknown Description");
+            listDataChild.put(listDataHeader.get(listDataHeader.size() - 1), childList);
+            listDataImages.add(R.drawable.default_image); // Replace with actual image handling logic
+        }
+
+        expandableListAdapter.notifyDataSetChanged();
     }
 }
