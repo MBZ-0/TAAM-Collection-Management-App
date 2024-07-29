@@ -3,6 +3,8 @@ package com.tbb.taamcollection;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +29,9 @@ public class CustomExpandableListFragment extends Fragment {
     List<Integer> listDataLotNumbers;
     List<Integer> listDataImages;
     List<Integer> listIds;
-    List<Boolean> checkboxStates;
     private DatabaseReference itemsRef;
     private ItemDatabase itemDatabase;
+    SharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,13 +50,19 @@ public class CustomExpandableListFragment extends Fragment {
         listDataImages = new ArrayList<>();
         listIds = new ArrayList<>();
 
-        // Initialize adapter and set it to the ExpandableListView
-        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader,
-                listDataChild, listDataLotNumbers, listDataImages, listIds);
-        expandableListView.setAdapter(expandableListAdapter);
+        // Initialize ViewModel
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         // Fetch data from Firebase
         prepareListDataFromDatabase();
+
+        sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<String, List<Boolean>>>() {
+            @Override
+            public void onChanged(HashMap<String, List<Boolean>> state) {
+                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages, listIds, state);
+                expandableListView.setAdapter(expandableListAdapter);
+            }
+        });
 
         return view;
     }
@@ -87,7 +95,19 @@ public class CustomExpandableListFragment extends Fragment {
                         Log.d(TAG, "Fetched item is null");
                     }
                 }
-                checkboxStates = expandableListAdapter.getCheckboxStates();
+
+                if (sharedViewModel.getCheckBoxState().getValue() == null) {
+                    HashMap<String, List<Boolean>> initialCheckBoxState = new HashMap<>();
+                    for (String header : listDataHeader) {
+                        List<Boolean> initialStates = new ArrayList<>();
+                        for (int j = 0; j < listDataChild.get(header).size(); j++) {
+                            initialStates.add(false);
+                        }
+                        initialCheckBoxState.put(header, initialStates);
+                    }
+                    sharedViewModel.setCheckBoxState(initialCheckBoxState);
+                }
+
                 expandableListAdapter.notifyDataSetChanged();
             }
 
@@ -107,18 +127,20 @@ public class CustomExpandableListFragment extends Fragment {
     }
 
     public void removeItems() {
-        System.out.println("OKAYYYYY TESTING");
-        System.out.println("OKAYYYYY TESTING");
-        System.out.println("OKAYYYYY TESTING");
-        System.out.println("OKAYYYYY TESTING");
-        System.out.println("OKAYYYYY TESTING");
-
-        itemDatabase.remove(listIds.get(3));
-//        for (int i=0; i<checkboxStates.size(); i++) {
-//            System.out.println(checkboxStates.get(i));
-//            if (checkboxStates.get(i)) {
-//                itemDatabase.remove(listIds.get(i));
-//            }
-//        }
+        HashMap<String, List<Boolean>> state = sharedViewModel.getCheckBoxState().getValue();
+        if (state != null) {
+            for (int i = 0; i < listDataHeader.size(); i++) {
+                String header = listDataHeader.get(i);
+                List<Boolean> groupCheckBoxStates = state.get(header);
+                if (groupCheckBoxStates != null) {
+                    for (int j = 0; j < groupCheckBoxStates.size(); j++) {
+                        if (groupCheckBoxStates.get(j)) {
+                            int idIndex = listIds.indexOf(listIds.get(i));
+                            itemDatabase.remove(listIds.get(idIndex));
+                        }
+                    }
+                }
+            }
+        }
     }
 }

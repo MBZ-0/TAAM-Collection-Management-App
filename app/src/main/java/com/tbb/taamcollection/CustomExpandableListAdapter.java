@@ -21,20 +21,21 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
     private List<Integer> listDataLotNumbers;
-    private List<Integer> listDataImages; // List for image resources
-    private List<Boolean> checkboxStates; // List for checkbox states
+    private List<Integer> listDataImages;
+    private HashMap<String, List<Boolean>> checkBoxState;
     private List<Integer> listIds;
 
     public CustomExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, List<String>> listChildData,
                                        List<Integer> listDataLotNumbers, List<Integer> listDataImages,
-                                       List<Integer> listIds) {
+                                       List<Integer> listIds, HashMap<String, List<Boolean>> checkBoxState) {
         this.context = context;
         this.listDataHeader = listDataHeader != null ? listDataHeader : new ArrayList<>();
         this.listDataChild = listChildData != null ? listChildData : new HashMap<>();
         this.listDataLotNumbers = listDataLotNumbers != null ? listDataLotNumbers : new ArrayList<>();
         this.listDataImages = listDataImages != null ? listDataImages : new ArrayList<>();
-        this.checkboxStates = new ArrayList<>(Collections.nCopies(this.listDataHeader.size(), false)); // Initialize checkbox states
+        this.listIds = listIds != null ? listIds : new ArrayList<>();
+        this.checkBoxState = checkBoxState != null ? checkBoxState : new HashMap<>();
     }
 
     @Override
@@ -65,10 +66,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView descriptionContent = convertView.findViewById(R.id.description_content);
         ImageView descriptionArrow = convertView.findViewById(R.id.description_arrow);
 
-        // Set default text for missing child items
         String defaultText = "Unknown";
 
-        // Set text or other properties of the views
         if (childPosition == 0) {
             category.setVisibility(View.VISIBLE);
             period.setVisibility(View.GONE);
@@ -141,35 +140,33 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
         ImageView groupImage = convertView.findViewById(R.id.group_image);
 
-        // Set default values for group items
         String defaultGroupName = "Unnamed Group";
         String defaultLotNumber = "Lot: 0";
 
         itemName.setText(headerTitle != null ? headerTitle : defaultGroupName);
 
-        // Set the image resource for the group
         if (groupPosition < listDataImages.size()) {
             groupImage.setImageResource(listDataImages.get(groupPosition));
         } else {
             groupImage.setImageResource(R.drawable.default_image); // Default image
         }
 
-        // Set the checkbox state based on the list
-        try {
-            itemCheckbox.setOnCheckedChangeListener(null);
-            itemCheckbox.setChecked(checkboxStates.get(groupPosition));
-            itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                checkboxStates.set(groupPosition, isChecked);
-            });
-        } catch (IndexOutOfBoundsException e) {
-            Log.e("CustomExpandableListAdapter", "IndexOutOfBoundsException in getGroupView: " + e.getMessage());
-            // Initialize checkboxStates correctly
-            checkboxStates = new ArrayList<>(Collections.nCopies(this.listDataHeader.size(), false));
-            itemCheckbox.setChecked(checkboxStates.get(groupPosition));
-            itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                checkboxStates.set(groupPosition, isChecked);
-            });
+        List<Boolean> groupCheckBoxState = checkBoxState.get(this.listDataHeader.get(groupPosition));
+        if (groupCheckBoxState == null) {
+            groupCheckBoxState = new ArrayList<>(Collections.nCopies(getChildrenCount(groupPosition), false));
+            checkBoxState.put(this.listDataHeader.get(groupPosition), groupCheckBoxState);
         }
+
+        itemCheckbox.setOnCheckedChangeListener(null);
+        itemCheckbox.setChecked(groupCheckBoxState.get(0)); // Assuming first checkbox state represents the group
+
+        List<Boolean> finalGroupCheckBoxState = groupCheckBoxState;
+        itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            for (int i = 0; i < finalGroupCheckBoxState.size(); i++) {
+                finalGroupCheckBoxState.set(i, isChecked);
+            }
+            notifyDataSetChanged();
+        });
 
         return convertView;
     }
@@ -184,8 +181,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    // Method to get the list of all checkbox states
     public List<Boolean> getCheckboxStates() {
-        return checkboxStates;
+        List<Boolean> allStates = new ArrayList<>();
+        for (String key : checkBoxState.keySet()) {
+            allStates.addAll(checkBoxState.get(key));
+        }
+        return allStates;
     }
 }

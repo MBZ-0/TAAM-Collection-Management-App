@@ -10,103 +10,97 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.function.BiConsumer;
+import java.util.List;
 
-/***
- * class ItemDatabase
- *  Fields
- * HashMap allItems: A hashmap of every item in the database since last update
- * Item query: Gets an item
- */
-public class ItemDatabase extends Database{
+public class ItemDatabase extends Database {
 
     static Database db;
     HashMap<Integer, Item> allItems;
     protected ArrayList<HashMap<String, Object>> preConvert;
 
-
     HashMap<Integer, Item> byLot;
     HashMap<String, LinkedList<Item>> byName;
 
-    ItemDatabase(String name){
+    ItemDatabase(String name) {
         super(name);
         db = this;
         updateDatabase();
     }
-    void updateDatabase(){
-        //@SuppressWarnings("unchecked") //L no more stinky warning
+
+    void updateDatabase() {
         database.get().addOnCompleteListener(task -> {
-            if(!task.isSuccessful()){
+            if (!task.isSuccessful()) {
                 System.out.println("FAIL");
-            }else{
+            } else {
                 Object k = task.getResult().getValue();
-                if(k != null) {
-                    preConvert= (ArrayList<HashMap<String, Object>>)k;
-                    updateQuery();
-                    loaded = true;
+                if (k instanceof List) {
+                    preConvert = (ArrayList<HashMap<String, Object>>) k;
+                } else if (k instanceof HashMap) {
+                    preConvert = new ArrayList<>();
+                    preConvert.add((HashMap<String, Object>) k);
+                } else {
+                    System.out.println("Unexpected data type: " + k.getClass().getName());
+                    return;
                 }
+                updateQuery();
+                loaded = true;
             }
         });
     }
 
-    void updateQuery(){
+    void updateQuery() {
         allItems = Item.convert(preConvert);
     }
 
-    void add(Item obj){
+    void add(Item obj) {
         int id = nextId();
-        addEntry(obj, Integer.toString(id) );
-        if(loaded){
+        addEntry(obj, Integer.toString(id));
+        if (loaded) {
             allItems.put(id, obj);
         }
     }
 
-    void remove(int id){
+    void remove(int id) {
         removeEntry(Integer.toString(id));
-        if(loaded){
+        if (loaded) {
             allItems.remove(id);
         }
     }
 
-    LinkedList<Item> search(String name, String lot, String category, String period){
+    LinkedList<Item> search(String name, String lot, String category, String period) {
         LinkedList<Item> r = new LinkedList<>();
         allItems.forEach((key, value) -> {
-//            if(value.getName().contains(s) || Integer.toString(value.getLotNumber()).contains(s)){
-//                r.add(value);
-//            }
             boolean match = true;
-            if (!(lot.isEmpty()) && !(lot.equals(String.valueOf(value.getLotNumber())))){
+            if (!lot.isEmpty() && !lot.equals(String.valueOf(value.getLotNumber()))) {
                 match = false;
             }
-            if (!name.isEmpty() && !(name.equals(value.getName()))){
-                match = false;
-
-            }
-            if (!category.isEmpty() && !(category.equals(value.getCategory().getValue()))){
+            if (!name.isEmpty() && !name.equals(value.getName())) {
                 match = false;
             }
-            if (!period.isEmpty() && !(period.equals(value.getPeriod().getValue()))){
+            if (!category.isEmpty() && !category.equals(value.getCategory().getValue())) {
                 match = false;
             }
-            if(match){
+            if (!period.isEmpty() && !period.equals(value.getPeriod().getValue())) {
+                match = false;
+            }
+            if (match) {
                 r.add(value);
             }
-
         });
         return r;
     }
 
-    Item query(int id){
+    Item query(int id) {
         if (loaded) {
             return allItems.get(id);
         }
         return null;
     }
 
-    int nextId(){
+    int nextId() {
         int a = 0;
-        while(allItems.get(a) != null){
-            a ++;
+        while (allItems.get(a) != null) {
+            a++;
         }
         return a;
     }
