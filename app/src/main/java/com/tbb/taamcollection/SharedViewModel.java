@@ -8,14 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SharedViewModel extends ViewModel {
-    private final MutableLiveData<HashMap<String, List<Boolean>>> checkBoxState = new MutableLiveData<>();
+    private final MutableLiveData<HashMap<Integer, List<Boolean>>> checkBoxState = new MutableLiveData<>();
 
-    public LiveData<HashMap<String, List<Boolean>>> getCheckBoxState() {
+    public LiveData<HashMap<Integer, List<Boolean>>> getCheckBoxState() {
         return checkBoxState;
     }
 
-    public void setCheckBoxState(HashMap<String, List<Boolean>> state) {
+    public void setCheckBoxState(HashMap<Integer, List<Boolean>> state) {
         checkBoxState.setValue(state);
     }
 }
-

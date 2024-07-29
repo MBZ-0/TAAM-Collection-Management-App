@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -56,9 +57,9 @@ public class CustomExpandableListFragment extends Fragment {
         // Fetch data from Firebase
         prepareListDataFromDatabase();
 
-        sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<String, List<Boolean>>>() {
+        sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<Integer, List<Boolean>>>() {
             @Override
-            public void onChanged(HashMap<String, List<Boolean>> state) {
+            public void onChanged(HashMap<Integer, List<Boolean>> state) {
                 expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages, listIds, state);
                 expandableListView.setAdapter(expandableListAdapter);
             }
@@ -83,7 +84,7 @@ public class CustomExpandableListFragment extends Fragment {
                     if (item != null) {
                         listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
                         listDataLotNumbers.add(item.getLotNumber() != 0 ? item.getLotNumber() : 0);
-                        listIds.add(item.getId() != 0 ? item.getId() : -1);
+                        listIds.add(item.getId());
                         List<String> childList = new ArrayList<>();
                         childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
                         childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
@@ -97,13 +98,9 @@ public class CustomExpandableListFragment extends Fragment {
                 }
 
                 if (sharedViewModel.getCheckBoxState().getValue() == null) {
-                    HashMap<String, List<Boolean>> initialCheckBoxState = new HashMap<>();
-                    for (String header : listDataHeader) {
-                        List<Boolean> initialStates = new ArrayList<>();
-                        for (int j = 0; j < listDataChild.get(header).size(); j++) {
-                            initialStates.add(false);
-                        }
-                        initialCheckBoxState.put(header, initialStates);
+                    HashMap<Integer, List<Boolean>> initialCheckBoxState = new HashMap<>();
+                    for (int id : listIds) {
+                        initialCheckBoxState.put(id, new ArrayList<>(Collections.nCopies(1, false)));
                     }
                     sharedViewModel.setCheckBoxState(initialCheckBoxState);
                 }
@@ -127,20 +124,26 @@ public class CustomExpandableListFragment extends Fragment {
     }
 
     public void removeItems() {
-        HashMap<String, List<Boolean>> state = sharedViewModel.getCheckBoxState().getValue();
+        HashMap<Integer, List<Boolean>> state = sharedViewModel.getCheckBoxState().getValue();
         if (state != null) {
-            for (int i = 0; i < listDataHeader.size(); i++) {
-                String header = listDataHeader.get(i);
-                List<Boolean> groupCheckBoxStates = state.get(header);
-                if (groupCheckBoxStates != null) {
-                    for (int j = 0; j < groupCheckBoxStates.size(); j++) {
-                        if (groupCheckBoxStates.get(j)) {
-                            int idIndex = listIds.indexOf(listIds.get(i));
-                            itemDatabase.remove(listIds.get(idIndex));
-                        }
-                    }
+            List<Integer> idsToRemove = new ArrayList<>();
+            for (int id : listIds) {
+                List<Boolean> groupCheckBoxStates = state.get(id);
+                if (groupCheckBoxStates != null && groupCheckBoxStates.get(0)) {
+                    idsToRemove.add(id);
+                } else {
+                    Log.d(TAG, "Item with ID " + id + " is not checked or state is null");
                 }
             }
+
+            for (int id : idsToRemove) {
+                Log.d(TAG, "Attempting to remove item with ID: " + id);
+                itemDatabase.remove(id);
+                Log.d(TAG, "Removed item with ID: " + id);
+            }
+
+            // Fetch data again after deletion to update the list
+            prepareListDataFromDatabase();
         }
     }
 }
