@@ -3,6 +3,8 @@ package com.tbb.taamcollection;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +28,10 @@ public class CustomExpandableListFragment extends Fragment {
     HashMap<String, List<String>> listDataChild;
     List<Integer> listDataLotNumbers;
     List<Integer> listDataImages;
+    List<Integer> listIds;
     private DatabaseReference itemsRef;
     private ItemDatabase itemDatabase;
+    SharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,13 +48,21 @@ public class CustomExpandableListFragment extends Fragment {
         listDataChild = new HashMap<>();
         listDataLotNumbers = new ArrayList<>();
         listDataImages = new ArrayList<>();
+        listIds = new ArrayList<>();
 
-        // Initialize adapter and set it to the ExpandableListView
-        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages);
-        expandableListView.setAdapter(expandableListAdapter);
+        // Initialize ViewModel
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         // Fetch data from Firebase
         prepareListDataFromDatabase();
+
+        sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<String, List<Boolean>>>() {
+            @Override
+            public void onChanged(HashMap<String, List<Boolean>> state) {
+                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages, listIds, state);
+                expandableListView.setAdapter(expandableListAdapter);
+            }
+        });
 
         return view;
     }
@@ -64,12 +76,14 @@ public class CustomExpandableListFragment extends Fragment {
                 listDataChild.clear();
                 listDataLotNumbers.clear();
                 listDataImages.clear();
+                listIds.clear();
                 int i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Item item = snapshot.getValue(Item.class);
                     if (item != null) {
                         listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
                         listDataLotNumbers.add(item.getLotNumber() != 0 ? item.getLotNumber() : 0);
+                        listIds.add(item.getId() != 0 ? item.getId() : -1);
                         List<String> childList = new ArrayList<>();
                         childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
                         childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
@@ -82,6 +96,18 @@ public class CustomExpandableListFragment extends Fragment {
                     }
                 }
 
+                if (sharedViewModel.getCheckBoxState().getValue() == null) {
+                    HashMap<String, List<Boolean>> initialCheckBoxState = new HashMap<>();
+                    for (String header : listDataHeader) {
+                        List<Boolean> initialStates = new ArrayList<>();
+                        for (int j = 0; j < listDataChild.get(header).size(); j++) {
+                            initialStates.add(false);
+                        }
+                        initialCheckBoxState.put(header, initialStates);
+                    }
+                    sharedViewModel.setCheckBoxState(initialCheckBoxState);
+                }
+
                 expandableListAdapter.notifyDataSetChanged();
             }
 
@@ -90,5 +116,31 @@ public class CustomExpandableListFragment extends Fragment {
                 Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
         });
+    }
+
+    public CustomExpandableListAdapter getAdapter() {
+        return expandableListAdapter;
+    }
+
+    public DatabaseReference getDatabaseReference() {
+        return itemsRef;
+    }
+
+    public void removeItems() {
+        HashMap<String, List<Boolean>> state = sharedViewModel.getCheckBoxState().getValue();
+        if (state != null) {
+            for (int i = 0; i < listDataHeader.size(); i++) {
+                String header = listDataHeader.get(i);
+                List<Boolean> groupCheckBoxStates = state.get(header);
+                if (groupCheckBoxStates != null) {
+                    for (int j = 0; j < groupCheckBoxStates.size(); j++) {
+                        if (groupCheckBoxStates.get(j)) {
+                            int idIndex = listIds.indexOf(listIds.get(i));
+                            itemDatabase.remove(listIds.get(idIndex));
+                        }
+                    }
+                }
+            }
+        }
     }
 }
