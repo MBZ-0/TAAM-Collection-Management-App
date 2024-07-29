@@ -1,7 +1,6 @@
 package com.tbb.taamcollection;
 
 import androidx.annotation.NonNull;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +15,7 @@ public class ItemDatabase extends Database {
 
     static Database db;
     HashMap<Integer, Item> allItems;
-    protected ArrayList<HashMap<String, Object>> preConvert;
+    protected List<Object> preConvert;
 
     HashMap<Integer, Item> byLot;
     HashMap<String, LinkedList<Item>> byName;
@@ -34,13 +33,15 @@ public class ItemDatabase extends Database {
             } else {
                 Object k = task.getResult().getValue();
                 if (k instanceof List) {
-                    preConvert = (ArrayList<HashMap<String, Object>>) k;
+                    preConvert = (ArrayList<Object>) k;
                 } else if (k instanceof HashMap) {
-                    preConvert = new ArrayList<>();
-                    preConvert.add((HashMap<String, Object>) k);
+                    preConvert = new ArrayList<>(((HashMap<String, Object>) k).values());
                 } else {
-                    System.out.println("Unexpected data type: " + k.getClass().getName());
-                    return;
+                    System.out.println("Unexpected data type: " + (k != null ? k.getClass().getName() : "null"));
+                    preConvert = new ArrayList<>();
+                }
+                if (preConvert == null) {
+                    preConvert = new ArrayList<>();
                 }
                 updateQuery();
                 loaded = true;
