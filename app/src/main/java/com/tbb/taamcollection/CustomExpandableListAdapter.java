@@ -13,6 +13,8 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,20 +25,29 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> listDataChild;
     private List<Integer> listDataLotNumbers;
     private List<String> listDataUrls; // List for URLs
+    private List<Integer> listDataImages;
+    private HashMap<Integer, List<Boolean>> checkBoxState;
+    private List<Integer> listIds;
 
     public CustomExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, List<String>> listChildData,
-                                       List<Integer> listDataLotNumbers, List<String> listDataUrls) {
+                                       List<Integer> listDataLotNumbers, List<String> listDataUrls,
+                                       List<Integer> listDataImages, List<Integer> listIds,
+                                       HashMap<Integer, List<Boolean>> checkBoxState) {
         this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listDataChild = listChildData;
-        this.listDataLotNumbers = listDataLotNumbers;
-        this.listDataUrls = listDataUrls; // Initialize the list of URLs
+        this.listDataHeader = listDataHeader != null ? listDataHeader : new ArrayList<>();
+        this.listDataChild = listChildData != null ? listChildData : new HashMap<>();
+        this.listDataLotNumbers = listDataLotNumbers != null ? listDataLotNumbers : new ArrayList<>();
+        this.listDataUrls = listDataUrls != null ? listDataUrls : new ArrayList<>();
+        this.listDataImages = listDataImages != null ? listDataImages : new ArrayList<>();
+        this.listIds = listIds != null ? listIds : new ArrayList<>();
+        this.checkBoxState = checkBoxState != null ? checkBoxState : new HashMap<>();
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).get(childPosition);
+        List<String> childList = this.listDataChild.get(this.listDataHeader.get(groupPosition));
+        return childList != null ? childList.get(childPosition) : null;
     }
 
     @Override
@@ -61,10 +72,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView descriptionContent = convertView.findViewById(R.id.description_content);
         ImageView descriptionArrow = convertView.findViewById(R.id.description_arrow);
 
-        // Set default text for missing child items
         String defaultText = "Unknown";
 
-        // Set text or other properties of the views
         if (childPosition == 0) {
             category.setVisibility(View.VISIBLE);
             period.setVisibility(View.GONE);
@@ -104,7 +113,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 3; // We now have 3 child items: Category, Period, Description
+        List<String> childList = this.listDataChild.get(this.listDataHeader.get(groupPosition));
+        return childList != null ? childList.size() : 0;
     }
 
     @Override
@@ -123,7 +133,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
+    public View getGroupView(final int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
@@ -137,12 +147,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         ImageView groupImage = convertView.findViewById(R.id.group_image);
         VideoView groupVideo = convertView.findViewById(R.id.group_video);
 
-        // Set default values for group items
         String defaultGroupName = "Unnamed Group";
         String defaultLotNumber = "Lot: 0";
 
         itemName.setText(headerTitle != null ? headerTitle : defaultGroupName);
-        lotNumber.setText("Lot: " + (listDataLotNumbers.get(groupPosition) != null ? listDataLotNumbers.get(groupPosition) : 0));
+        lotNumber.setText("Lot: " + (groupPosition < listDataLotNumbers.size() ? listDataLotNumbers.get(groupPosition) : defaultLotNumber));
 
         // Set the image or video resource for the group
         String url = listDataUrls.get(groupPosition);
@@ -169,6 +178,24 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             groupImage.setImageResource(R.drawable.default_image); // Default image
         }
 
+        int itemId = listIds.get(groupPosition);
+        List<Boolean> groupCheckBoxState = checkBoxState.get(itemId);
+        if (groupCheckBoxState == null) {
+            groupCheckBoxState = new ArrayList<>(Collections.nCopies(getChildrenCount(groupPosition), false));
+            checkBoxState.put(itemId, groupCheckBoxState);
+        }
+
+        itemCheckbox.setOnCheckedChangeListener(null);
+        itemCheckbox.setChecked(groupCheckBoxState.get(0)); // Assuming first checkbox state represents the group
+
+        List<Boolean> finalGroupCheckBoxState = groupCheckBoxState;
+        itemCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            for (int i = 0; i < finalGroupCheckBoxState.size(); i++) {
+                finalGroupCheckBoxState.set(i, isChecked);
+            }
+            notifyDataSetChanged();
+        });
+
         return convertView;
     }
 
@@ -191,5 +218,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         } else {
             return -1;
         }
+    }
+
+    public List<Boolean> getCheckboxStates() {
+        List<Boolean> allStates = new ArrayList<>();
+        for (Integer key : checkBoxState.keySet()) {
+            allStates.addAll(checkBoxState.get(key));
+        }
+        return allStates;
     }
 }

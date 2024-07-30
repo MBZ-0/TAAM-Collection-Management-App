@@ -3,29 +3,31 @@ package com.tbb.taamcollection;
 import android.media.Image;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class Item {
     private int id = 0;
     private int lotNumber = 0;
-    private String name = "", description = "";
+    private String name = "";
+    private String description = "";
     private Period period = Period.Ji;
     private Category category = Category.Bronze;
     private String url = "";
-
+  
+    Image img;
     public Item() {}
 
-    Item(ItemDatabase db){
+    Item(ItemDatabase db) {
         id = db.nextId();
     }
 
-    Item(int id){
+    Item(int id) {
         this.id = id;
     }
 
-    static HashMap<Integer, Item> convert(ArrayList<HashMap<String, Object>> a){
+    static HashMap<Integer, Item> convert(List<Object> a) {
         a.removeAll(Collections.singleton(null));
         HashMap<Integer, Item> r = new HashMap<>();
         for(int i = 0; i < a.size(); i ++){
@@ -42,6 +44,32 @@ public class Item {
             }
         }
         return r;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        if (id != item.id) return false;
+        if (lotNumber != item.lotNumber) return false;
+        if (!name.equals(item.name)) return false;
+        if (!description.equals(item.description)) return false;
+        if (period != item.period) return false;
+        return category == item.category;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + lotNumber;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + period.hashCode();
+        result = 31 * result + category.hashCode();
+        return result;
     }
 
     public void setId(int id) {
@@ -95,7 +123,7 @@ public class Item {
     public Category getCategory() {
         return category;
     }
-
+  
     public String getUrl() { return url; }
 
     //0 for image, 1 for video, -1 for neither
