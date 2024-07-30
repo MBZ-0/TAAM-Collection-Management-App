@@ -65,10 +65,6 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v){
                 LinkedList<Item> itemsList = db.search("",lotText.getText().toString(),"","");
-                for(Item item : itemsList){
-                    System.out.println("TEST");
-                }
-                System.out.println(lotText.toString());
                 createPDF(itemsList);
 
 
@@ -78,7 +74,7 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v){
                 LinkedList<Item> itemsList = db.search(nameText.toString(),"","","");
-
+                createPDF(itemsList);
 
 
             }
@@ -87,7 +83,7 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v){
                 LinkedList<Item> itemsList = db.search("","",catText.toString(),"");
-
+                createPDF(itemsList);
 
 
             }
@@ -97,7 +93,7 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v){
                 LinkedList<Item> itemsList = db.search("","",catdpText.toString(),"");
-
+                createPDF(itemsList);
 
 
             }
@@ -107,7 +103,7 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v){
                 LinkedList<Item> itemsList = db.search("","","",periodText.toString());
-
+                createPDF(itemsList);
 
 
             }
@@ -116,13 +112,11 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v){
                 LinkedList<Item> itemsList = db.search("","","",periodDPText.toString());
-
+                createPDF(itemsList);
 
 
             }
         });
-
-
 
 
         return view;
@@ -134,7 +128,7 @@ public class ReportItemFragment extends Fragment {
 
         int page_num = 1;
         PdfDocument document = new PdfDocument();
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595,842,page_num).create();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(584,440,page_num).create();
 
         PdfDocument.Page page = document.startPage(pageInfo);
 
@@ -147,8 +141,6 @@ public class ReportItemFragment extends Fragment {
         paint.setTextSize(42);
         float x = 50;
         float y = 200;
-        canvas.drawText("Items: ", 50, 150, paint);
-        canvas.drawText("Names: ", 400, 150, paint);
         for(Item item : itemsList) {
 
             System.out.println(item.getName());
