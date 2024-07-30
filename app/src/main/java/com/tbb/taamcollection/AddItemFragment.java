@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemFragment extends Fragment {
-    private EditText editTextLotNum, editTextName, editTextDescription;
+    private EditText editTextLotNum, editTextName, editTextDescription, editTextUrl;
     private Spinner spinnerCategory, spinnerPeriod;
     private TextView errorField;
     private Button buttonAdd;
@@ -37,6 +37,7 @@ public class AddItemFragment extends Fragment {
         spinnerCategory = view.findViewById(R.id.spinnerAddCategory);
         spinnerPeriod = view.findViewById(R.id.spinnerAddPeriod);
         editTextDescription = view.findViewById(R.id.editTextDescription);
+        editTextUrl = view.findViewById(R.id.editTextUrl);
         buttonAdd = view.findViewById(R.id.buttonAdd);
         errorField = view.findViewById(R.id.textViewError);
 
@@ -85,6 +86,7 @@ public class AddItemFragment extends Fragment {
         String category = spinnerCategory.getSelectedItem().toString().trim();
         String period = spinnerPeriod.getSelectedItem().toString().trim();
         String description = editTextDescription.getText().toString().trim();
+        String url = editTextUrl.getText().toString().trim();
 
         errorField.setText("");
 
@@ -109,7 +111,12 @@ public class AddItemFragment extends Fragment {
         item.setDescription(description);
         item.setCategory(propercategory);
         item.setPeriod(properperiod);
-        item.setImg(null);
+
+        if (url.isEmpty()) {
+            // Use a default image URL if the URL is empty
+            url = "android.resource://" + getContext().getPackageName() + "/drawable/default_image";
+        }
+        item.setUrl(url);
 
         itemdb.add(item);
         itemdb.updateDatabase();

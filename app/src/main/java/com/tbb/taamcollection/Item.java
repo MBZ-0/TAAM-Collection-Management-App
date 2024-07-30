@@ -14,9 +14,9 @@ public class Item {
     private String description = "";
     private Period period = Period.Ji;
     private Category category = Category.Bronze;
-
+    private String url = "";
+  
     Image img;
-
     public Item() {}
 
     Item(ItemDatabase db) {
@@ -30,27 +30,17 @@ public class Item {
     static HashMap<Integer, Item> convert(List<Object> a) {
         a.removeAll(Collections.singleton(null));
         HashMap<Integer, Item> r = new HashMap<>();
-        for (Object obj : a) {
-            if (obj instanceof HashMap) {
-                HashMap<String, Object> k = (HashMap<String, Object>) obj;
-                Integer id = (k.get("id") instanceof Long) ? Math.toIntExact((Long) k.get("id")) : null;
-                Integer lotNumber = (k.get("lotNumber") instanceof Long) ? Math.toIntExact((Long) k.get("lotNumber")) : null;
-                String name = (String) k.get("name");
-                String description = (String) k.get("description");
-                Period period = Period.fromLabel((String) k.get("period"));
-                Category category = Category.fromLabel((String) k.get("category"));
-
-                if (id != null && lotNumber != null) {
-                    Item n = new Item(id);
-                    n.setLotNumber(lotNumber);
-                    n.setName(name);
-                    n.setDescription(description);
-                    n.setPeriod(period);
-                    n.setCategory(category);
-                    r.put(id, n);
-                } else {
-                    System.out.println("Invalid data for item: " + k);
-                }
+        for(int i = 0; i < a.size(); i ++){
+            if(a.get(i) != null) {
+                HashMap<String, Object> k = a.get(i);
+                Item n = new Item( Math.toIntExact((long)k.get("id")));
+                n.lotNumber = Math.toIntExact((long)k.get("lotNumber"));
+                n.name = (String)k.get("name");
+                n.description = (String)k.get("description");
+                n.period = Period.fromLabel((String)k.get("period"));
+                n.category = Category.fromLabel((String)k.get("category"));
+                n.url = (String)k.get("url");
+                r.put(i, n);
             }
         }
         return r;
@@ -106,8 +96,8 @@ public class Item {
         this.category = category;
     }
 
-    public void setImg(Image img) {
-        this.img = img;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public int getId() {
@@ -133,8 +123,15 @@ public class Item {
     public Category getCategory() {
         return category;
     }
+  
+    public String getUrl() { return url; }
 
-    public Image getImg() {
-        return img;
-    }
+    //0 for image, 1 for video, -1 for neither
+    public int getUrlStatus() { if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".bmp") || url.endsWith(".svg")) {
+        return 0;
+    } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
+        return 1;
+    } else {
+        return -1;
+    }}
 }
