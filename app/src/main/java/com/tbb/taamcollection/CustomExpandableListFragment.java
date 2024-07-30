@@ -31,7 +31,9 @@ public class CustomExpandableListFragment extends Fragment {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     List<Integer> listDataLotNumbers;
+    List<Integer> listDataImages;
     List<String> listDataUrls;
+    List<Integer> listIds;
     private DatabaseReference itemsRef;
     private ItemDatabase itemDatabase;
     SharedViewModel sharedViewModel;
@@ -50,14 +52,26 @@ public class CustomExpandableListFragment extends Fragment {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
         listDataLotNumbers = new ArrayList<>();
+        listDataImages = new ArrayList<>();
         listDataUrls = new ArrayList<>();
-
-        // Initialize adapter and set it to the ExpandableListView
-        expandableListAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild, listDataLotNumbers, listDataUrls);
-        expandableListView.setAdapter(expandableListAdapter);
+        listIds = new ArrayList<>();
 
         // Initialize ViewModel
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        // Initialize the adapter
+        expandableListAdapter = new CustomExpandableListAdapter(
+                getContext(),
+                listDataHeader,
+                listDataChild,
+                listDataLotNumbers,
+                listDataUrls,
+                listDataImages,
+                listIds,
+                sharedViewModel.getCheckBoxState().getValue()
+        );
+
+        expandableListView.setAdapter(expandableListAdapter);
 
         // Check if there are arguments passed to the fragment
         Bundle args = getArguments();
@@ -74,15 +88,7 @@ public class CustomExpandableListFragment extends Fragment {
         sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<Integer, List<Boolean>>>() {
             @Override
             public void onChanged(HashMap<Integer, List<Boolean>> state) {
-                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages, listIds, state);
-                expandableListView.setAdapter(expandableListAdapter);
-            }
-        });
-
-        sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<Integer, List<Boolean>>>() {
-            @Override
-            public void onChanged(HashMap<Integer, List<Boolean>> state) {
-                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages, listIds, state);
+                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataUrls, listDataImages, listIds, state);
                 expandableListView.setAdapter(expandableListAdapter);
             }
         });
@@ -98,7 +104,9 @@ public class CustomExpandableListFragment extends Fragment {
                 listDataHeader.clear();
                 listDataChild.clear();
                 listDataLotNumbers.clear();
+                listDataImages.clear();
                 listDataUrls.clear();
+                listIds.clear();
                 int i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Item item = snapshot.getValue(Item.class);
@@ -112,6 +120,7 @@ public class CustomExpandableListFragment extends Fragment {
                         childList.add(item.getDescription() != null ? item.getDescription() : "Unknown Description");
                         listDataChild.put(listDataHeader.get(i), childList);
                         listDataUrls.add(item.getUrl() != null ? item.getUrl() : ""); // Use the actual URL
+                        listDataImages.add(R.drawable.default_image); // Placeholder, modify as needed
                         i++;
                     } else {
                         Log.d(TAG, "Fetched item is null");
@@ -135,7 +144,29 @@ public class CustomExpandableListFragment extends Fragment {
             }
         });
     }
-  
+
+    private void prepareListDataFromItemsList(LinkedList<Item> itemsList) {
+        listDataHeader.clear();
+        listDataChild.clear();
+        listDataLotNumbers.clear();
+        listDataImages.clear();
+        listDataUrls.clear();
+
+        for (Item item : itemsList) {
+            listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
+            listDataLotNumbers.add(item.getLotNumber() != 0 ? item.getLotNumber() : 0);
+            List<String> childList = new ArrayList<>();
+            childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
+            childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
+            childList.add(item.getDescription() != null ? item.getDescription() : "Unknown Description");
+            listDataChild.put(listDataHeader.get(listDataHeader.size() - 1), childList);
+            listDataUrls.add(item.getUrl() != null ? item.getUrl() : ""); // Use the actual URL
+            listDataImages.add(R.drawable.default_image); // Placeholder, modify as needed
+        }
+
+        expandableListAdapter.notifyDataSetChanged();
+    }
+
     public CustomExpandableListAdapter getAdapter() {
         return expandableListAdapter;
     }

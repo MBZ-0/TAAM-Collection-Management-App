@@ -1,7 +1,5 @@
 package com.tbb.taamcollection;
 
-import android.media.Image;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,8 +13,7 @@ public class Item {
     private Period period = Period.Ji;
     private Category category = Category.Bronze;
     private String url = "";
-  
-    Image img;
+
     public Item() {}
 
     Item(ItemDatabase db) {
@@ -30,16 +27,16 @@ public class Item {
     static HashMap<Integer, Item> convert(List<Object> a) {
         a.removeAll(Collections.singleton(null));
         HashMap<Integer, Item> r = new HashMap<>();
-        for(int i = 0; i < a.size(); i ++){
-            if(a.get(i) != null) {
-                HashMap<String, Object> k = a.get(i);
-                Item n = new Item( Math.toIntExact((long)k.get("id")));
-                n.lotNumber = Math.toIntExact((long)k.get("lotNumber"));
-                n.name = (String)k.get("name");
-                n.description = (String)k.get("description");
-                n.period = Period.fromLabel((String)k.get("period"));
-                n.category = Category.fromLabel((String)k.get("category"));
-                n.url = (String)k.get("url");
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i) != null && a.get(i) instanceof HashMap) {
+                HashMap<String, Object> k = (HashMap<String, Object>) a.get(i);
+                Item n = new Item(Math.toIntExact((long) k.get("id")));
+                n.lotNumber = Math.toIntExact((long) k.get("lotNumber"));
+                n.name = (String) k.get("name");
+                n.description = (String) k.get("description");
+                n.period = Period.fromLabel((String) k.get("period"));
+                n.category = Category.fromLabel((String) k.get("category"));
+                n.url = (String) k.get("url");
                 r.put(i, n);
             }
         }
@@ -123,15 +120,19 @@ public class Item {
     public Category getCategory() {
         return category;
     }
-  
-    public String getUrl() { return url; }
+
+    public String getUrl() {
+        return url;
+    }
 
     //0 for image, 1 for video, -1 for neither
-    public int getUrlStatus() { if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".bmp") || url.endsWith(".svg")) {
-        return 0;
-    } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
-        return 1;
-    } else {
-        return -1;
-    }}
+    public int getUrlStatus() {
+        if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".bmp") || url.endsWith(".svg")) {
+            return 0;
+        } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
 }
