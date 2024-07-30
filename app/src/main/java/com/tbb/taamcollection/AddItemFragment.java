@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,7 +22,7 @@ public class AddItemFragment extends Fragment {
     private EditText editTextLotNum, editTextName, editTextDescription, editTextUrl;
     private Spinner spinnerCategory, spinnerPeriod;
     private TextView errorField;
-    private Button buttonAdd;
+    private Button buttonAdd, buttonBack;
 
     private FirebaseDatabase db;
     private DatabaseReference itemsRef;
@@ -39,6 +40,7 @@ public class AddItemFragment extends Fragment {
         editTextDescription = view.findViewById(R.id.editTextDescription);
         editTextUrl = view.findViewById(R.id.editTextUrl);
         buttonAdd = view.findViewById(R.id.buttonAdd);
+        buttonBack = view.findViewById(R.id.buttonAddReturn);
         errorField = view.findViewById(R.id.textViewError);
 
         ArrayAdapter<CharSequence> categoryadapter = ArrayAdapter.createFromResource(getContext(),
@@ -61,6 +63,13 @@ public class AddItemFragment extends Fragment {
             public void onClick(View v) {
                 System.out.println(itemdb);
                 addItem();
+            }
+        });
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new HomeFragment());
             }
         });
 
@@ -124,5 +133,12 @@ public class AddItemFragment extends Fragment {
 
         itemdb.add(item);
         itemdb.updateDatabase();
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
