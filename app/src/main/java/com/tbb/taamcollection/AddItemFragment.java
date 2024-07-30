@@ -89,6 +89,7 @@ public class AddItemFragment extends Fragment {
         String url = editTextUrl.getText().toString().trim();
 
         errorField.setText("");
+        errorField.setTextColor(0xFFE20303);
 
         if (lotNumStr.isEmpty() || name.isEmpty() || description.isEmpty()) {
             errorField.setText("Please fill in all Fields");
@@ -99,6 +100,9 @@ public class AddItemFragment extends Fragment {
             errorField.setText("Lot Number should be a Number");
             return;
         }
+
+        errorField.setText("Item Added Successfully!");
+        errorField.setTextColor(0xFF8BC34A);
 
         int lotNum = Integer.parseInt(lotNumStr);
 
