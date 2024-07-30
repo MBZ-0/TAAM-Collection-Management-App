@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = db.getReference("items"); // Adjust the reference as per your database structure
 
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
+            loadFragment(new ReportItemFragment());
         }
     }
 

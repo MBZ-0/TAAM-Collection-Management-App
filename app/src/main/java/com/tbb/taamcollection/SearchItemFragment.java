@@ -50,6 +50,7 @@ public class SearchItemFragment extends Fragment {
 
 
 
+
             }
         });
 
