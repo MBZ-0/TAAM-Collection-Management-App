@@ -75,6 +75,14 @@ public class CustomExpandableListFragment extends Fragment {
             }
         });
 
+        sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<Integer, List<Boolean>>>() {
+            @Override
+            public void onChanged(HashMap<Integer, List<Boolean>> state) {
+                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages, listIds, state);
+                expandableListView.setAdapter(expandableListAdapter);
+            }
+        });
+
         return view;
     }
 
