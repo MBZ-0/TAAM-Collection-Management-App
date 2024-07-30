@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.LinkedList;
 
 public class CustomExpandableListFragment extends Fragment {
 
@@ -54,8 +55,25 @@ public class CustomExpandableListFragment extends Fragment {
         // Initialize ViewModel
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        // Fetch data from Firebase
-        prepareListDataFromDatabase();
+        // Check if there are arguments passed to the fragment
+        Bundle args = getArguments();
+        if (args != null) {
+            LinkedList<Item> itemsList = (LinkedList<Item>) args.getSerializable("itemsList");
+            if (itemsList != null) {
+                prepareListDataFromItemsList(itemsList);
+            }
+        } else {
+            // Fetch data from Firebase if no arguments are passed
+            prepareListDataFromDatabase();
+        }
+
+        sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<Integer, List<Boolean>>>() {
+            @Override
+            public void onChanged(HashMap<Integer, List<Boolean>> state) {
+                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImages, listIds, state);
+                expandableListView.setAdapter(expandableListAdapter);
+            }
+        });
 
         sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<Integer, List<Boolean>>>() {
             @Override
@@ -114,7 +132,7 @@ public class CustomExpandableListFragment extends Fragment {
             }
         });
     }
-
+  
     public CustomExpandableListAdapter getAdapter() {
         return expandableListAdapter;
     }
