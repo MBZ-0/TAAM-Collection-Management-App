@@ -1,4 +1,4 @@
-package com.example.taamcollection;
+package com.tbb.taamcollection;
 
 import org.junit.Test;
 
