@@ -1,5 +1,7 @@
 package com.tbb.taamcollection;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -10,13 +12,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+
+class ItemBehavior{
+
+    void onUpdate(@NonNull DataSnapshot dataSnapshot){
+
+    }
+
+}
+
 public class ItemDatabase extends Database {
 
     static Database db;
+    ItemBehavior behavior;
     HashMap<Integer, Item> allItems;
     protected List<Object> preConvert;
 
@@ -82,6 +95,21 @@ public class ItemDatabase extends Database {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Handle possible errors
+            }
+        });
+    }
+
+    void checkForUpdates(){
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                updateDatabase();
+                behavior.onUpdate(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
         });
     }

@@ -29,6 +29,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<Integer, List<Boolean>> checkBoxState;
     private List<Integer> listIds;
 
+    private List<Item> itemsList;
+
     public CustomExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, List<String>> listChildData,
                                        List<Integer> listDataLotNumbers, List<String> listDataUrls,

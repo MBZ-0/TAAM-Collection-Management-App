@@ -56,6 +56,8 @@ public class CustomExpandableListFragment extends Fragment {
         listDataUrls = new ArrayList<>();
         listIds = new ArrayList<>();
 
+
+
         // Initialize ViewModel
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -96,11 +98,12 @@ public class CustomExpandableListFragment extends Fragment {
         return view;
     }
 
+
     private void prepareListDataFromDatabase() {
-        itemsRef = itemDatabase.database;
-        itemsRef.addValueEventListener(new ValueEventListener() {
+        ItemDatabase db =(ItemDatabase) ItemDatabase.db;
+        db.behavior = new ItemBehavior(){
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            void onUpdate(@NonNull DataSnapshot dataSnapshot){
                 listDataHeader.clear();
                 listDataChild.clear();
                 listDataLotNumbers.clear();
@@ -137,12 +140,7 @@ public class CustomExpandableListFragment extends Fragment {
 
                 expandableListAdapter.notifyDataSetChanged();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Database error: " + databaseError.getMessage());
-            }
-        });
+        };
     }
 
     private void prepareListDataFromItemsList(LinkedList<Item> itemsList) {
