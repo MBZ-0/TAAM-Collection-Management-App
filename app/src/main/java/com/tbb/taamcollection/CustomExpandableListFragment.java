@@ -141,6 +141,8 @@ public class CustomExpandableListFragment extends Fragment {
                 expandableListAdapter.notifyDataSetChanged();
             }
         };
+
+        db.checkForUpdates();
     }
 
     private void prepareListDataFromItemsList(LinkedList<Item> itemsList) {
