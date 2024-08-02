@@ -24,22 +24,22 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
     private List<Integer> listDataLotNumbers;
-    private List<String> listDataUrls; // List for URLs
-    private List<Integer> listDataImages;
+    private List<String> listDataImageUrls; // Updated to store image URLs
+    private List<String> listDataVideoUrls; // List for video URLs
     private HashMap<Integer, List<Boolean>> checkBoxState;
     private List<Integer> listIds;
 
     public CustomExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, List<String>> listChildData,
-                                       List<Integer> listDataLotNumbers, List<String> listDataUrls,
-                                       List<Integer> listDataImages, List<Integer> listIds,
+                                       List<Integer> listDataLotNumbers, List<String> listDataImageUrls,
+                                       List<String> listDataVideoUrls, List<Integer> listIds,
                                        HashMap<Integer, List<Boolean>> checkBoxState) {
         this.context = context;
         this.listDataHeader = listDataHeader != null ? listDataHeader : new ArrayList<>();
         this.listDataChild = listChildData != null ? listChildData : new HashMap<>();
         this.listDataLotNumbers = listDataLotNumbers != null ? listDataLotNumbers : new ArrayList<>();
-        this.listDataUrls = listDataUrls != null ? listDataUrls : new ArrayList<>();
-        this.listDataImages = listDataImages != null ? listDataImages : new ArrayList<>();
+        this.listDataImageUrls = listDataImageUrls != null ? listDataImageUrls : new ArrayList<>();
+        this.listDataVideoUrls = listDataVideoUrls != null ? listDataVideoUrls : new ArrayList<>();
         this.listIds = listIds != null ? listIds : new ArrayList<>();
         this.checkBoxState = checkBoxState != null ? checkBoxState : new HashMap<>();
     }
@@ -60,6 +60,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         final String childText = (String) getChild(groupPosition, childPosition);
+        String videoUrl = listDataVideoUrls.get(groupPosition);
+        boolean hasVideo = videoUrl != null && !videoUrl.isEmpty();
+
+        // Skip creating the video child view if no video URL
+        if (!hasVideo && childPosition == 3) {
+            return new View(context);
+        }
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -70,7 +77,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView period = convertView.findViewById(R.id.period);
         TextView descriptionTitle = convertView.findViewById(R.id.description_title);
         TextView descriptionContent = convertView.findViewById(R.id.description_content);
+        TextView videoTitle = convertView.findViewById(R.id.video_title);
         ImageView descriptionArrow = convertView.findViewById(R.id.description_arrow);
+        ImageView videoArrow = convertView.findViewById(R.id.video_arrow);
+        VideoView videoContent = convertView.findViewById(R.id.video_content);
 
         String defaultText = "Unknown";
 
@@ -79,21 +89,30 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
+            videoTitle.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.GONE);
+            videoArrow.setVisibility(View.GONE);
+            videoContent.setVisibility(View.GONE);
             category.setText("Category: " + (childText != null ? childText : defaultText));
         } else if (childPosition == 1) {
             category.setVisibility(View.GONE);
             period.setVisibility(View.VISIBLE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
+            videoTitle.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.GONE);
+            videoArrow.setVisibility(View.GONE);
+            videoContent.setVisibility(View.GONE);
             period.setText("Period: " + (childText != null ? childText : defaultText));
         } else if (childPosition == 2) {
             category.setVisibility(View.GONE);
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.VISIBLE);
             descriptionContent.setVisibility(View.GONE);
+            videoTitle.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.VISIBLE);
+            videoArrow.setVisibility(View.GONE);
+            videoContent.setVisibility(View.GONE);
             descriptionTitle.setText("Description: ");
             descriptionContent.setText("Detailed description: " + (childText != null ? childText : defaultText));
 
@@ -106,6 +125,33 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                     descriptionArrow.setImageResource(R.drawable.ic_arrow_down);
                 }
             });
+        } else if (childPosition == 3 && hasVideo) { // New child position for video URL
+            category.setVisibility(View.GONE);
+            period.setVisibility(View.GONE);
+            descriptionTitle.setVisibility(View.GONE);
+            descriptionContent.setVisibility(View.GONE);
+            videoTitle.setVisibility(View.VISIBLE);
+            videoContent.setVisibility(View.GONE);
+            descriptionArrow.setVisibility(View.GONE);
+            videoArrow.setVisibility(View.VISIBLE);
+            videoTitle.setText("Video: ");
+
+            videoTitle.setOnClickListener(v -> {
+                if (videoContent.getVisibility() == View.GONE) {
+                    videoContent.setVisibility(View.VISIBLE);
+                    videoArrow.setImageResource(R.drawable.ic_arrow_up);
+
+                    // Set the video URL
+                    videoContent.setVideoPath(videoUrl);
+                    videoContent.start();
+                } else {
+                    videoContent.setVisibility(View.GONE);
+                    videoArrow.setImageResource(R.drawable.ic_arrow_down);
+                }
+            });
+        } else {
+            // Handle unexpected child positions gracefully
+            convertView = new View(context);
         }
 
         return convertView;
@@ -145,7 +191,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lotNumber = convertView.findViewById(R.id.lot_number);
         CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
         ImageView groupImage = convertView.findViewById(R.id.group_image);
-        VideoView groupVideo = convertView.findViewById(R.id.group_video);
 
         String defaultGroupName = "Unnamed Group";
         String defaultLotNumber = "Lot: 0";
@@ -153,28 +198,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         itemName.setText(headerTitle != null ? headerTitle : defaultGroupName);
         lotNumber.setText("Lot: " + (groupPosition < listDataLotNumbers.size() ? listDataLotNumbers.get(groupPosition) : defaultLotNumber));
 
-        // Set the image or video resource for the group
-        String url = listDataUrls.get(groupPosition);
-        if (url != null && !url.isEmpty()) {
-            int urlStatus = getUrlStatus(url);
-            if (urlStatus == 0) {
-                groupImage.setVisibility(View.VISIBLE);
-                groupVideo.setVisibility(View.GONE);
-                Glide.with(context).load(url).placeholder(R.drawable.default_image).into(groupImage);
-            } else if (urlStatus == 1) {
-                groupImage.setVisibility(View.GONE);
-                groupVideo.setVisibility(View.VISIBLE);
-                Uri videoUri = Uri.parse(url);
-                groupVideo.setVideoURI(videoUri);
-                groupVideo.setOnPreparedListener(mp -> mp.start());
-            } else {
-                groupImage.setVisibility(View.VISIBLE);
-                groupVideo.setVisibility(View.GONE);
-                groupImage.setImageResource(R.drawable.default_image); // Default image
-            }
+        // Set the image resource for the group
+        String imageUrl = listDataImageUrls.get(groupPosition);
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            groupImage.setVisibility(View.VISIBLE);
+            Glide.with(context).load(imageUrl).placeholder(R.drawable.default_image).into(groupImage);
         } else {
             groupImage.setVisibility(View.VISIBLE);
-            groupVideo.setVisibility(View.GONE);
             groupImage.setImageResource(R.drawable.default_image); // Default image
         }
 
@@ -207,17 +237,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
-    }
-
-    // Helper method to determine URL status
-    private int getUrlStatus(String url) {
-        if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".bmp") || url.endsWith(".svg")) {
-            return 0;
-        } else if (url.endsWith(".mp4") || url.endsWith(".avi") || url.endsWith(".mov") || url.endsWith(".mkv") || url.endsWith(".flv") || url.endsWith(".wmv")) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 
     public List<Boolean> getCheckboxStates() {

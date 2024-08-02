@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemFragment extends Fragment {
-    private EditText editTextLotNum, editTextName, editTextDescription, editTextUrl;
+    private EditText editTextLotNum, editTextName, editTextDescription, editTextImageUrl, editTextVideoUrl;
     private Spinner spinnerCategory, spinnerPeriod;
     private TextView errorField;
     private Button buttonAdd, buttonBack;
@@ -38,7 +38,8 @@ public class AddItemFragment extends Fragment {
         spinnerCategory = view.findViewById(R.id.spinnerAddCategory);
         spinnerPeriod = view.findViewById(R.id.spinnerAddPeriod);
         editTextDescription = view.findViewById(R.id.editTextDescription);
-        editTextUrl = view.findViewById(R.id.editTextUrl);
+        editTextImageUrl = view.findViewById(R.id.editTextImageUrl);
+        editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl);
         buttonAdd = view.findViewById(R.id.buttonAdd);
         buttonBack = view.findViewById(R.id.buttonAddReturn);
         errorField = view.findViewById(R.id.textViewError);
@@ -95,7 +96,8 @@ public class AddItemFragment extends Fragment {
         String category = spinnerCategory.getSelectedItem().toString().trim();
         String period = spinnerPeriod.getSelectedItem().toString().trim();
         String description = editTextDescription.getText().toString().trim();
-        String url = editTextUrl.getText().toString().trim();
+        String imageUrl = editTextImageUrl.getText().toString().trim();
+        String videoUrl = editTextVideoUrl.getText().toString().trim();
 
         errorField.setText("");
         errorField.setTextColor(0xFFE20303);
@@ -125,11 +127,11 @@ public class AddItemFragment extends Fragment {
         item.setCategory(propercategory);
         item.setPeriod(properperiod);
 
-        if (url.isEmpty()) {
+        if (imageUrl.isEmpty()) {
             // Use a default image URL if the URL is empty
-            url = "android.resource://" + getContext().getPackageName() + "/drawable/default_image";
+            imageUrl = "android.resource://" + getContext().getPackageName() + "/drawable/default_image";
         }
-        item.setUrl(url);
+        item.setImageUrl(imageUrl);
 
         itemdb.add(item);
         itemdb.updateDatabase();

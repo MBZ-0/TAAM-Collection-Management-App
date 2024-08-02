@@ -32,7 +32,8 @@ public class CustomExpandableListFragment extends Fragment {
     HashMap<String, List<String>> listDataChild;
     List<Integer> listDataLotNumbers;
     List<Integer> listDataImages;
-    List<String> listDataUrls;
+    List<String> listDataImageUrls;
+    List<String> listDataVideoUrls;
     List<Integer> listIds;
     private DatabaseReference itemsRef;
     private ItemDatabase itemDatabase;
@@ -53,7 +54,8 @@ public class CustomExpandableListFragment extends Fragment {
         listDataChild = new HashMap<>();
         listDataLotNumbers = new ArrayList<>();
         listDataImages = new ArrayList<>();
-        listDataUrls = new ArrayList<>();
+        listDataImageUrls = new ArrayList<>();
+        listDataVideoUrls = new ArrayList<>();
         listIds = new ArrayList<>();
 
         // Initialize ViewModel
@@ -65,8 +67,8 @@ public class CustomExpandableListFragment extends Fragment {
                 listDataHeader,
                 listDataChild,
                 listDataLotNumbers,
-                listDataUrls,
-                listDataImages,
+                listDataImageUrls,
+                listDataVideoUrls,
                 listIds,
                 sharedViewModel.getCheckBoxState().getValue()
         );
@@ -88,7 +90,7 @@ public class CustomExpandableListFragment extends Fragment {
         sharedViewModel.getCheckBoxState().observe(getViewLifecycleOwner(), new Observer<HashMap<Integer, List<Boolean>>>() {
             @Override
             public void onChanged(HashMap<Integer, List<Boolean>> state) {
-                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataUrls, listDataImages, listIds, state);
+                expandableListAdapter = new CustomExpandableListAdapter(getActivity(), listDataHeader, listDataChild, listDataLotNumbers, listDataImageUrls, listDataVideoUrls, listIds, state);
                 expandableListView.setAdapter(expandableListAdapter);
             }
         });
@@ -105,7 +107,8 @@ public class CustomExpandableListFragment extends Fragment {
                 listDataChild.clear();
                 listDataLotNumbers.clear();
                 listDataImages.clear();
-                listDataUrls.clear();
+                listDataImageUrls.clear();
+                listDataVideoUrls.clear();
                 listIds.clear();
                 int i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -118,9 +121,11 @@ public class CustomExpandableListFragment extends Fragment {
                         childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
                         childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
                         childList.add(item.getDescription() != null ? item.getDescription() : "Unknown Description");
+                        childList.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL as a child
                         listDataChild.put(listDataHeader.get(i), childList);
-                        listDataUrls.add(item.getUrl() != null ? item.getUrl() : ""); // Use the actual URL
+                        listDataImageUrls.add(item.getImageUrl() != null ? item.getImageUrl() : ""); // Use the actual image URL
                         listDataImages.add(R.drawable.default_image); // Placeholder, modify as needed
+                        listDataVideoUrls.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL to the list
                         i++;
                     } else {
                         Log.d(TAG, "Fetched item is null");
@@ -150,7 +155,8 @@ public class CustomExpandableListFragment extends Fragment {
         listDataChild.clear();
         listDataLotNumbers.clear();
         listDataImages.clear();
-        listDataUrls.clear();
+        listDataImageUrls.clear();
+        listDataVideoUrls.clear();
 
         for (Item item : itemsList) {
             listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
@@ -159,9 +165,11 @@ public class CustomExpandableListFragment extends Fragment {
             childList.add(item.getCategory() != null ? item.getCategory().getValue() : "Unknown Category");
             childList.add(item.getPeriod() != null ? item.getPeriod().getValue() : "Unknown Period");
             childList.add(item.getDescription() != null ? item.getDescription() : "Unknown Description");
+            childList.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL as a child
             listDataChild.put(listDataHeader.get(listDataHeader.size() - 1), childList);
-            listDataUrls.add(item.getUrl() != null ? item.getUrl() : ""); // Use the actual URL
+            listDataImageUrls.add(item.getImageUrl() != null ? item.getImageUrl() : ""); // Use the actual image URL
             listDataImages.add(R.drawable.default_image); // Placeholder, modify as needed
+            listDataVideoUrls.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL to the list
         }
 
         expandableListAdapter.notifyDataSetChanged();
@@ -199,3 +207,4 @@ public class CustomExpandableListFragment extends Fragment {
         }
     }
 }
+
