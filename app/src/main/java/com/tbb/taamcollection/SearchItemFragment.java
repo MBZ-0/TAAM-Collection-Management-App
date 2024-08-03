@@ -30,6 +30,7 @@ public class SearchItemFragment extends Fragment {
         TextInputEditText nameItem = view.findViewById(R.id.nameItem);
         spinnerCategory = view.findViewById(R.id.spinnerSearchCategory);
         spinnerPeriod = view.findViewById(R.id.spinnerSeachPeriod);
+        Button buttonBack = view.findViewById(R.id.buttonBack);
 
         ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.categories_array, R.layout.spinner);
@@ -42,6 +43,13 @@ public class SearchItemFragment extends Fragment {
         spinnerPeriod.setAdapter(periodAdapter);
 
         db = new ItemDatabase("items");
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new HomeFragment());
+            }
+        });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,5 +82,12 @@ public class SearchItemFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
