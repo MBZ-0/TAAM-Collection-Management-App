@@ -77,7 +77,7 @@ public class AddItemFragment extends Fragment {
         return view;
     }
 
-    private static boolean isNumber(String str) {
+    public static boolean isNumber(String str) {
         if (str == null || str.isEmpty()) {
             return false;
         }
