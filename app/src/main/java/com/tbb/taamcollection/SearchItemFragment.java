@@ -1,4 +1,5 @@
 package com.tbb.taamcollection;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,4 +54,3 @@ public class SearchItemFragment extends Fragment {
         return view;
     }
 }
-

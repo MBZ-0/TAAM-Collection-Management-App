@@ -71,6 +71,13 @@ public class Item {
         return result;
     }
 
+    // Just using this to debug the issues related to the Search Fragment
+    @Override
+    public String toString(){
+        return "Name: " + name + "\nLot: " + lotNumber +
+                "\nCategory: " + category + "\nPeriod: " + period;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
