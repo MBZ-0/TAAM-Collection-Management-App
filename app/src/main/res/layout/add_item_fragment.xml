@@ -14,7 +14,6 @@
         android:fontFamily="@font/oswald_bold"
         android:hint="Description: "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerAddPeriod" />
 
@@ -26,7 +25,6 @@
         android:fontFamily="@font/oswald_bold"
         android:hint="Lot Number:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +36,6 @@
         android:fontFamily="@font/oswald_bold"
         android:hint="Name: "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLotNum" />
 
@@ -50,7 +47,7 @@
         android:fontFamily="@font/oswald_bold"
         android:text="Please fill in every field"
         android:textColor="#E20303"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUrl"
+        app:layout_constraintTop_toBottomOf="@+id/editTextVideoUrl"
         tools:layout_editor_absoluteX="0dp"
         tools:visibility="invisible" />
 
@@ -71,17 +68,26 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/editTextUrl"
+        android:id="@+id/editTextImageUrl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:ems="10"
         android:fontFamily="@font/oswald_bold"
-        android:hint="Image/Video URL:"
-        android:inputType="text"
+        android:hint="Image URL:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+
+    <EditText
+        android:id="@+id/editTextVideoUrl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/oswald_bold"
+        android:hint="Video URL:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextImageUrl" />
 
     <Button
         android:id="@+id/buttonAddReturn"
