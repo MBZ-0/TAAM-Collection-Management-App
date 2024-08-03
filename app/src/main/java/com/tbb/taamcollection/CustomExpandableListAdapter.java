@@ -1,7 +1,6 @@
 package com.tbb.taamcollection;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,13 +59,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         final String childText = (String) getChild(groupPosition, childPosition);
-        String videoUrl = listDataVideoUrls.get(groupPosition);
-        boolean hasVideo = videoUrl != null && !videoUrl.isEmpty();
-
-        // Skip creating the video child view if no video URL
-        if (!hasVideo && childPosition == 3) {
-            return new View(context);
-        }
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,10 +69,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView period = convertView.findViewById(R.id.period);
         TextView descriptionTitle = convertView.findViewById(R.id.description_title);
         TextView descriptionContent = convertView.findViewById(R.id.description_content);
-        TextView videoTitle = convertView.findViewById(R.id.video_title);
         ImageView descriptionArrow = convertView.findViewById(R.id.description_arrow);
+        TextView videoTitle = convertView.findViewById(R.id.video_title);
         ImageView videoArrow = convertView.findViewById(R.id.video_arrow);
-        VideoView videoContent = convertView.findViewById(R.id.video_content);
+        VideoView videoContent = convertView.findViewById(R.id.video_content); // Assuming video_content is the ID for the VideoView
 
         String defaultText = "Unknown";
 
@@ -89,8 +81,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
-            videoTitle.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.GONE);
+            videoTitle.setVisibility(View.GONE);
             videoArrow.setVisibility(View.GONE);
             videoContent.setVisibility(View.GONE);
             category.setText("Category: " + (childText != null ? childText : defaultText));
@@ -99,8 +91,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             period.setVisibility(View.VISIBLE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
-            videoTitle.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.GONE);
+            videoTitle.setVisibility(View.GONE);
             videoArrow.setVisibility(View.GONE);
             videoContent.setVisibility(View.GONE);
             period.setText("Period: " + (childText != null ? childText : defaultText));
@@ -109,8 +101,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.VISIBLE);
             descriptionContent.setVisibility(View.GONE);
-            videoTitle.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.VISIBLE);
+            videoTitle.setVisibility(View.GONE);
             videoArrow.setVisibility(View.GONE);
             videoContent.setVisibility(View.GONE);
             descriptionTitle.setText("Description: ");
@@ -125,33 +117,39 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                     descriptionArrow.setImageResource(R.drawable.ic_arrow_down);
                 }
             });
-        } else if (childPosition == 3 && hasVideo) { // New child position for video URL
+        } else if (childPosition == 3) {
+            String videoUrl = listDataVideoUrls.get(groupPosition);
+
             category.setVisibility(View.GONE);
             period.setVisibility(View.GONE);
             descriptionTitle.setVisibility(View.GONE);
             descriptionContent.setVisibility(View.GONE);
-            videoTitle.setVisibility(View.VISIBLE);
-            videoContent.setVisibility(View.GONE);
             descriptionArrow.setVisibility(View.GONE);
-            videoArrow.setVisibility(View.VISIBLE);
-            videoTitle.setText("Video: ");
 
-            videoTitle.setOnClickListener(v -> {
-                if (videoContent.getVisibility() == View.GONE) {
-                    videoContent.setVisibility(View.VISIBLE);
-                    videoArrow.setImageResource(R.drawable.ic_arrow_up);
+            if (videoUrl != null && !videoUrl.isEmpty()) {
+                videoTitle.setVisibility(View.VISIBLE);
+                videoArrow.setVisibility(View.VISIBLE);
+                videoContent.setVisibility(View.GONE);
+                videoTitle.setText("Video: ");
+                videoTitle.setOnClickListener(v -> {
+                    if (videoContent.getVisibility() == View.GONE) {
+                        videoContent.setVisibility(View.VISIBLE);
+                        videoArrow.setImageResource(R.drawable.ic_arrow_up);
 
-                    // Set the video URL
-                    videoContent.setVideoPath(videoUrl);
-                    videoContent.start();
-                } else {
-                    videoContent.setVisibility(View.GONE);
-                    videoArrow.setImageResource(R.drawable.ic_arrow_down);
-                }
-            });
-        } else {
-            // Handle unexpected child positions gracefully
-            convertView = new View(context);
+                        // Set the video URL
+                        videoContent.setVideoPath(videoUrl);
+                        videoContent.start();
+                    } else {
+                        videoContent.setVisibility(View.GONE);
+                        videoArrow.setImageResource(R.drawable.ic_arrow_down);
+                        videoContent.stopPlayback();
+                    }
+                });
+            } else {
+                videoTitle.setVisibility(View.GONE);
+                videoArrow.setVisibility(View.GONE);
+                videoContent.setVisibility(View.GONE);
+            }
         }
 
         return convertView;

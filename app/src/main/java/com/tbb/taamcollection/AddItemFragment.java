@@ -126,12 +126,8 @@ public class AddItemFragment extends Fragment {
         item.setDescription(description);
         item.setCategory(propercategory);
         item.setPeriod(properperiod);
-
-        if (imageUrl.isEmpty()) {
-            // Use a default image URL if the URL is empty
-            imageUrl = "android.resource://" + getContext().getPackageName() + "/drawable/default_image";
-        }
         item.setImageUrl(imageUrl);
+        item.setVideoUrl(videoUrl);
 
         itemdb.add(item);
         itemdb.updateDatabase();
