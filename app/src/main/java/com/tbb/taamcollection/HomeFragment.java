@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.LinkedList;
+
 public class HomeFragment extends Fragment {
 
     public HomeFragment() {
@@ -45,8 +47,9 @@ public class HomeFragment extends Fragment {
         Button buttonReport = view.findViewById(R.id.report);
         Button buttonView = view.findViewById(R.id.view);
         Button buttonSearch = view.findViewById(R.id.search);
+        Button buttonBackFromSearch = view.findViewById(R.id.searchHomeScreenBack);
 
-        if(AdminDatabase.loggedIn){
+        if (AdminDatabase.loggedIn) {
             onLogin(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
         } else {
             onLogout(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
@@ -62,7 +65,7 @@ public class HomeFragment extends Fragment {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminDatabase.loggedIn) {
+                if (AdminDatabase.loggedIn) {
                     loadFragment(new AddItemFragment());
                 }
             }
@@ -71,7 +74,7 @@ public class HomeFragment extends Fragment {
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminDatabase.loggedIn) {
+                if (AdminDatabase.loggedIn) {
                     loadFragment(new RemoveItemFragment());
                 }
             }
@@ -80,7 +83,7 @@ public class HomeFragment extends Fragment {
         buttonReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminDatabase.loggedIn) {
+                if (AdminDatabase.loggedIn) {
                     loadFragment(new ReportItemFragment());
                 }
             }
@@ -89,7 +92,7 @@ public class HomeFragment extends Fragment {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AdminDatabase.loggedIn) {
+                if (AdminDatabase.loggedIn) {
                     onLogout(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
                 }
             }
@@ -109,10 +112,49 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Add the CustomExpandableListFragment to the HomeFragment layout
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(), "CustomExpandableListFragment");
-        transaction.commit();
+        // Handle back button to go to the previous screen
+        buttonBackFromSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
+
+        // Check if there are search results passed to this fragment
+        Bundle args = getArguments();
+        if (args != null) {
+            LinkedList<Item> searchResults = (LinkedList<Item>) args.getSerializable("searchResults");
+            if (searchResults != null) {
+                // Replace the expandable list with search results
+                CustomExpandableListFragment searchResultsFragment = new CustomExpandableListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("itemsList", searchResults);
+                searchResultsFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.replace(R.id.expandableListView, searchResultsFragment, "CustomExpandableListFragment");
+                transaction.commit();
+
+                // Make the back button visible
+                buttonBackFromSearch.setVisibility(View.VISIBLE);
+            } else {
+                // Make the back button invisible
+                buttonBackFromSearch.setVisibility(View.GONE);
+
+                // Add the CustomExpandableListFragment to the HomeFragment layout
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(), "CustomExpandableListFragment");
+                transaction.commit();
+            }
+        } else {
+            // Make the back button invisible
+            buttonBackFromSearch.setVisibility(View.GONE);
+
+            // Add the CustomExpandableListFragment to the HomeFragment layout
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(), "CustomExpandableListFragment");
+            transaction.commit();
+        }
 
         return view;
     }

@@ -67,22 +67,26 @@ public class SearchItemFragment extends Fragment {
 
                 if (!lot.isEmpty() || !name.isEmpty() || !category.isEmpty() || !period.isEmpty()) {
                     LinkedList<Item> itemsList = db.search(name, lot, category, period);
-
-                    CustomExpandableListFragment fragment = new CustomExpandableListFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("itemsList", itemsList);
-                    fragment.setArguments(bundle);
-
-                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    passSearchResultsToHomeFragment(itemsList);
                 }
             }
         });
 
         return view;
     }
+
+    private void passSearchResultsToHomeFragment(LinkedList<Item> itemsList) {
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("searchResults", itemsList);
+        homeFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, homeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

@@ -60,6 +60,18 @@
         app:layout_constraintStart_toEndOf="@+id/view" />
 
     <Button
+        android:id="@+id/searchHomeScreenBack"
+        style="@style/ButtonStyle"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/adminBack"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/search" />
+
+    <Button
         android:id="@+id/add"
         style="@style/ButtonStyle"
         android:layout_width="75dp"
