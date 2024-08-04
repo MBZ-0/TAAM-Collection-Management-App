@@ -1,5 +1,7 @@
 package com.tbb.taamcollection;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +64,6 @@ public class AddItemFragment extends Fragment {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(itemdb);
                 addItem();
             }
         });
@@ -90,7 +91,6 @@ public class AddItemFragment extends Fragment {
     }
 
     private void addItem() {
-        System.out.println(itemdb);
         String lotNumStr = editTextLotNum.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
         String category = spinnerCategory.getSelectedItem().toString().trim();
@@ -112,6 +112,10 @@ public class AddItemFragment extends Fragment {
             return;
         }
 
+        if (imageUrl.isEmpty()) {
+            imageUrl = getDefaultImageUri(getContext()).toString();
+        }
+
         errorField.setText("Item Added Successfully!");
         errorField.setTextColor(0xFF8BC34A);
 
@@ -131,6 +135,10 @@ public class AddItemFragment extends Fragment {
 
         itemdb.add(item);
         itemdb.updateDatabase();
+    }
+
+    private Uri getDefaultImageUri(Context context) {
+        return Uri.parse("android.resource://" + context.getPackageName() + "/" + R.drawable.default_image);
     }
 
     private void loadFragment(Fragment fragment) {

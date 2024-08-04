@@ -200,10 +200,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         String imageUrl = listDataImageUrls.get(groupPosition);
         if (imageUrl != null && !imageUrl.isEmpty()) {
             groupImage.setVisibility(View.VISIBLE);
-            Glide.with(context).load(imageUrl).placeholder(R.drawable.default_image).into(groupImage);
-        } else {
-            groupImage.setVisibility(View.VISIBLE);
-            groupImage.setImageResource(R.drawable.default_image); // Default image
+            Glide.with(context).load(imageUrl).into(groupImage);
         }
         int itemId = listIds.get(groupPosition);
         List<Boolean> groupCheckBoxState = checkBoxState.get(itemId);
