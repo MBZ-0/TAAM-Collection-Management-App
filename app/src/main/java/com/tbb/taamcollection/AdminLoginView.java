@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -21,13 +20,13 @@ public class AdminLoginView extends Fragment {
     TextInputEditText userText, passText;
 
     AdminLoginPresenter presenter;
+    AdminLoginView self = this;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_login_fragment, container, false);
         setVariables(view);
-
         presenter = new AdminLoginPresenter();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -38,18 +37,12 @@ public class AdminLoginView extends Fragment {
                     //presenter.emptyPassUser.setVisibility(View.VISIBLE);
                 } else {
                     //presenter.emptyPassUser.setVisibility(View.INVISIBLE);
-                    //db.authenticateLogin(username, password);
+                    //presenter.authenticateLogin(username, password);
                 }
             }
         });
 
-        buttonReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //presenter.loadHome();
-                loadFragment(new HomeFragment());
-            }
-        });
+        buttonReturn.setOnClickListener(v -> presenter.loadHome(self));
 
         return view;
     }
@@ -66,12 +59,5 @@ public class AdminLoginView extends Fragment {
     private void setUsernamePassword() {
         String username = userText.getText().toString();
         String password = passText.getText().toString();
-    }
-
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }
