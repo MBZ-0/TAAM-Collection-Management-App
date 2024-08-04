@@ -33,7 +33,12 @@ public class AdminLoginPresenterTest {
 
     @Test
     public void testAuthenticateLoginTrue() {
-
+        String username = "correctusername";
+        String password = "coolpassword";
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        when(model.authenticateLogin(username, password)).thenReturn(true);
+        presenter.authenticateLogin(username, password);
+        verify(view).setIsValid(true);
     }
 
     @Test
