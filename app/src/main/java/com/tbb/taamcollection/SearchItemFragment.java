@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ import java.util.LinkedList;
 public class SearchItemFragment extends Fragment {
     ItemDatabase db;
     private Spinner spinnerCategory, spinnerPeriod;
+    private TextView errorField;
+
 
     @Nullable
     @Override
@@ -31,6 +34,7 @@ public class SearchItemFragment extends Fragment {
         spinnerCategory = view.findViewById(R.id.spinnerSearchCategory);
         spinnerPeriod = view.findViewById(R.id.spinnerSeachPeriod);
         Button buttonBack = view.findViewById(R.id.buttonBack);
+        errorField = view.findViewById(R.id.textViewError);
 
         ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.categories_array, R.layout.spinner);
@@ -65,9 +69,16 @@ public class SearchItemFragment extends Fragment {
                 String category = spinnerCategory.getSelectedItem().toString();
                 String period = spinnerPeriod.getSelectedItem().toString();
 
+                errorField.setText("");
+                errorField.setTextColor(0xFFE20303);
+
                 if (!lot.isEmpty() || !name.isEmpty() || !category.isEmpty() || !period.isEmpty()) {
                     LinkedList<Item> itemsList = db.search(name, lot, category, period);
                     passSearchResultsToHomeFragment(itemsList);
+                }
+                //
+                else {
+                    errorField.setText("Please fill in at least one field");
                 }
             }
         });
