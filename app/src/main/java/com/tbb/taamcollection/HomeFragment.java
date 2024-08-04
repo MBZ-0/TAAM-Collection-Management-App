@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new AdminLoginFragment());
+                loadFragment(new AdminLoginView());
             }
         });
 

@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-public class AdminLoginFragment extends Fragment {
+public class AdminLoginView extends Fragment {
 
     @Nullable
     @Override
