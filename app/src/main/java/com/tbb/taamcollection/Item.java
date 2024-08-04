@@ -31,7 +31,8 @@ public class Item {
         for (int i = 0; i < a.size(); i++) {
             if (a.get(i) != null && a.get(i) instanceof HashMap) {
                 HashMap<String, Object> k = (HashMap<String, Object>) a.get(i);
-                Item n = new Item(Math.toIntExact((long) k.get("id")));
+                int id = Math.toIntExact((long) k.get("id"));
+                Item n = new Item(id);
                 n.lotNumber = Math.toIntExact((long) k.get("lotNumber"));
                 n.name = (String) k.get("name");
                 n.description = (String) k.get("description");
@@ -39,7 +40,7 @@ public class Item {
                 n.category = Category.fromLabel((String) k.get("category"));
                 n.imageUrl = (String) k.get("imageUrl");
                 n.videoUrl = (String) k.get("videoUrl");
-                r.put(i, n);
+                r.put(id, n);
             }
         }
         return r;
