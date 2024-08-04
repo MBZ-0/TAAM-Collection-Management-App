@@ -27,24 +27,34 @@ public class AdminLoginView extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_login_fragment, container, false);
         setVariables(view);
-        presenter = new AdminLoginPresenter();
+        presenter = new AdminLoginPresenter(new AdminLoginModel());
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setUsernamePassword();
-                if (username.isEmpty() || password.isEmpty()) {
-                    //presenter.emptyPassUser.setVisibility(View.VISIBLE);
-                } else {
-                    //presenter.emptyPassUser.setVisibility(View.INVISIBLE);
-                    //presenter.authenticateLogin(username, password);
-                }
-            }
+        buttonLogin.setOnClickListener(v -> {
+            setUsernamePassword();
+            setEmptyPassUser(presenter.checkEmpty(username, password));
+            setIsValid(presenter.authenticateLogin(username, password));
         });
 
         buttonReturn.setOnClickListener(v -> presenter.loadHome(self));
 
         return view;
+    }
+
+    private void setEmptyPassUser(boolean visible) {
+        if (visible) {
+            emptyPassUser.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyPassUser.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setIsValid(boolean valid) {
+        if (valid) {
+            invalidLogin.setVisibility(View.INVISIBLE);
+        } else {
+            invalidLogin.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setVariables(View view) {
@@ -57,7 +67,7 @@ public class AdminLoginView extends Fragment {
     }
 
     private void setUsernamePassword() {
-        String username = userText.getText().toString();
-        String password = passText.getText().toString();
+        username = userText.getText().toString();
+        password = passText.getText().toString();
     }
 }

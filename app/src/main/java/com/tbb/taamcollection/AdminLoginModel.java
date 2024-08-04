@@ -10,18 +10,16 @@ public class AdminLoginModel {
             @Override
             void success() {
                 AdminDatabase.loggedIn = true;
-                //presenter.invalidLogin.setVisibility(View.INVISIBLE);
-                //loadFragment(new HomeFragment());
             }
 
             @Override
             void failure() {
-                //presenter.invalidLogin.setVisibility(View.VISIBLE);
             }
         };
     }
 
-    public void authenticateLogin(String username, String password) {
+    public boolean authenticateLogin(String username, String password) {
         db.authenticateLogin(username, password);
+        return AdminDatabase.loggedIn;
     }
 }
