@@ -61,11 +61,6 @@ public class SearchItemFragment extends Fragment {
                 String lot = lotNum.getText().toString();
                 String name = nameItem.getText().toString();
 
-                ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(getContext(),
-                        R.array.categories_array, R.layout.spinner);
-                categoryAdapter.setDropDownViewResource(R.layout.spinner);
-                spinnerCategory.setAdapter(categoryAdapter);
-
                 String category = spinnerCategory.getSelectedItem().toString();
                 String period = spinnerPeriod.getSelectedItem().toString();
 
