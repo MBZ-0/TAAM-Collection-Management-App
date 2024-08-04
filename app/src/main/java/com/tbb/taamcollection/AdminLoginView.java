@@ -49,7 +49,7 @@ public class AdminLoginView extends Fragment {
         }
     }
 
-    private void setIsValid(boolean valid) {
+    void setIsValid(boolean valid) {
         if (valid) {
             invalidLogin.setVisibility(View.INVISIBLE);
         } else {

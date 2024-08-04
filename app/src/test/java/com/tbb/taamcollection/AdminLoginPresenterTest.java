@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.view.View;
+import android.widget.TextView;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminLoginPresenterTest {
@@ -20,6 +21,9 @@ public class AdminLoginPresenterTest {
     @Mock
     AdminLoginView view;
 
+    @Mock
+    TextView invalidLogin;
+
     @Test
     public void testAuthenticateLoginFalse() {
         String username = "notacorrectusername";
@@ -27,7 +31,7 @@ public class AdminLoginPresenterTest {
         AdminLoginPresenter presenter = new AdminLoginPresenter(model);
         when(model.authenticateLogin(username, password)).thenReturn(false);
         assertFalse(presenter.authenticateLogin(username, password));
-        verify(view).invalidLogin.setVisibility(View.INVISIBLE);
+        verify(view).setIsValid(false);
     }
 
     @Test
