@@ -124,7 +124,6 @@ public class CustomExpandableListFragment extends Fragment {
                         childList.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL as a child
                         listDataChild.put(listDataHeader.get(i), childList);
                         listDataImageUrls.add(item.getImageUrl() != null ? item.getImageUrl() : ""); // Use the actual image URL
-                        listDataImages.add(R.drawable.default_image); // Placeholder, modify as needed
                         listDataVideoUrls.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL to the list
                         i++;
                     } else {
@@ -168,7 +167,6 @@ public class CustomExpandableListFragment extends Fragment {
             childList.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL as a child
             listDataChild.put(listDataHeader.get(listDataHeader.size() - 1), childList);
             listDataImageUrls.add(item.getImageUrl() != null ? item.getImageUrl() : ""); // Use the actual image URL
-            listDataImages.add(R.drawable.default_image); // Placeholder, modify as needed
             listDataVideoUrls.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL to the list
         }
 

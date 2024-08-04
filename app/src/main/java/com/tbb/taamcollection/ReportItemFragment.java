@@ -1,6 +1,9 @@
 package com.tbb.taamcollection;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.pdf.PdfDocument;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,19 +18,20 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Color;
 import java.io.File;
-
-
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.collection.LLRBNode;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.LinkedList;
+import java.util.List;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 public class ReportItemFragment extends Fragment {
     ItemDatabase db;
-    // Default constructor
+
     public ReportItemFragment() {
         // Required empty public constructor
     }
@@ -36,8 +40,6 @@ public class ReportItemFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        // The layout file should be created in the res/layout directory
         View view = inflater.inflate(R.layout.report_item_fragment, container, false);
         db = new ItemDatabase("items");
         Button lotButton = view.findViewById(R.id.lot_submit);
@@ -57,117 +59,134 @@ public class ReportItemFragment extends Fragment {
         Button allButton = view.findViewById(R.id.all_submit);
         Button allDPButton = view.findViewById(R.id.all_dpsubmit);
 
-
-
-
-
-        lotButton.setOnClickListener(new View.OnClickListener(){ //LOT SEARCH
+        lotButton.setOnClickListener(new View.OnClickListener() { // LOT SEARCH
             @Override
-            public void onClick(View v){
-                LinkedList<Item> itemsList = db.search("",lotText.getText().toString(),"","");
-                createPDF(itemsList);
-
-
+            public void onClick(View v) {
+                LinkedList<Item> itemsList = db.search("", lotText.getText().toString(), "", "");
+                new CreatePDFTask().execute(itemsList);
             }
         });
-        nameButton.setOnClickListener(new View.OnClickListener(){ //NAME SEARCH
+        nameButton.setOnClickListener(new View.OnClickListener() { // NAME SEARCH
             @Override
-            public void onClick(View v){
-                LinkedList<Item> itemsList = db.search(nameText.toString(),"","","");
-                createPDF(itemsList);
-
-
+            public void onClick(View v) {
+                LinkedList<Item> itemsList = db.search(nameText.getText().toString(), "", "", "");
+                new CreatePDFTask().execute(itemsList);
             }
         });
-        catButton.setOnClickListener(new View.OnClickListener(){ // CATEGORY SEARCH
+        catButton.setOnClickListener(new View.OnClickListener() { // CATEGORY SEARCH
             @Override
-            public void onClick(View v){
-                LinkedList<Item> itemsList = db.search("","",catText.toString(),"");
-                createPDF(itemsList);
-
-
+            public void onClick(View v) {
+                LinkedList<Item> itemsList = db.search("", "", catText.getText().toString(), "");
+                new CreatePDFTask().execute(itemsList);
             }
         });
-
-        catdpButton.setOnClickListener(new View.OnClickListener(){ // CATEGORY W/ DESC. & PIC
+        catdpButton.setOnClickListener(new View.OnClickListener() { // CATEGORY W/ DESC. & PIC
             @Override
-            public void onClick(View v){
-                LinkedList<Item> itemsList = db.search("","",catdpText.toString(),"");
-                createPDF(itemsList);
-
-
+            public void onClick(View v) {
+                LinkedList<Item> itemsList = db.search("", "", catdpText.getText().toString(), "");
+                new CreatePDFTask().execute(itemsList);
             }
         });
-
-        periodButton.setOnClickListener(new View.OnClickListener(){ // PERIOD SEARCH
+        periodButton.setOnClickListener(new View.OnClickListener() { // PERIOD SEARCH
             @Override
-            public void onClick(View v){
-                LinkedList<Item> itemsList = db.search("","","",periodText.toString());
-                createPDF(itemsList);
-
-
+            public void onClick(View v) {
+                LinkedList<Item> itemsList = db.search("", "", "", periodText.getText().toString());
+                new CreatePDFTask().execute(itemsList);
             }
         });
-        periodDPButton.setOnClickListener(new View.OnClickListener(){ // PERIOD W/ DESC. & PIC SEARCH
+        periodDPButton.setOnClickListener(new View.OnClickListener() { // PERIOD W/ DESC. & PIC SEARCH
             @Override
-            public void onClick(View v){
-                LinkedList<Item> itemsList = db.search("","","",periodDPText.toString());
-                createPDF(itemsList);
-
-
+            public void onClick(View v) {
+                LinkedList<Item> itemsList = db.search("", "", "", periodDPText.getText().toString());
+                new CreatePDFTask().execute(itemsList);
             }
         });
-
 
         return view;
     }
 
+    private class CreatePDFTask extends AsyncTask<List<Item>, Void, PdfDocument> {
+        @Override
+        protected PdfDocument doInBackground(List<Item>... params) {
+            List<Item> itemsList = params[0];
+            PdfDocument document = new PdfDocument();
+            int page_num = 1;
+            PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(584, 440, page_num).create();
+            PdfDocument.Page page = document.startPage(pageInfo);
 
-    // let it accept all diff parameters, make if statements that handle if the other arguments are empty
-    private void createPDF(LinkedList<Item> itemsList){
+            Canvas canvas = page.getCanvas();
+            canvas.drawColor(Color.WHITE);
 
-        int page_num = 1;
-        PdfDocument document = new PdfDocument();
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(584,440,page_num).create();
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            paint.setTextSize(42);
 
-        PdfDocument.Page page = document.startPage(pageInfo);
+            float x = 50;
+            float y = 50;
+            float imageWidth = 100;
+            float imageHeight = 100;
 
-        Canvas canvas = page.getCanvas();
-        canvas.drawColor(Color.WHITE);
+            Bitmap defaultBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_image);
 
-        Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
+            for (Item item : itemsList) {
+                canvas.drawText(item.getName(), x, y, paint);
+                y += paint.getTextSize() + 10;
 
-        paint.setTextSize(42);
-        float x = 50;
-        float y = 200;
-        for(Item item : itemsList) {
+                Bitmap bitmap;
+                if (item.getImageUrl() == null || item.getImageUrl().isEmpty()) {
+                    bitmap = defaultBitmap;
+                } else {
+                    bitmap = getBitmapFromURL(item.getImageUrl());
+                }
 
-            System.out.println(item.getName());
-            canvas.drawText(item.getName(), x, y, paint);
-            if(y+50 >= 800){ // Creates new page
-                document.finishPage(page);
-                pageInfo = new PdfDocument.PageInfo.Builder(595,842,page_num++).create();
-                page = document.startPage(pageInfo);
-                canvas = page.getCanvas();
+                if (bitmap != null) {
+                    bitmap = Bitmap.createScaledBitmap(bitmap, (int) imageWidth, (int) imageHeight, false);
+                    canvas.drawBitmap(bitmap, x, y, paint);
+                    y += imageHeight + 20;
+                }
+
+                if (y + imageHeight >= pageInfo.getPageHeight()) { // Create a new page if the current page is full
+                    document.finishPage(page);
+                    pageInfo = new PdfDocument.PageInfo.Builder(595, 842, page_num++).create();
+                    page = document.startPage(pageInfo);
+                    canvas = page.getCanvas();
+                    canvas.drawColor(Color.WHITE);
+                    y = 50;
+                }
             }
-            y+=50;
 
+            document.finishPage(page);
+            return document;
         }
-        System.out.println("hello");
 
-        document.finishPage(page);
+        @Override
+        protected void onPostExecute(PdfDocument document) {
+            String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+            File file = new File(pdfPath, "Report.pdf");
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                document.writeTo(fos);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        File file = new File(pdfPath, "Report.pdf");
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            document.writeTo(fos);
-        } catch (FileNotFoundException e){
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            document.close();
+        }
+
+        private Bitmap getBitmapFromURL(String src) {
+            try {
+                URL url = new URL(src);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                return BitmapFactory.decodeStream(input);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
     }
-
 }
