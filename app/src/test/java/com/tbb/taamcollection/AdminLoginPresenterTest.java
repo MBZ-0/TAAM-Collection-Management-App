@@ -12,6 +12,9 @@ import static org.mockito.Mockito.when;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 @RunWith(MockitoJUnitRunner.class)
 public class AdminLoginPresenterTest {
 
@@ -20,6 +23,12 @@ public class AdminLoginPresenterTest {
 
     @Mock
     AdminLoginView view;
+
+    @Mock
+    FragmentManager fragmentManager;
+
+    @Mock
+    FragmentTransaction fragmentTransaction;
 
     @Test
     public void testAuthenticateLoginFalse() {
@@ -43,7 +52,10 @@ public class AdminLoginPresenterTest {
 
     @Test
     public void testLoadHome() {
-
+        when(view.getParentFragmentManager()).thenReturn(fragmentManager);
+        when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        presenter.loadHome(view);
     }
 
     @Test

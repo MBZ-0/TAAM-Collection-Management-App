@@ -17,15 +17,15 @@ public class AdminLoginPresenter {
         view.setIsValid(model.authenticateLogin(username, password));
     }
 
-    public void loadHome(Fragment current) {
-        loadFragment(new HomeFragment(), current);
-    }
-
     public void checkEmpty(String username, String password) {
         view.setEmptyPassUser(username.isEmpty() || password.isEmpty());
     }
 
-    private void loadFragment(Fragment toLoad, Fragment fromLoad) {
+    public void loadHome(Fragment current) {
+        loadFragment(new HomeFragment(), current);
+    }
+
+    void loadFragment(Fragment toLoad, Fragment fromLoad) {
         FragmentTransaction transaction = fromLoad.getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, toLoad);
         transaction.addToBackStack(null);
