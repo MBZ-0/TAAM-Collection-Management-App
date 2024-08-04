@@ -21,16 +21,13 @@ public class AdminLoginPresenterTest {
     @Mock
     AdminLoginView view;
 
-    @Mock
-    TextView invalidLogin;
-
     @Test
     public void testAuthenticateLoginFalse() {
         String username = "notacorrectusername";
         String password = "stinkypassword";
-        AdminLoginPresenter presenter = new AdminLoginPresenter(model);
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
         when(model.authenticateLogin(username, password)).thenReturn(false);
-        assertFalse(presenter.authenticateLogin(username, password));
+        presenter.authenticateLogin(username, password);
         verify(view).setIsValid(false);
     }
 

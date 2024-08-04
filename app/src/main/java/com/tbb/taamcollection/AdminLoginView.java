@@ -27,12 +27,12 @@ public class AdminLoginView extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_login_fragment, container, false);
         setVariables(view);
-        presenter = new AdminLoginPresenter(new AdminLoginModel());
+        presenter = new AdminLoginPresenter(this, new AdminLoginModel());
 
         buttonLogin.setOnClickListener(v -> {
             setUsernamePassword();
-            setEmptyPassUser(presenter.checkEmpty(username, password));
-            setIsValid(presenter.authenticateLogin(username, password));
+            presenter.checkEmpty(username, password);
+            presenter.authenticateLogin(username, password);
         });
 
         buttonReturn.setOnClickListener(v -> presenter.loadHome(self));
@@ -40,7 +40,7 @@ public class AdminLoginView extends Fragment {
         return view;
     }
 
-    private void setEmptyPassUser(boolean visible) {
+    void setEmptyPassUser(boolean visible) {
         if (visible) {
             emptyPassUser.setVisibility(View.VISIBLE);
         }

@@ -6,21 +6,23 @@ import androidx.fragment.app.FragmentTransaction;
 public class AdminLoginPresenter {
 
     AdminLoginModel model;
+    AdminLoginView view;
 
-    public AdminLoginPresenter(AdminLoginModel model) {
+    public AdminLoginPresenter(AdminLoginView view, AdminLoginModel model) {
+        this.view = view;
         this.model = model;
     }
 
-    public boolean authenticateLogin(String username, String password) {
-        return model.authenticateLogin(username, password);
+    public void authenticateLogin(String username, String password) {
+        view.setIsValid(model.authenticateLogin(username, password));
     }
 
     public void loadHome(Fragment current) {
         loadFragment(new HomeFragment(), current);
     }
 
-    public boolean checkEmpty(String username, String password) {
-        return (username.isEmpty() || password.isEmpty());
+    public void checkEmpty(String username, String password) {
+        view.setEmptyPassUser(username.isEmpty() || password.isEmpty());
     }
 
     private void loadFragment(Fragment toLoad, Fragment fromLoad) {
