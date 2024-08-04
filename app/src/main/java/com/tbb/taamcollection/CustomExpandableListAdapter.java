@@ -205,7 +205,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             groupImage.setVisibility(View.VISIBLE);
             groupImage.setImageResource(R.drawable.default_image); // Default image
         }
-
         int itemId = listIds.get(groupPosition);
         List<Boolean> groupCheckBoxState = checkBoxState.get(itemId);
         if (groupCheckBoxState == null) {

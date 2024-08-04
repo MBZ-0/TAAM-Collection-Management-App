@@ -156,6 +156,7 @@ public class CustomExpandableListFragment extends Fragment {
         listDataImages.clear();
         listDataImageUrls.clear();
         listDataVideoUrls.clear();
+        listIds.clear();
 
         for (Item item : itemsList) {
             listDataHeader.add(item.getName() != null ? item.getName() : "Unknown Name");
@@ -168,6 +169,7 @@ public class CustomExpandableListFragment extends Fragment {
             listDataChild.put(listDataHeader.get(listDataHeader.size() - 1), childList);
             listDataImageUrls.add(item.getImageUrl() != null ? item.getImageUrl() : ""); // Use the actual image URL
             listDataVideoUrls.add(item.getVideoUrl() != null ? item.getVideoUrl() : ""); // Add video URL to the list
+            listIds.add(item.getId());
         }
 
         expandableListAdapter.notifyDataSetChanged();
