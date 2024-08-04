@@ -15,43 +15,30 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AdminLoginView extends Fragment {
+    String username, password;
+    Button buttonLogin, buttonReturn;
+    TextView invalidLogin, emptyPassUser;
+    TextInputEditText userText, passText;
+
+    AdminLoginPresenter presenter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_login_fragment, container, false);
-        Button buttonLogin = view.findViewById(R.id.buttonLogin);
-        Button buttonReturn = view.findViewById(R.id.buttonReturn);
-        TextView invalidLogin = view.findViewById(R.id.invalidLogin);
-        TextView emptyPassUser = view.findViewById(R.id.emptyPassUser);
-        TextInputEditText userText = view.findViewById(R.id.username);
-        TextInputEditText passText = view.findViewById(R.id.password);
+        setVariables(view);
 
-        AdminDatabase db = new AdminDatabase("adminLogins") {
-            @Override
-            void success() {
-                AdminDatabase.loggedIn = true;
-                invalidLogin.setVisibility(View.INVISIBLE);
-                loadFragment(new HomeFragment());
-            }
-
-            @Override
-            void failure() {
-                invalidLogin.setVisibility(View.VISIBLE);
-            }
-        };
+        presenter = new AdminLoginPresenter();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = userText.getText().toString();
-                String password = passText.getText().toString();
-
+                setUsernamePassword();
                 if (username.isEmpty() || password.isEmpty()) {
-                    emptyPassUser.setVisibility(View.VISIBLE);
+                    //presenter.emptyPassUser.setVisibility(View.VISIBLE);
                 } else {
-                    emptyPassUser.setVisibility(View.INVISIBLE);
-                    db.authenticateLogin(username, password);
+                    //presenter.emptyPassUser.setVisibility(View.INVISIBLE);
+                    //db.authenticateLogin(username, password);
                 }
             }
         });
@@ -59,11 +46,26 @@ public class AdminLoginView extends Fragment {
         buttonReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //presenter.loadHome();
                 loadFragment(new HomeFragment());
             }
         });
 
         return view;
+    }
+
+    private void setVariables(View view) {
+        buttonLogin = view.findViewById(R.id.buttonLogin);
+        buttonReturn = view.findViewById(R.id.buttonReturn);
+        invalidLogin = view.findViewById(R.id.invalidLogin);
+        emptyPassUser = view.findViewById(R.id.emptyPassUser);
+        userText = view.findViewById(R.id.username);
+        passText = view.findViewById(R.id.password);
+    }
+
+    private void setUsernamePassword() {
+        String username = userText.getText().toString();
+        String password = passText.getText().toString();
     }
 
     private void loadFragment(Fragment fragment) {
