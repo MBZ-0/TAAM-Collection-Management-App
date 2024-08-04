@@ -126,19 +126,11 @@ public class ReportItemFragment extends Fragment {
             float imageWidth = 100;
             float imageHeight = 100;
 
-            Bitmap defaultBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_image);
-
             for (Item item : itemsList) {
                 canvas.drawText(item.getName(), x, y, paint);
                 y += paint.getTextSize() + 10;
 
-                Bitmap bitmap;
-                if (item.getImageUrl() == null || item.getImageUrl().isEmpty()) {
-                    bitmap = defaultBitmap;
-                } else {
-                    bitmap = getBitmapFromURL(item.getImageUrl());
-                }
-
+                Bitmap bitmap = getBitmapFromURL(item.getImageUrl());
                 if (bitmap != null) {
                     bitmap = Bitmap.createScaledBitmap(bitmap, (int) imageWidth, (int) imageHeight, false);
                     canvas.drawBitmap(bitmap, x, y, paint);
