@@ -17,7 +17,32 @@ public class AdminLoginPresenterTest {
     AdminLoginView view;
 
     @Test
-    public void exampleTest() {
-        assertEquals(1, 1);
+    public void testAuthenticateLoginFalse() {
+
+    }
+
+    @Test
+    public void testAuthenticateLoginTrue() {
+
+    }
+
+    @Test
+    public void testLoadHome() {
+
+    }
+
+    @Test
+    public void testCheckEmptyUserEmpty() {
+
+    }
+
+    @Test
+    public void testCheckEmptyPassEmpty() {
+
+    }
+
+    @Test
+    public void testCheckEmptyGood() {
+
     }
 }
