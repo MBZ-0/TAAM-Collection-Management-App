@@ -40,20 +40,11 @@ public class AdminLoginView extends Fragment {
     }
 
     void setEmptyPassUser(boolean visible) {
-        if (visible) {
-            emptyPassUser.setVisibility(View.VISIBLE);
-        }
-        else {
-            emptyPassUser.setVisibility(View.INVISIBLE);
-        }
+        emptyPassUser.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
     void setIsValid(boolean valid) {
-        if (valid) {
-            invalidLogin.setVisibility(View.INVISIBLE);
-        } else {
-            invalidLogin.setVisibility(View.VISIBLE);
-        }
+        invalidLogin.setVisibility(valid ? View.INVISIBLE : View.VISIBLE);
     }
 
     private void setVariables(View view) {

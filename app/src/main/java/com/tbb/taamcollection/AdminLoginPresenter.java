@@ -12,15 +12,25 @@ public class AdminLoginPresenter {
         this.model = model;
     }
 
-    public boolean authenticateLogin(String username, String password) {
-        boolean success = model.authenticateLogin(username, password);
-        view.setIsValid(success);
-        return success;
+    public void authenticateLogin(String username, String password) {
+        model.authenticateLogin(username, password, new AdminLoginModel.AuthCallback() {
+            @Override
+            public void onSuccess() {
+                view.setIsValid(true);
+                loadHome(view);
+            }
+
+            @Override
+            public void onFailure() {
+                view.setIsValid(false);
+            }
+        });
     }
 
     public boolean checkEmpty(String username, String password) {
-        view.setEmptyPassUser(username.isEmpty() || password.isEmpty());
-        return (username.isEmpty() || password.isEmpty());
+        boolean isEmpty = username.isEmpty() || password.isEmpty();
+        view.setEmptyPassUser(isEmpty);
+        return isEmpty;
     }
 
     public void doLogic(String username, String password, Fragment view) {
@@ -28,10 +38,7 @@ public class AdminLoginPresenter {
         this.view.setIsValid(true);
         boolean empty = checkEmpty(username, password);
         if (!empty) {
-            boolean success = authenticateLogin(username, password);
-            if (success) {
-                loadHome(view);
-            }
+            authenticateLogin(username, password);
         }
     }
 
