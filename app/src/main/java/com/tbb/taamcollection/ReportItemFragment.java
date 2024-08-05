@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ import java.util.List;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class ReportItemFragment extends Fragment {
+    public boolean dp = false;
     ItemDatabase db;
 
     public ReportItemFragment() {
@@ -59,6 +63,7 @@ public class ReportItemFragment extends Fragment {
         Button allButton = view.findViewById(R.id.all_submit);
         Button allDPButton = view.findViewById(R.id.all_dpsubmit);
 
+
         lotButton.setOnClickListener(new View.OnClickListener() { // LOT SEARCH
             @Override
             public void onClick(View v) {
@@ -84,6 +89,7 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LinkedList<Item> itemsList = db.search("", "", catdpText.getText().toString(), "");
+                dp = true;
                 new CreatePDFTask().execute(itemsList);
             }
         });
@@ -98,6 +104,7 @@ public class ReportItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LinkedList<Item> itemsList = db.search("", "", "", periodDPText.getText().toString());
+                dp = true;
                 new CreatePDFTask().execute(itemsList);
             }
         });
@@ -109,6 +116,9 @@ public class ReportItemFragment extends Fragment {
         @Override
         protected PdfDocument doInBackground(List<Item>... params) {
             List<Item> itemsList = params[0];
+
+            int index = 0;
+
             PdfDocument document = new PdfDocument();
             int page_num = 1;
             PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(584, 440, page_num).create();
@@ -119,32 +129,44 @@ public class ReportItemFragment extends Fragment {
 
             Paint paint = new Paint();
             paint.setColor(Color.BLACK);
-            paint.setTextSize(42);
+            paint.setTextSize(20);
+            TextPaint textPaint = new TextPaint();
+            textPaint.setColor(Color.BLACK);
+            textPaint.setTextSize(20);
 
-            float x = 50;
-            float y = 50;
-            float imageWidth = 100;
-            float imageHeight = 100;
+
 
             for (Item item : itemsList) {
-                canvas.drawText(item.getName(), x, y, paint);
-                y += paint.getTextSize() + 10;
-
-                Bitmap bitmap = getBitmapFromURL(item.getImageUrl());
-                if (bitmap != null) {
-                    bitmap = Bitmap.createScaledBitmap(bitmap, (int) imageWidth, (int) imageHeight, false);
-                    canvas.drawBitmap(bitmap, x, y, paint);
-                    y += imageHeight + 20;
-                }
-
-                if (y + imageHeight >= pageInfo.getPageHeight()) { // Create a new page if the current page is full
+                if(index != 0){
                     document.finishPage(page);
-                    pageInfo = new PdfDocument.PageInfo.Builder(595, 842, page_num++).create();
+                    pageInfo = new PdfDocument.PageInfo.Builder(584, 440, page_num++).create();
                     page = document.startPage(pageInfo);
                     canvas = page.getCanvas();
                     canvas.drawColor(Color.WHITE);
-                    y = 50;
+
                 }
+                Bitmap bitmap = getBitmapFromURL(item.getImageUrl());
+                if (bitmap != null) {
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+                    canvas.drawBitmap(bitmap,50, 50, paint);
+
+                }
+                StaticLayout textBox = new StaticLayout(item.getDescription(), textPaint,200, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false );
+
+                canvas.save();
+                canvas.translate(300, 50);
+                textBox.draw(canvas);
+                canvas.restore();
+
+                if(dp == false) {
+                    canvas.drawText("Name: " + item.getName(), 50, 250, paint);
+                    canvas.drawText("Category: " + item.getCategory().toString(), 50, 280, paint);
+                    canvas.drawText("Name: " + item.getLotNumber(), 50, 310, paint);
+                }
+
+                index++;
+
+
             }
 
             document.finishPage(page);
