@@ -1,10 +1,16 @@
 package com.tbb.taamcollection;
 
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +32,7 @@ public class AdminLoginFragment extends Fragment {
         TextView emptyPassUser = view.findViewById(R.id.emptyPassUser);
         TextInputEditText userText = view.findViewById(R.id.username);
         TextInputEditText passText = view.findViewById(R.id.password);
-
+        CheckBox showPass = view.findViewById(R.id.showPass);
         AdminDatabase db = new AdminDatabase("adminLogins") {
             @Override
             void success() {
@@ -40,6 +46,17 @@ public class AdminLoginFragment extends Fragment {
                 invalidLogin.setVisibility(View.VISIBLE);
             }
         };
+
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
+                if (check) {
+                    passText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    passText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+}
+            }
+        });
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override

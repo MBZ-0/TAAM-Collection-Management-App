@@ -82,6 +82,9 @@
 
     <Button
         android:id="@+id/name_submit"
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="308dp"
@@ -94,6 +97,9 @@
 
     <Button
         android:id="@+id/cat_submit"
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="308dp"
@@ -106,6 +112,9 @@
 
     <Button
         android:id="@+id/cat_dpsubmit"
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="308dp"
@@ -118,6 +127,10 @@
 
     <Button
         android:id="@+id/period_submit"
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="308dp"
@@ -130,6 +143,9 @@
 
     <Button
         android:id="@+id/period_dpsubmit"
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="308dp"
@@ -143,6 +159,9 @@
 
     <Button
         android:id="@+id/all_submit"
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="308dp"
@@ -155,6 +174,9 @@
 
     <Button
         android:id="@+id/all_dpsubmit"
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
@@ -179,6 +201,12 @@
 
     <Button
         android:id="@+id/lot_submit"
+
+        style="@style/ButtonStyle"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
+
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="308dp"
@@ -191,8 +219,8 @@
 
     <EditText
         android:id="@+id/editTextText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="259dp"
+        android:layout_height="45dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="520dp"
         android:ems="10"
