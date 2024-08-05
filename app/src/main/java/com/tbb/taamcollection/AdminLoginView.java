@@ -31,8 +31,7 @@ public class AdminLoginView extends Fragment {
 
         buttonLogin.setOnClickListener(v -> {
             setUsernamePassword();
-            presenter.checkEmpty(username, password);
-            presenter.authenticateLogin(username, password);
+            presenter.doLogic(username, password, this);
         });
 
         buttonReturn.setOnClickListener(v -> presenter.loadHome(self));
