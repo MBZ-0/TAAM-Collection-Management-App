@@ -52,8 +52,14 @@ public class AdminLoginPresenterTest {
     public void testAuthenticateLoginTrue() {
         String username = "correctusername";
         String password = "coolpassword";
+        doAnswer(invocation -> {
+            AdminLoginModel.AuthCallback callback = invocation.getArgument(2);
+            callback.onSuccess();
+            return null;
+        }).when(model).authenticateLogin(eq(username), eq(password), any(AdminLoginModel.AuthCallback.class));
+        when(view.getParentFragmentManager()).thenReturn(fragmentManager);
+        when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
-        //when(model.authenticateLogin(username, password)).thenReturn(true);
         presenter.authenticateLogin(username, password);
         verify(view).setIsValid(true);
     }
@@ -97,8 +103,14 @@ public class AdminLoginPresenterTest {
     public void testDoLogicGood() {
         String username = "good username";
         String password = "good password";
+        doAnswer(invocation -> {
+            AdminLoginModel.AuthCallback callback = invocation.getArgument(2);
+            callback.onSuccess();
+            return null;
+        }).when(model).authenticateLogin(eq(username), eq(password), any(AdminLoginModel.AuthCallback.class));
+        when(view.getParentFragmentManager()).thenReturn(fragmentManager);
+        when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
-        //when(model.authenticateLogin(username, password)).thenReturn(true);
         when(view.getParentFragmentManager()).thenReturn(fragmentManager);
         when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
         presenter.doLogic(username, password, view);
@@ -121,10 +133,12 @@ public class AdminLoginPresenterTest {
     public void testDoLogicbadLogin() {
         String username = "bad username";
         String password = "bad password";
+        doAnswer(invocation -> {
+            AdminLoginModel.AuthCallback callback = invocation.getArgument(2);
+            callback.onFailure();
+            return null;
+        }).when(model).authenticateLogin(eq(username), eq(password), any(AdminLoginModel.AuthCallback.class));
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
-        //when(model.authenticateLogin(username, password)).thenReturn(false);
-        when(view.getParentFragmentManager()).thenReturn(fragmentManager);
-        when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
         presenter.doLogic(username, password, view);
         verify(view, times(2)).setEmptyPassUser(false);
         verify(view).setIsValid(true);
