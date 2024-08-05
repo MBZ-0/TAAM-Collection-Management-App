@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.LinkedList;
 
 public class HomeFragment extends Fragment {
+
+    private TextView searchBasedView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -48,6 +51,7 @@ public class HomeFragment extends Fragment {
         Button buttonView = view.findViewById(R.id.view);
         Button buttonSearch = view.findViewById(R.id.search);
         Button buttonBackFromSearch = view.findViewById(R.id.searchHomeScreenBack);
+        searchBasedView = view.findViewById(R.id.searchBasedText);
 
         if (AdminDatabase.loggedIn) {
             onLogin(buttonBack, buttonAdd, buttonRemove, buttonReport, buttonAdmin);
@@ -58,7 +62,7 @@ public class HomeFragment extends Fragment {
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new AdminLoginFragment());
+                loadFragment(new AdminLoginView());
             }
         });
 
@@ -124,6 +128,7 @@ public class HomeFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             LinkedList<Item> searchResults = (LinkedList<Item>) args.getSerializable("searchResults");
+            String searchBasedText = args.getString("searchBasedText");
             if (searchResults != null) {
                 // Replace the expandable list with search results
                 CustomExpandableListFragment searchResultsFragment = new CustomExpandableListFragment();
@@ -131,32 +136,46 @@ public class HomeFragment extends Fragment {
                 bundle.putSerializable("itemsList", searchResults);
                 searchResultsFragment.setArguments(bundle);
 
+                searchBasedView.setText(searchBasedText);
+
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.expandableListView, searchResultsFragment, "CustomExpandableListFragment");
+                transaction.replace(R.id.expandableListView, searchResultsFragment,
+                        "CustomExpandableListFragment");
                 transaction.commit();
 
                 // Make the back button visible
                 buttonBackFromSearch.setVisibility(View.VISIBLE);
+                searchBasedView.setVisibility(View.VISIBLE);
             } else {
                 // Make the back button invisible
                 buttonBackFromSearch.setVisibility(View.GONE);
+                searchBasedView.setVisibility(View.GONE);
 
                 // Add the CustomExpandableListFragment to the HomeFragment layout
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(), "CustomExpandableListFragment");
+                transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(),
+                        "CustomExpandableListFragment");
                 transaction.commit();
             }
         } else {
             // Make the back button invisible
             buttonBackFromSearch.setVisibility(View.GONE);
+            searchBasedView.setVisibility(View.GONE);
 
             // Add the CustomExpandableListFragment to the HomeFragment layout
             FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(), "CustomExpandableListFragment");
+            transaction.replace(R.id.expandableListView, new CustomExpandableListFragment(),
+                    "CustomExpandableListFragment");
             transaction.commit();
         }
 
         return view;
+    }
+
+    public void setSearchBasedTextView(String searchBasedText) {
+        if (searchBasedView != null) {
+            searchBasedView.setText(searchBasedText);
+        }
     }
 
     private void loadFragment(Fragment fragment) {
