@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -83,5 +84,43 @@ public class AdminLoginPresenterTest {
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
         presenter.checkEmpty(username, password);
         verify(view).setEmptyPassUser(false);
+    }
+
+    @Test
+    public void testDoLogicGood() {
+        String username = "good username";
+        String password = "good password";
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        when(model.authenticateLogin(username, password)).thenReturn(true);
+        when(view.getParentFragmentManager()).thenReturn(fragmentManager);
+        when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
+        presenter.doLogic(username, password, view);
+        verify(view, times(2)).setEmptyPassUser(false);
+        verify(view, times(2)).setIsValid(true);
+    }
+
+    @Test
+    public void testDoLogicEmpty() {
+        String username = "";
+        String password = "good password";
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        presenter.doLogic(username, password, view);
+        verify(view).setEmptyPassUser(false);
+        verify(view).setIsValid(true);
+        verify(view).setEmptyPassUser(true);
+    }
+
+    @Test
+    public void testDoLogicbadLogin() {
+        String username = "bad username";
+        String password = "bad password";
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        when(model.authenticateLogin(username, password)).thenReturn(false);
+        when(view.getParentFragmentManager()).thenReturn(fragmentManager);
+        when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
+        presenter.doLogic(username, password, view);
+        verify(view, times(2)).setEmptyPassUser(false);
+        verify(view).setIsValid(true);
+        verify(view).setIsValid(false);
     }
 }
