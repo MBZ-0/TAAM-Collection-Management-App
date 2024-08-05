@@ -22,7 +22,10 @@ public class SearchItemFragment extends Fragment {
     ItemDatabase db;
     private Spinner spinnerCategory, spinnerPeriod;
     private TextView errorField;
-
+    private String search_name;
+    private String search_lot;
+    private String search_category;
+    private String search_period;
 
     @Nullable
     @Override
@@ -69,14 +72,14 @@ public class SearchItemFragment extends Fragment {
 
                 if (!lot.isEmpty() || !name.isEmpty() || !category.isEmpty() || !period.isEmpty()) {
                     LinkedList<Item> itemsList = db.search(name, lot, category, period);
+                    search_name = name; search_lot = lot;
+                    search_category = category; search_period = period;
                     if (itemsList.size() == 0) {
                         errorField.setText("No results were found!");
                         return;
                     }
                     passSearchResultsToHomeFragment(itemsList);
-                }
-                //
-                else {
+                } else {
                     errorField.setText("Please fill in at least one field");
                 }
             }
@@ -89,6 +92,9 @@ public class SearchItemFragment extends Fragment {
         HomeFragment homeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("searchResults", itemsList);
+        String searchBasedText = "Search Based On -> Name: " + search_name + " - Lot#: " +
+                search_lot + " - Category: " + search_category + " - Period: " + search_period;
+        bundle.putString("searchBasedText", searchBasedText);
         homeFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -96,7 +102,6 @@ public class SearchItemFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
