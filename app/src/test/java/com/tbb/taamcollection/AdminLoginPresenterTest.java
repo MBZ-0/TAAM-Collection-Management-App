@@ -6,6 +6,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,8 +38,12 @@ public class AdminLoginPresenterTest {
     public void testAuthenticateLoginFalse() {
         String username = "notacorrectusername";
         String password = "stinkypassword";
+        doAnswer(invocation -> {
+            AdminLoginModel.AuthCallback callback = invocation.getArgument(2);
+            callback.onFailure();
+            return null;
+        }).when(model).authenticateLogin(eq(username), eq(password), any(AdminLoginModel.AuthCallback.class));
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
-        when(model.authenticateLogin(username, password)).thenReturn(false);
         presenter.authenticateLogin(username, password);
         verify(view).setIsValid(false);
     }
@@ -46,7 +53,7 @@ public class AdminLoginPresenterTest {
         String username = "correctusername";
         String password = "coolpassword";
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
-        when(model.authenticateLogin(username, password)).thenReturn(true);
+        //when(model.authenticateLogin(username, password)).thenReturn(true);
         presenter.authenticateLogin(username, password);
         verify(view).setIsValid(true);
     }
@@ -91,7 +98,7 @@ public class AdminLoginPresenterTest {
         String username = "good username";
         String password = "good password";
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
-        when(model.authenticateLogin(username, password)).thenReturn(true);
+        //when(model.authenticateLogin(username, password)).thenReturn(true);
         when(view.getParentFragmentManager()).thenReturn(fragmentManager);
         when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
         presenter.doLogic(username, password, view);
@@ -115,7 +122,7 @@ public class AdminLoginPresenterTest {
         String username = "bad username";
         String password = "bad password";
         AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
-        when(model.authenticateLogin(username, password)).thenReturn(false);
+        //when(model.authenticateLogin(username, password)).thenReturn(false);
         when(view.getParentFragmentManager()).thenReturn(fragmentManager);
         when(fragmentManager.beginTransaction()).thenReturn(fragmentTransaction);
         presenter.doLogic(username, password, view);
