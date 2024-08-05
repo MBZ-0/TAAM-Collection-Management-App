@@ -4,7 +4,16 @@ public class AdminLoginModel {
     AdminDatabase db;
 
     public AdminLoginModel() {
-        db = new AdminDatabase("adminLogins");
+        db = new AdminDatabase("adminLogins") {
+            @Override
+            void success() {
+                AdminDatabase.loggedIn = true;
+            }
+
+            @Override
+            void failure() {
+            };
+        };
     }
 
     public boolean authenticateLogin(String username, String password) {
