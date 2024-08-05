@@ -60,16 +60,28 @@ public class AdminLoginPresenterTest {
 
     @Test
     public void testCheckEmptyUserEmpty() {
-
+        String username = "";
+        String password = "good password";
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        presenter.checkEmpty(username, password);
+        verify(view).setEmptyPassUser(true);
     }
 
     @Test
     public void testCheckEmptyPassEmpty() {
-
+        String username = "good username";
+        String password = "";
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        presenter.checkEmpty(username, password);
+        verify(view).setEmptyPassUser(true);
     }
 
     @Test
     public void testCheckEmptyGood() {
-
+        String username = "good username";
+        String password = "good password";
+        AdminLoginPresenter presenter = new AdminLoginPresenter(view, model);
+        presenter.checkEmpty(username, password);
+        verify(view).setEmptyPassUser(false);
     }
 }
