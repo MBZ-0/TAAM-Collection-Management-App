@@ -16,23 +16,28 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/border">
 
             <ImageView
                 android:id="@+id/group_image"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="260dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:outlineProvider="none"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/item_name"
                 android:layout_width="346dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/oswald_bold"
                 android:text="Item Name"
                 android:textColor="@color/black"
@@ -80,22 +85,26 @@
                 android:layout_width="351dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/oswald_bold"
                 android:text="Description"
                 android:textColor="@color/black"
                 android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/item_category" />
 
             <VideoView
                 android:id="@+id/group_video"
-                android:layout_width="348dp"
+                android:layout_width="0dp"
                 android:layout_height="260dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:visibility="invisible"
+                android:layout_marginEnd="16dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/group_image" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
