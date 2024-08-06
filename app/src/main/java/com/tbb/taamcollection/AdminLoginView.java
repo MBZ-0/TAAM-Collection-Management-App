@@ -1,10 +1,13 @@
 package com.tbb.taamcollection;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ public class AdminLoginView extends Fragment {
     Button buttonLogin, buttonReturn;
     TextView invalidLogin, emptyPassUser;
     TextInputEditText userText, passText;
+    CheckBox showPass;
 
     AdminLoginPresenter presenter;
     AdminLoginView self = this;
@@ -27,6 +31,7 @@ public class AdminLoginView extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_login_fragment, container, false);
         setVariables(view);
+        showPassword(showPass);
         presenter = new AdminLoginPresenter(this, new AdminLoginModel());
 
         buttonLogin.setOnClickListener(v -> {
@@ -43,6 +48,19 @@ public class AdminLoginView extends Fragment {
         emptyPassUser.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
+    void showPassword(CheckBox showPass){
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
+                if (check) {
+                    passText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    passText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
+    }
+
     void setIsValid(boolean valid) {
         invalidLogin.setVisibility(valid ? View.INVISIBLE : View.VISIBLE);
     }
@@ -54,6 +72,7 @@ public class AdminLoginView extends Fragment {
         emptyPassUser = view.findViewById(R.id.emptyPassUser);
         userText = view.findViewById(R.id.username);
         passText = view.findViewById(R.id.password);
+        showPass = view.findViewById(R.id.showPass);
     }
 
     private void setUsernamePassword() {
