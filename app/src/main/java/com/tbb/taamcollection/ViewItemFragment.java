@@ -63,8 +63,9 @@ public class ViewItemFragment extends Fragment {
             View card = inflater.inflate(R.layout.view_item_child, l, false);
             TextView name = card.findViewById(R.id.item_name);
             name.setText(v.getName());
-            TextView lot = card.findViewById(R.id.item_name);
-            lot.setText("Lot# " + v.getLotNumber());
+            TextView lot = card.findViewById(R.id.lot_number);
+            String lt = "Lot# " + v.getLotNumber();
+            lot.setText(lt);
             TextView description = card.findViewById(R.id.item_description);
             description.setText(v.getDescription());
             TextView category = card.findViewById(R.id.item_category);

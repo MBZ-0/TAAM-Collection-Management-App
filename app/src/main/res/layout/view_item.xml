@@ -40,6 +40,7 @@
             android:background="@drawable/button_background"
             android:fontFamily="@font/oswald_bold"
             android:text="@string/adminBack"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Scroll" />
