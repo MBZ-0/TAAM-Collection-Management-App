@@ -60,7 +60,7 @@ public class ViewItemFragment extends Fragment {
             TextView description = card.findViewById(R.id.item_description);
             description.setText(v.getDescription());
             ImageView image = card.findViewById(R.id.group_image);
-//            image.setImage(v.getImg());
+            //image.set  (v.getImageUrl());
             //Uncomment later and deal with it
 
             TextView category = card.findViewById(R.id.item_category);
