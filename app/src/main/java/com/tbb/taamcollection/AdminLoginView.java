@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.view.KeyEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +35,21 @@ public class AdminLoginView extends Fragment {
         showPassword(showPass);
         presenter = new AdminLoginPresenter(this, new AdminLoginModel());
 
+        buttonLogin.setOnClickListener(v -> {
+            setUsernamePassword();
+            presenter.doLogic(username, password, this);
+        });
+        passText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    setUsernamePassword();
+                    presenter.doLogic(username, password, AdminLoginView.this);
+                    return true;
+                }
+                return false;
+            }
+        });
         buttonLogin.setOnClickListener(v -> {
             setUsernamePassword();
             presenter.doLogic(username, password, this);
