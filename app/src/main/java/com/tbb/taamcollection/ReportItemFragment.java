@@ -177,7 +177,7 @@ public class ReportItemFragment extends Fragment {
                 if(dp == false) {
                     canvas.drawText("Name: " + item.getName(), 50, 250, paint);
                     canvas.drawText("Category: " + item.getCategory().toString(), 50, 280, paint);
-                    canvas.drawText("Name: " + item.getLotNumber(), 50, 310, paint);
+                    canvas.drawText("Lot #: " + item.getLotNumber(), 50, 310, paint);
                 }
 
                 index++;
