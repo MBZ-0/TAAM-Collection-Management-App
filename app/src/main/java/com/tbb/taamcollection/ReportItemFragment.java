@@ -144,10 +144,10 @@ public class ReportItemFragment extends Fragment {
 
             Paint paint = new Paint();
             paint.setColor(Color.BLACK);
-            paint.setTextSize(20);
+            paint.setTextSize(10);
             TextPaint textPaint = new TextPaint();
             textPaint.setColor(Color.BLACK);
-            textPaint.setTextSize(20);
+            textPaint.setTextSize(10);
 
 
 

@@ -6,138 +6,164 @@
     android:layout_height="match_parent"
     tools:context=".AddItemFragment">
 
-    <EditText
-        android:id="@+id/editTextDescription"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oswald_bold"
-        android:hint="Description: "
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerAddPeriod" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editTextLotNum"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/oswald_bold"
-        android:hint="Lot Number:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oswald_bold"
-        android:hint="Name: "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLotNum" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".AddItemFragment">
 
-    <TextView
-        android:id="@+id/textViewError"
-        android:layout_width="410dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oswald_bold"
-        android:text="Please fill in every field"
-        android:textColor="#E20303"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextVideoUrl"
-        tools:visibility="invisible" />
+                <EditText
+                    android:id="@+id/editTextDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/oswald_bold"
+                    android:hint="Description: "
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerAddPeriod" />
 
-    <Spinner
-        android:id="@+id/spinnerAddCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
+                <EditText
+                    android:id="@+id/editTextLotNum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:fontFamily="@font/oswald_bold"
+                    android:hint="Lot Number:"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinnerAddPeriod"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/oswald_bold"
+                    android:hint="Name: "
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextLotNum" />
 
-    <EditText
-        android:id="@+id/editTextImageUrl"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oswald_bold"
-        android:hint="Image URL:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+                <TextView
+                    android:id="@+id/textViewError"
+                    android:layout_width="410dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/oswald_bold"
+                    android:text="Please fill in every field"
+                    android:textColor="#E20303"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextVideoUrl"
+                    tools:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/editTextVideoUrl"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oswald_bold"
-        android:hint="Video URL:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextImageUrl" />
+                <Spinner
+                    android:id="@+id/spinnerAddCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
 
-    <Button
-        android:id="@+id/buttonViewBack"
-        style="@style/ButtonStyle"
-        android:layout_width="85dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="88dp"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-        android:text="@string/add_item"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewError" />
+                <Spinner
+                    android:id="@+id/spinnerAddPeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
 
-    <Button
-        android:id="@+id/buttonAddReturn"
-        style="@style/ButtonStyle"
-        android:layout_width="85dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-        android:text="Back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewError" />
+                <EditText
+                    android:id="@+id/editTextImageUrl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/oswald_bold"
+                    android:hint="Image URL:"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
-    <TextView
-        android:id="@+id/textViewPeriod"
-        android:layout_width="380dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oswald_bold"
-        android:text="Please Select Period"
-        android:textColor="@color/grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerAddCategory" />
+                <EditText
+                    android:id="@+id/editTextVideoUrl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/oswald_bold"
+                    android:hint="Video URL:"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextImageUrl" />
 
-    <TextView
-        android:id="@+id/textViewCategory"
-        android:layout_width="380dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oswald_bold"
-        android:text="Please Select Category"
-        android:textColor="@color/grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+                <Button
+                    android:id="@+id/buttonViewBack"
+                    style="@style/ButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="88dp"
+                    android:background="@drawable/button_background"
+                    android:fontFamily="@font/oswald_bold"
+                    android:text="@string/add_item"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewError" />
+
+                <Button
+                    android:id="@+id/buttonAddReturn"
+                    style="@style/ButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="88dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_background"
+                    android:fontFamily="@font/oswald_bold"
+                    android:text="Back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewError" />
+
+                <TextView
+                    android:id="@+id/textViewPeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/oswald_bold"
+                    android:text="Please Select Period"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerAddCategory" />
+
+                <TextView
+                    android:id="@+id/textViewCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/oswald_bold"
+                    android:text="Please Select Category"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toTopOf="@+id/spinnerAddCategory"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.003"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
