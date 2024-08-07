@@ -42,7 +42,7 @@ public class AddItemFragment extends Fragment {
         editTextDescription = view.findViewById(R.id.editTextDescription);
         editTextImageUrl = view.findViewById(R.id.editTextImageUrl);
         editTextVideoUrl = view.findViewById(R.id.editTextVideoUrl);
-        buttonAdd = view.findViewById(R.id.buttonAdd);
+        buttonAdd = view.findViewById(R.id.buttonViewBack);
         buttonBack = view.findViewById(R.id.buttonAddReturn);
         errorField = view.findViewById(R.id.textViewError);
 
