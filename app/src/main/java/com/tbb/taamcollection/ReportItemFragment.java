@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import android.os.Environment;
 import android.text.Layout;
@@ -55,6 +57,7 @@ public class ReportItemFragment extends Fragment {
         // Variables
         Spinner spinnerReportType = view.findViewById(R.id.spinnerReportType);
         Button reportButton = view.findViewById(R.id.reportSubmit);
+        Button backButtonReport = view.findViewById(R.id.backButtonReport);
         TextInputEditText reportText = view.findViewById(R.id.reportInput);
         TextView reportStatus = view.findViewById(R.id.reportStatus);
 
@@ -65,7 +68,12 @@ public class ReportItemFragment extends Fragment {
         itemAdapter.setDropDownViewResource(R.layout.spinner);
         spinnerReportType.setAdapter(itemAdapter);
 
-
+        backButtonReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new HomeFragment());
+            }
+        });
 
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,10 +81,8 @@ public class ReportItemFragment extends Fragment {
                 reportStatus.setText("Report PDF Document Generated");
                 reportStatus.setTextColor(Color.parseColor("#65D304"));
 
-                String type = "";
-                if(spinnerReportType.getSelectedItem().toString() != null){
-                    type = spinnerReportType.getSelectedItem().toString();
-                }
+                String type = spinnerReportType.getSelectedItem().toString();
+
                 System.out.println(type);
                 if(type.equals("Lot#")){
                     LinkedList<Item> itemsList = db.search("", reportText.getText().toString(), "", "");
@@ -117,67 +123,6 @@ public class ReportItemFragment extends Fragment {
 
             }
         });
-//        Button nameButton = view.findViewById(R.id.name_submit);
-//        Button catButton = view.findViewById(R.id.cat_submit);
-//        Button catdpButton = view.findViewById(R.id.cat_dpsubmit);
-//        Button periodButton = view.findViewById(R.id.period_submit);
-//        Button periodDPButton = view.findViewById(R.id.period_dpsubmit);
-//
-//        TextInputEditText lotText = view.findViewById(R.id.lot_input);
-//        TextInputEditText nameText = view.findViewById(R.id.name_input);
-//        TextInputEditText catText = view.findViewById(R.id.cat_input);
-//        TextInputEditText catdpText = view.findViewById(R.id.cat_dpinput);
-//        TextInputEditText periodText = view.findViewById(R.id.period_input);
-//        TextInputEditText periodDPText = view.findViewById(R.id.period_dpinput);
-//
-//        Button allButton = view.findViewById(R.id.all_submit);
-//        Button allDPButton = view.findViewById(R.id.all_dpsubmit);
-//
-//
-//        lotButton.setOnClickListener(new View.OnClickListener() { // LOT SEARCH
-//            @Override
-//            public void onClick(View v) {
-//                LinkedList<Item> itemsList = db.search("", lotText.getText().toString(), "", "");
-//                new CreatePDFTask().execute(itemsList);
-//            }
-//        });
-//        nameButton.setOnClickListener(new View.OnClickListener() { // NAME SEARCH
-//            @Override
-//            public void onClick(View v) {
-//                LinkedList<Item> itemsList = db.search(nameText.getText().toString(), "", "", "");
-//                new CreatePDFTask().execute(itemsList);
-//            }
-//        });
-//        catButton.setOnClickListener(new View.OnClickListener() { // CATEGORY SEARCH
-//            @Override
-//            public void onClick(View v) {
-//                LinkedList<Item> itemsList = db.search("", "", catText.getText().toString(), "");
-//                new CreatePDFTask().execute(itemsList);
-//            }
-//        });
-//        catdpButton.setOnClickListener(new View.OnClickListener() { // CATEGORY W/ DESC. & PIC
-//            @Override
-//            public void onClick(View v) {
-//                LinkedList<Item> itemsList = db.search("", "", catdpText.getText().toString(), "");
-//                dp = true;
-//                new CreatePDFTask().execute(itemsList);
-//            }
-//        });
-//        periodButton.setOnClickListener(new View.OnClickListener() { // PERIOD SEARCH
-//            @Override
-//            public void onClick(View v) {
-//                LinkedList<Item> itemsList = db.search("", "", "", periodText.getText().toString());
-//                new CreatePDFTask().execute(itemsList);
-//            }
-//        });
-//        periodDPButton.setOnClickListener(new View.OnClickListener() { // PERIOD W/ DESC. & PIC SEARCH
-//            @Override
-//            public void onClick(View v) {
-//                LinkedList<Item> itemsList = db.search("", "", "", periodDPText.getText().toString());
-//                dp = true;
-//                new CreatePDFTask().execute(itemsList);
-//            }
-//        });
 
         return view;
     }
@@ -273,5 +218,11 @@ public class ReportItemFragment extends Fragment {
                 return null;
             }
         }
+    }
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
