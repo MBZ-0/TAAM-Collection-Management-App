@@ -12,6 +12,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="272dp"
         android:hint="Report Search"
+        android:singleLine="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
