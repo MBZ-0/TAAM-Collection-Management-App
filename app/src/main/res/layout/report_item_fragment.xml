@@ -59,12 +59,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="152dp"
         android:text="Report Item"
         android:textColorLink="#000000"
         android:textSize="34sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="123dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
