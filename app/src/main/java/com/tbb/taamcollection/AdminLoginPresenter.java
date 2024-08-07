@@ -33,6 +33,8 @@ public class AdminLoginPresenter {
         return isEmpty;
     }
 
+
+
     public void doLogic(String username, String password, Fragment view) {
         this.view.setEmptyPassUser(false);
         this.view.setIsValid(true);

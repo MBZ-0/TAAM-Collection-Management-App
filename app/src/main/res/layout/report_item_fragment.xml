@@ -5,167 +5,28 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="364dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="592dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Report for all items with Description and Picture"
-        android:textSize="15sp"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/reportInput"
+        android:layout_width="326dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="272dp"
+        android:hint="Report Search"
+        android:singleLine="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/period_dpinput"
-        android:layout_width="257dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="356dp"
-        android:hint="Report by Period with Description and Picture only"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/cat_dpinput"
-        android:layout_width="257dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="440dp"
-        android:hint="Report by Category with Description and Picture only"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/period_input"
-        android:layout_width="261dp"
+    <Button
+        android:id="@+id/reportSubmit"
+        style="@style/ButtonStyle"
+        android:layout_width="97dp"
         android:layout_height="52dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="228dp"
-        android:hint="Report by Period "
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/name_input"
-        android:layout_width="249dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="292dp"
-        android:hint="Report by name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/cat_input"
-        android:layout_width="254dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="164dp"
-        android:hint="Report by Category"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/name_submit"
-        style="@style/ButtonStyle"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="292dp"
-        android:text="Submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/cat_submit"
-        style="@style/ButtonStyle"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="164dp"
-        android:text="Submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/cat_dpsubmit"
-        style="@style/ButtonStyle"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="448dp"
-        android:text="Submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/period_submit"
-        style="@style/ButtonStyle"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="228dp"
-        android:text="Submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/period_dpsubmit"
-        style="@style/ButtonStyle"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
+        android:layout_marginStart="268dp"
         android:layout_marginTop="360dp"
-        android:text="Submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/all_submit"
-        style="@style/ButtonStyle"
         android:background="@drawable/button_background"
         android:fontFamily="@font/oswald_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="520dp"
         android:text="Submit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -173,62 +34,59 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/all_dpsubmit"
-        style="@style/ButtonStyle"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
+        android:id="@+id/backButtonReport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="648dp"
-        android:text="Submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/lot_input"
-        android:layout_width="251dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="108dp"
-        android:hint="Report by lot #"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/lot_submit"
-
-        style="@style/ButtonStyle"
+        android:layout_marginStart="304dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/oswald_bold"
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Spinner
+        android:id="@+id/spinnerReportType"
+        android:layout_width="158dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="360dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.158"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
+    <TextView
+        android:id="@+id/reportStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="100dp"
-        android:text="Submit"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="432dp"
+        android:textColorLink="#65D304"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="259dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="520dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Report for all items"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="152dp"
+        android:text="Report Item"
+        android:textColorLink="#000000"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

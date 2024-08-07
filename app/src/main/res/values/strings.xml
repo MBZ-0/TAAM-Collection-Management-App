@@ -40,6 +40,7 @@
         <item>Lacquer</item>
         <item>Enamels</item>
     </string-array>
+
     <string-array name="periods_array">
         <item></item>
         <item>Xia</item>
@@ -61,6 +62,19 @@
         <item>Ming</item>
         <item>Qing</item>
         <item>Modern</item>
+    </string-array>
+
+    <string-array name="type_array">
+        <item>Lot#</item>
+        <item>Name</item>
+        <item>Category</item>
+        <item>Period</item>
+        <item>Category Desc./Pic.</item>
+        <item>Period Desc./Pic.</item>
+        <item>All</item>
+        <item>All Desc./Pic.</item>
+
+
     </string-array>
 
 </resources>
