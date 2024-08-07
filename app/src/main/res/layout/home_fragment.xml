@@ -148,7 +148,7 @@
         android:layout_height="27dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/favicon"
+        android:src="@drawable/icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
