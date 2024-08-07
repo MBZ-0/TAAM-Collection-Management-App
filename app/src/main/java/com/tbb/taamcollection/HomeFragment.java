@@ -4,13 +4,17 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -38,11 +42,14 @@ public class HomeFragment extends Fragment {
         admin.setVisibility(View.VISIBLE);
     }
 
+    SharedViewModel sharedViewModel;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.home_fragment, container, false);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Button buttonAdmin = view.findViewById(R.id.admin);
         Button buttonBack = view.findViewById(R.id.adminBack);
         Button buttonAdd = view.findViewById(R.id.add);
@@ -112,7 +119,22 @@ public class HomeFragment extends Fragment {
         buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new ViewItemFragment());
+
+                HashMap<Integer, List<Boolean>> checkBoxState = sharedViewModel.getCheckBoxState().getValue();
+                boolean valid = true;
+                for (int id : checkBoxState.keySet()) {
+                    List<Boolean> state = checkBoxState.get(id);
+                    if (state != null && state.contains(true)) {
+                        loadFragment(new ViewItemFragment());
+                        valid = false;
+                    }
+                }
+                if(valid){
+                        TextView err = view.findViewById(R.id.noSelect);
+                        err.setVisibility(View.VISIBLE);
+                }
+
+
             }
         });
 
