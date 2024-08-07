@@ -118,8 +118,8 @@
 
     <TextView
         android:id="@+id/textViewPeriod"
-        android:layout_width="417dp"
-        android:layout_height="27dp"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/oswald_bold"
         android:text="Please Select Period"
@@ -130,8 +130,8 @@
 
     <TextView
         android:id="@+id/textViewCategory"
-        android:layout_width="412dp"
-        android:layout_height="26dp"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/oswald_bold"
         android:text="Please Select Category"

@@ -7,8 +7,8 @@
     android:gravity="center_vertical">
 
     <FrameLayout
-        android:layout_width="56dp"
-        android:layout_height="56dp">
+        android:layout_width="72dp"
+        android:layout_height="72dp">
 
         <ImageView
         android:id="@+id/group_image"
