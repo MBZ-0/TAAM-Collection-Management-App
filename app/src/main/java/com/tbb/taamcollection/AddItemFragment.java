@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemFragment extends Fragment {
+    private static final String DEFAULT_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg";
     private EditText editTextLotNum, editTextName, editTextDescription, editTextImageUrl, editTextVideoUrl;
     private Spinner spinnerCategory, spinnerPeriod;
     private TextView errorField;
@@ -113,7 +114,7 @@ public class AddItemFragment extends Fragment {
         }
 
         if (imageUrl.isEmpty()) {
-            imageUrl = getDefaultImageUri(getContext()).toString();
+            imageUrl = DEFAULT_IMAGE_URL;
         }
 
         errorField.setText("Item Added Successfully!");
@@ -135,10 +136,6 @@ public class AddItemFragment extends Fragment {
 
         itemdb.add(item);
         itemdb.updateDatabase();
-    }
-
-    private Uri getDefaultImageUri(Context context) {
-        return Uri.parse("android.resource://" + context.getPackageName() + "/" + R.drawable.default_image);
     }
 
     private void loadFragment(Fragment fragment) {
