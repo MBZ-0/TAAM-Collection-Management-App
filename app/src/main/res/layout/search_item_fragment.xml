@@ -5,6 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/oswald_bold"
+        android:text="Please Select the Category"
+        android:textColor="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSearchCategory" />
+
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/lotNum"
         android:layout_width="300dp"
@@ -23,31 +36,26 @@
         android:id="@+id/spinnerSearchCategory"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/nameItem" />
 
     <Spinner
         android:id="@+id/spinnerSeachPeriod"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="380dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textViewCategory" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/nameItem"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="8dp"
         android:hint="Name"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +63,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/lotNum" />
 
     <TextView
         android:id="@+id/textViewError"
@@ -70,36 +78,47 @@
         app:layout_constraintTop_toBottomOf="@+id/spinnerSeachPeriod"
         tools:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/textViewPeriod"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/oswald_bold"
+        android:text="Please Select the Period"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerSearchCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameItem"
+        app:layout_constraintVertical_bias="0.0" />
+
     <Button
         android:id="@+id/searchButton"
         style="@style/ButtonStyle"
         android:layout_width="85dp"
         android:layout_height="45dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="180dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="92dp"
         android:text="Result"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewError" />
 
     <Button
         android:id="@+id/buttonBack"
         style="@style/ButtonStyle"
         android:layout_width="85dp"
         android:layout_height="45dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="180dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="92dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/oswald_bold"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/searchButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewError" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

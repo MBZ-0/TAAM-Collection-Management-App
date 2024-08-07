@@ -8,15 +8,6 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!-- Black bar -->
-    <include layout="@layout/bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/black_bar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <!-- FrameLayout for fragment container -->
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -25,16 +16,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/black_bar" />
-
-    <!-- TextView for app name -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" /> <!-- Adjusted to position below the favicon -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
