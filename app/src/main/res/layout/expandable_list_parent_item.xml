@@ -7,14 +7,15 @@
     android:gravity="center_vertical">
 
     <FrameLayout
-        android:layout_width="48dp"
-        android:layout_height="48dp">
+        android:layout_width="56dp"
+        android:layout_height="56dp">
 
         <ImageView
-            android:id="@+id/group_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+        android:id="@+id/group_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:paddingStart="24dp"/>
 
         <VideoView
             android:id="@+id/group_video"

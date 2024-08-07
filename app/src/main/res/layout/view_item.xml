@@ -32,15 +32,13 @@
 
         <Button
             android:id="@+id/buttonViewBack"
-            android:layout_width="118dp"
-            android:layout_height="48dp"
+            style="@style/ButtonStyle"
+            android:layout_width="85dp"
+            android:layout_height="45dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/button_background"
-            android:fontFamily="@font/oswald_bold"
             android:text="@string/adminBack"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Scroll" />

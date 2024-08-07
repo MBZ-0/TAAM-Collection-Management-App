@@ -10,7 +10,7 @@
         android:id="@+id/editTextDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Description: "
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
         android:id="@+id/editTextLotNum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Lot Number:"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
         android:id="@+id/editTextName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Name: "
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,37 +41,38 @@
 
     <TextView
         android:id="@+id/textViewError"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="410dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/oswald_bold"
         android:text="Please fill in every field"
         android:textColor="#E20303"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextVideoUrl"
-        tools:layout_editor_absoluteX="0dp"
         tools:visibility="invisible" />
 
     <Spinner
         android:id="@+id/spinnerAddCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/editTextName"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
 
     <Spinner
         android:id="@+id/spinnerAddPeriod"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerAddCategory"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
 
     <EditText
         android:id="@+id/editTextImageUrl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Image URL:"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +83,7 @@
         android:id="@+id/editTextVideoUrl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/oswald_bold"
         android:hint="Video URL:"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,31 +91,53 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextImageUrl" />
 
     <Button
-        android:id="@+id/buttonAddReturn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/oswald_bold"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewError"
-        app:layout_constraintVertical_bias="0.3" />
-
-    <Button
         android:id="@+id/buttonViewBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
+        android:layout_width="85dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="88dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/oswald_bold"
         android:text="@string/add_item"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewError" />
+
+    <Button
+        android:id="@+id/buttonAddReturn"
+        style="@style/ButtonStyle"
+        android:layout_width="85dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/oswald_bold"
+        android:text="Back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewError"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewError" />
+
+    <TextView
+        android:id="@+id/textViewPeriod"
+        android:layout_width="417dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/oswald_bold"
+        android:text="Please Select Period"
+        android:textColor="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAddCategory" />
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="412dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/oswald_bold"
+        android:text="Please Select Category"
+        android:textColor="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
