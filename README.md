@@ -3,37 +3,21 @@
 ## Overview
 
 This project is the Collection Management System for the Toronto Asian Art Museum (TAAM), developed as part of the CSCB07 course project. It includes various functionalities such as viewing, adding, searching, and removing items from the collection, as well as generating reports. The system supports both images and videos of items, enhancing the detailed representation of the collection. Additionally, the app is linked to a Firebase server, ensuring secure data storage and real-time synchronization across devices.
+
 ## Screenshots
 
-### Home Screen
-![HomeScreen](https://github.com/user-attachments/assets/6bfc5093-e9b9-4381-8038-efd88059e4d7)
-
-### Admin Home Screen
-![AdminHomeScreen](https://github.com/user-attachments/assets/c974371e-f2f8-4e62-905b-4b945a2d8ae1)
-
-### Admin Login Screen
-![AdminLoginScreen](https://github.com/user-attachments/assets/282442f8-4719-478a-9b59-59446f2a62a3)
-
-### Custom Expandable ListView
-![CustomExpandableListView](https://github.com/user-attachments/assets/b89beaba-efcb-4c27-8b27-93fa537901c6)
-
-### Displaying Videos
-![Displaying Videos](https://github.com/user-attachments/assets/8002dc60-f44a-4425-83f5-4747b60a989a)
-
-### View Fragment
-![ViewFragment](https://github.com/user-attachments/assets/53f9cb4a-3069-4eaf-ae29-65a2ba7471c4)
-
-### Report Item
-![ReportItem](https://github.com/user-attachments/assets/1ad1d6aa-ff1c-4331-96b1-d632239edfee)
-
-### Add Item Fragment
-![AddItemFragment](https://github.com/user-attachments/assets/924aeb56-2cc9-4849-8f1b-afa0ab62e45d)
-
-### Remove Item Fragment
-![RemoveItemFragment](https://github.com/user-attachments/assets/057e62af-25e6-4874-87be-b798a2fdf264)
-
-### Search Fragment
-![SearchFragment](https://github.com/user-attachments/assets/6bf554ee-cda2-43ca-83b4-7611df611f65)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6bfc5093-e9b9-4381-8038-efd88059e4d7" alt="HomeScreen" width="200"/>
+  <img src="https://github.com/user-attachments/assets/c974371e-f2f8-4e62-905b-4b945a2d8ae1" alt="AdminHomeScreen" width="200"/>
+  <img src="https://github.com/user-attachments/assets/282442f8-4719-478a-9b59-59446f2a62a3" alt="AdminLoginScreen" width="200"/>
+  <img src="https://github.com/user-attachments/assets/b89beaba-efcb-4c27-8b27-93fa537901c6" alt="CustomExpandableListView" width="200"/>
+  <img src="https://github.com/user-attachments/assets/8002dc60-f44a-4425-83f5-4747b60a989a" alt="Displaying Videos" width="200"/>
+  <img src="https://github.com/user-attachments/assets/53f9cb4a-3069-4eaf-ae29-65a2ba7471c4" alt="ViewFragment" width="200"/>
+  <img src="https://github.com/user-attachments/assets/1ad1d6aa-ff1c-4331-96b1-d632239edfee" alt="ReportItem" width="200"/>
+  <img src="https://github.com/user-attachments/assets/924aeb56-2cc9-4849-8f1b-afa0ab62e45d" alt="AddItemFragment" width="200"/>
+  <img src="https://github.com/user-attachments/assets/057e62af-25e6-4874-87be-b798a2fdf264" alt="RemoveItemFragment" width="200"/>
+  <img src="https://github.com/user-attachments/assets/6bf554ee-cda2-43ca-83b4-7611df611f65" alt="SearchFragment" width="200"/>
+</p>
 
 ### PDF Report
 [Report.pdf](https://github.com/user-attachments/files/16537191/Report.pdf)
@@ -75,3 +59,7 @@ This project is the Collection Management System for the Toronto Asian Art Museu
 
 7. **Generating Reports**: 
    - Select the report criteria and click "Submit" to generate a PDF report.
+
+## Further Details
+
+For further details on setting up and running the project, refer to the [Report.pdf](https://github.com/user-attachments/files/16537191/Report.pdf).
