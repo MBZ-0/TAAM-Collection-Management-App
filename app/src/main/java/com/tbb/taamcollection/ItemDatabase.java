@@ -121,7 +121,7 @@ public class ItemDatabase extends Database {
             if (!lot.isEmpty() && !lot.equals(String.valueOf(value.getLotNumber()))) {
                 match = false;
             }
-            if (!name.isEmpty() && !name.equals(value.getName())) {
+            if (!name.isEmpty() && !value.getName().toLowerCase().contains(name.toLowerCase())) {
                 match = false;
             }
             if (!category.isEmpty() && !category.equals(value.getCategory().getValue())) {
