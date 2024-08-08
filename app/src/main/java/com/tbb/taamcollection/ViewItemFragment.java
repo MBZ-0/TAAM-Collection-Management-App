@@ -60,33 +60,35 @@ public class ViewItemFragment extends Fragment {
 
 
         for(Item v:list) {
-            View card = inflater.inflate(R.layout.view_item_child, l, false);
-            TextView name = card.findViewById(R.id.item_name);
-            name.setText(v.getName());
-            TextView lot = card.findViewById(R.id.lot_number);
-            String lt = "Lot# " + v.getLotNumber();
-            lot.setText(lt);
-            TextView description = card.findViewById(R.id.item_description);
-            description.setText(v.getDescription());
-            TextView category = card.findViewById(R.id.item_category);
-            category.setText(v.getCategory().getValue());
-            TextView period = card.findViewById(R.id.item_period);
-            period.setText(v.getPeriod().getValue());
-            l.addView(card);
+            if(v != null) {
+                View card = inflater.inflate(R.layout.view_item_child, l, false);
+                TextView name = card.findViewById(R.id.item_name);
+                name.setText(v.getName());
+                TextView lot = card.findViewById(R.id.lot_number);
+                String lt = "Lot# " + v.getLotNumber();
+                lot.setText(lt);
+                TextView description = card.findViewById(R.id.item_description);
+                description.setText(v.getDescription());
+                TextView category = card.findViewById(R.id.item_category);
+                category.setText(v.getCategory().getValue());
+                TextView period = card.findViewById(R.id.item_period);
+                period.setText(v.getPeriod().getValue());
+                l.addView(card);
 
 
-            //Set image
-            ImageView image = card.findViewById(R.id.group_image);
-            Glide.with(view).load(v.getImageUrl()).into(image);
-            //Set video
-            String vid = v.getVideoUrl();
-            VideoView video = card.findViewById(R.id.group_video);
-            if(vid != null && !vid.isEmpty()){
-                video.setVideoPath(vid);
-                video.start();
-            }else{
+                //Set image
+                ImageView image = card.findViewById(R.id.group_image);
+                Glide.with(view).load(v.getImageUrl()).into(image);
+                //Set video
+                String vid = v.getVideoUrl();
+                VideoView video = card.findViewById(R.id.group_video);
+                if (vid != null && !vid.isEmpty()) {
+                    video.setVideoPath(vid);
+                    video.start();
+                } else {
 
-                video.setVisibility(View.GONE);
+                    video.setVisibility(View.GONE);
+                }
             }
         }
         Button buttonBack = view.findViewById(R.id.buttonViewBack);
