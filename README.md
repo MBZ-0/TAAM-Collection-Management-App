@@ -75,7 +75,3 @@ This project is the Collection Management System for the Toronto Asian Art Museu
 
 7. **Generating Reports**: 
    - Select the report criteria and click "Submit" to generate a PDF report.
-
-## Further Details
-
-For further details on setting up and running the project, refer to the [Report.pdf](https://github.com/user-attachments/files/16537191/Report.pdf).
