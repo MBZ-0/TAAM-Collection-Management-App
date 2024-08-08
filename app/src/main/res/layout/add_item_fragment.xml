@@ -39,10 +39,11 @@
                     android:id="@+id/editTextLotNum"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
+                    android:layout_marginTop="100dp"
                     android:fontFamily="@font/oswald_bold"
                     android:hint="Lot Number:"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,8 +114,8 @@
                 <Button
                     android:id="@+id/buttonViewBack"
                     style="@style/ButtonStyle"
-                    android:layout_width="85dp"
-                    android:layout_height="45dp"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="88dp"
                     android:background="@drawable/button_background"
@@ -126,8 +127,8 @@
                 <Button
                     android:id="@+id/buttonAddReturn"
                     style="@style/ButtonStyle"
-                    android:layout_width="85dp"
-                    android:layout_height="45dp"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="88dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/button_background"

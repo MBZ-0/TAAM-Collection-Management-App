@@ -8,8 +8,8 @@
     <Button
         android:id="@+id/buttonReturn"
         style="@style/ButtonStyle"
-        android:layout_width="90dp"
-        android:layout_height="45dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:text="return"
@@ -19,8 +19,8 @@
     <Button
         android:id="@+id/buttonLogin"
         style="@style/ButtonStyle"
-        android:layout_width="90dp"
-        android:layout_height="45dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginTop="532dp"
         android:text="LOG IN"
         app:layout_constraintEnd_toEndOf="parent"

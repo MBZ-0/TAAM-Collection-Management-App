@@ -21,8 +21,8 @@
     <Button
         android:id="@+id/buttonConfirm"
         style="@style/ButtonStyle"
-        android:layout_width="85dp"
-        android:layout_height="45dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="72dp"
         android:layout_marginBottom="376dp"
         android:background="@drawable/button_background"
@@ -35,8 +35,8 @@
     <Button
         android:id="@+id/buttonCancel"
         style="@style/ButtonStyle"
-        android:layout_width="85dp"
-        android:layout_height="45dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginStart="72dp"
         android:layout_marginBottom="376dp"
         android:background="@drawable/button_background"
