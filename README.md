@@ -12,7 +12,7 @@ This project is the Collection Management System for the Toronto Asian Art Museu
 
 ## Screenshots
 
-<p align="center">
+<p>
   <img src="https://github.com/user-attachments/assets/282442f8-4719-478a-9b59-59446f2a62a3" alt="AdminLoginScreen" width="200"/>
   <img src="https://github.com/user-attachments/assets/c974371e-f2f8-4e62-905b-4b945a2d8ae1" alt="AdminHomeScreen" width="200"/>
   <img src="https://github.com/user-attachments/assets/924aeb56-2cc9-4849-8f1b-afa0ab62e45d" alt="AddItemFragment" width="200"/>
