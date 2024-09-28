@@ -6,7 +6,7 @@ This project is the Collection Management System for the Toronto Asian Art Museu
 
 ## Demo Video
 
-
+[Click here to watch the demo video](https://github.com/user-attachments/assets/de334da3-b7cb-4d24-b236-e136d505063d)
 
 ## Screenshots
 
